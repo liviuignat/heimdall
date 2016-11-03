@@ -1,0 +1,1 @@
+require('ts-babel-node/register');

@@ -8,7 +8,10 @@
   "extends": "tslint:recommended",
   "rules": {
     "no-constructor-vars": true,
-    "quotemark": "single"
+    "quotemark": "single",
+    "object-literal-sort-keys": false,
+    "no-var-requires": false,
+    "max-line-length": 175
   },
   "rulesDirectory": [
     "node_modules/tslint-eslint-rules/dist/rules"

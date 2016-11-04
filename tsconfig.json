@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "declaration": true,
+    "lib": ["es6", "es2015.promise", "es2015.collection", "es2015.iterable"]
   },
   "files": [
     "src/**/**"

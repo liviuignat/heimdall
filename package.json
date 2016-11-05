@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "NodeJS Auth Service",
   "main": "index.js",
+  "engines": {
+    "node": "6.9.1"
+  },
   "scripts": {
     "start": "node ./node_modules/better-npm-run start",
     "dev": "concurrently --kill-others \"npm run watch-lint\" \"npm run start-dev\"",

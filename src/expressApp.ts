@@ -1,10 +1,9 @@
+import 'auth/passport';
 import * as express from 'express';
 import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import * as oauth2 from 'auth/oauth2';
-
-require('auth/passport');
 
 const app = express();
 app.use(cookieParser());

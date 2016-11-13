@@ -1,12 +1,16 @@
 # Heimdall 
 ### Node JS Authentication service built on Express and TypeScript
 
+[![Build Status](https://api.travis-ci.org/liviuignat/heimdall.svg?branch=master)](https://api.travis-ci.org/liviuignat/heimdall)
+
+#### Instal
+
 ```sh
 yarn install
 yarn run start
 yarn run dev
 ```
-### Docker
+#### Docker
 
 ```sh
 docker build -t heimdall .

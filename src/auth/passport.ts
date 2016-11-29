@@ -26,7 +26,7 @@ passport.use(new LocalStrategy((email: string, password: string, done) => {
       return done(null, user);
     })
     .catch(err => done(err, false));
-  }
+  },
 ));
 
 /**
@@ -52,7 +52,7 @@ passport.use(new BasicStrategy(
         return done(null, client);
       })
       .catch(err => done(err, false));
-    }
+    },
 ));
 
 /**
@@ -78,7 +78,7 @@ passport.use(new ClientPasswordStrategy((clientId, clientSecret, done) => {
       logger.error(JSON.stringify(err));
       done(err, false);
     });
-  }
+  },
 ));
 
 // Register serialialization and deserialization functions.

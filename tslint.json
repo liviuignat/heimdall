@@ -7,11 +7,14 @@
    */
   "extends": "tslint:recommended",
   "rules": {
-    "no-constructor-vars": true,
-    "quotemark": "single",
+    "no-parameter-properties": true,
+    "quotemark": ["single"],
     "object-literal-sort-keys": false,
     "no-var-requires": false,
-    "max-line-length": 175
+    "max-line-length": [true, 175],
+    "ordered-imports": false,
+    "arrow-parens": false
+
   },
   "rulesDirectory": [
     "node_modules/tslint-eslint-rules/dist/rules"

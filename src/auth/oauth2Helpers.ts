@@ -20,10 +20,10 @@ export async function createAuthorizationToken(clientId: string, userId: string,
   const value = generateAuthorizationTokenValue();
   const authToken: IAuthorizationCode = {
     value,
-    clientId: clientId,
+    clientId,
     redirectURI,
-    userId: userId,
-    scope: scope,
+    userId,
+    scope,
   };
 
   await saveAuthorizationCode(authToken);
@@ -37,9 +37,9 @@ export async function createAccessToken(clientId: string, userId: string, scope:
   const accessToken: IAccessToken = {
     value,
     expirationDate,
-    clientId: clientId,
-    userId: userId,
-    scope: scope,
+    clientId,
+    userId,
+    scope,
   };
 
   await saveAccessToken(accessToken);
@@ -51,9 +51,9 @@ export async function createRefreshToken(clientId: string, userId: string, scope
 
   const refreshToken: IRefreshToken = {
     value,
-    clientId: clientId,
-    userId: userId,
-    scope: scope,
+    clientId,
+    userId,
+    scope,
   };
 
   await saveRefreshToken(refreshToken);

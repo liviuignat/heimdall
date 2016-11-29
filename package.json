@@ -77,7 +77,7 @@
     "piping": "^1.0.0-rc.4",
     "sequelize": "^3.24.7",
     "ts-node": "^1.6.1",
-    "typescript": "^2.0.6",
+    "typescript": "^2.0.10",
     "winston": "^2.2.0"
   },
   "devDependencies": {
@@ -89,8 +89,8 @@
     "supertest": "^2.0.1",
     "supertest-as-promised": "^4.0.2",
     "ts-jest": "^0.1.11",
-    "tslint": "^3.15.1",
-    "tslint-eslint-rules": "^2.1.0",
+    "tslint": "^4.0.2",
+    "tslint-eslint-rules": "^3.0.0",
     "watch": "^1.0.1"
   },
   "jest": {

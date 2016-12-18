@@ -4,11 +4,14 @@
     "module": "commonjs",
     "baseUrl": "./src",
     "rootDir": "./src",
-    "declaration": true,
+    "declaration": false,
     "lib": ["es7", "es2017"]
   },
   "files": [
-    "src/**/**"
+    "src/**/*"
+  ],
+  "include": [
+    "src/**/*"
   ],
   "exclude": [
     "node_modules"

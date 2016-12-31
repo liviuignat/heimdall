@@ -20,14 +20,17 @@ export default function defineAuthClient(sequelize: Sequelize.Sequelize): IAuthC
     clientId: {
       type: Sequelize.STRING(256),
       allowNull: false,
+      field: 'client_id',
     },
     clientSecret: {
       type: Sequelize.STRING(256),
       allowNull: false,
+      field: 'client_secret',
     },
     trustedClient: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
+      field: 'trusted_client',
     },
     scope: Sequelize.STRING(4000),
   },
@@ -36,5 +39,7 @@ export default function defineAuthClient(sequelize: Sequelize.Sequelize): IAuthC
     timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
+    underscored: true,
+    underscoredAll: true,
   });
 };

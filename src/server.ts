@@ -7,7 +7,7 @@ const server = http.createServer(app);
 const port = process.env.PORT || 3000;
 
 async function start() {
-  await db.sequelize.sync();
+  await db.sequelize.sync({force: true});
   logger.info(JSON.stringify(await db.AuthClient.findAll()));
   logger.info(JSON.stringify(await db.User.findAll()));
 

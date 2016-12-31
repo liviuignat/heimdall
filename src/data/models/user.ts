@@ -23,13 +23,21 @@ export default function defineUser(sequelize: Sequelize.Sequelize): IUserModel {
       type: Sequelize.STRING(256),
       allowNull: false,
     },
-    firstName: Sequelize.STRING(256),
-    lastName: Sequelize.STRING(256),
+    firstName: {
+      type: Sequelize.STRING(256),
+      field: 'first_name',
+    },
+    lastName: {
+      type: Sequelize.STRING(256),
+      field: 'last_name',
+    },
   },
   {
     tableName: 'users',
     timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
+    underscored: true,
+    underscoredAll: true,
   });
 };

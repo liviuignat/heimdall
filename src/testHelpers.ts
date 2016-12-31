@@ -1,9 +1,10 @@
+import * as uuid from 'node-uuid';
 import db from 'data/database';
 import {IAuthClient, IUser}from 'interfaces';
 import {logger} from 'logger';
 
 export const firstClient: IAuthClient = {
-  id: '1',
+  id: uuid.v1(),
   name: 'EverReal client',
   clientId: 'ever_real_client',
   clientSecret: 'everreal@123',
@@ -11,7 +12,7 @@ export const firstClient: IAuthClient = {
 };
 
 export const firstUser: IUser = {
-  id: '1',
+  id: uuid.v1(),
   firstName: 'Liviu',
   lastName: 'Ignat',
   password: 'jasjasdjasldjkas',

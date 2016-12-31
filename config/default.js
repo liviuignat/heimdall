@@ -3,4 +3,7 @@ module.exports = {
     dialect: "sqlite",
     storage: "./db.development.sqlite",
   },
+  logger: {
+    level: "info",
+  },
 };

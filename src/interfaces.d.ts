@@ -5,6 +5,8 @@ export interface IAuthClient {
   clientSecret: string;
   trustedClient: boolean;
   scope?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface IRefreshToken {

@@ -4,7 +4,7 @@
   "description": "NodeJS Auth Service",
   "main": "index.js",
   "engines": {
-    "node": "6.9.1"
+    "node": "6.9.2"
   },
   "scripts": {
     "start": "node ./node_modules/better-npm-run start",

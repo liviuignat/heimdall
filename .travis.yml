@@ -1,6 +1,9 @@
 language: node_js
 node_js:
-  - "v6.9.1"
+  - "v6.9.2"
+
+services:
+  - sqlite3
 
 before_install:
   # Repo for newer Node.js versions
@@ -19,5 +22,5 @@ before_script:
   - "yarn install"
 
 script:
-  - "yarn run lint"
-  - "yarn run test-once"
+  - "yarn lint"
+  - "yarn test-once"

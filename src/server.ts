@@ -1,21 +1,24 @@
 import * as http from 'http';
 import app from 'expressApp';
-import database from 'data/database';
+import db from 'data/database';
 import {logger} from 'logger';
 
 const server = http.createServer(app);
 const port = process.env.PORT || 3000;
 
-database.sequelize.sync().then(() => {
-  logger.info('Sequelize started with success');
+async function start() {
+  await db.sequelize.sync();
+  logger.info(JSON.stringify(await db.AuthClient.findAll()));
+  logger.info(JSON.stringify(await db.User.findAll()));
 
   server.listen(port, (err: Error) => {
     if (err) {
-      return logger.error(JSON.stringify(err));
+      return Promise.reject(err);
     }
-
-    logger.info(`==> 💻  Open http://localhost:${port} in a browser to view the app.`);
+    return Promise.resolve();
   });
-}).catch(() => {
-  logger.error('Sequelize failed to initialize');
-});
+}
+
+start()
+  .then(() => logger.info(`💻  Open http://localhost:${port} in a browser to view the app.`))
+  .catch(err => logger.error(`Failed to start server. Error: ${JSON.stringify(err)}`));

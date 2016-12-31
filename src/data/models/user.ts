@@ -23,12 +23,8 @@ export default function defineUser(sequelize: Sequelize.Sequelize): IUserModel {
       type: Sequelize.STRING(256),
       allowNull: false,
     },
-    firstName: {
-      type: Sequelize.STRING(256),
-    },
-    lastName: {
-      type: Sequelize.STRING(256),
-    },
+    firstName: Sequelize.STRING(256),
+    lastName: Sequelize.STRING(256),
   },
   {
     tableName: 'users',

@@ -32,7 +32,7 @@ export default function defineAuthClient(sequelize: Sequelize.Sequelize): IAuthC
       allowNull: false,
       field: 'trusted_client',
     },
-    scope: Sequelize.STRING(4000),
+    scope: Sequelize.ARRAY(Sequelize.STRING),
   },
   {
     tableName: 'oauth_clients',

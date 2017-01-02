@@ -1,44 +1,42 @@
 import {IAuthorizationCode, IAccessToken, IRefreshToken} from 'interfaces';
+import db from 'data/database';
+import {logger} from 'logger';
 
-const authorizationCodes: IAuthorizationCode[] = [];
-const accessTokens: IAccessToken[] = [];
-const refreshTokens: IRefreshToken[] = [];
-
-export async function getAuthorizationCode(tokenValue: string) {
-  return authorizationCodes.filter(({value}) => value === tokenValue)[0];
+export async function getAuthorizationCode(tokenValue: string): Promise<IAuthorizationCode> {
+  const code: IAuthorizationCode = (await db.AuthToken.findOne({where: {value: tokenValue}})).toJSON();
+  return code;
 }
 
-export async function saveAuthorizationCode(authorizationToken: IAuthorizationCode) {
-  authorizationCodes.push(authorizationToken);
+export async function saveAuthorizationCode(authorizationToken: IAuthorizationCode): Promise<void> {
+  await db.AuthToken.insertOrUpdate(authorizationToken);
 }
 
-export async function deleteAuthorizationCode(tokenValue: string) {
-  const authorizationToken = await getAuthorizationCode(tokenValue);
-  authorizationCodes.splice(authorizationCodes.indexOf(authorizationToken), 1);
+export async function deleteAuthorizationCode(tokenValue: string): Promise<void> {
+  await db.AuthToken.destroy({where: {value: tokenValue}});
 }
 
-export async function getAccessToken(tokenValue: string) {
-  return accessTokens.filter(({value}) => value === tokenValue)[0];
+export async function getAccessToken(tokenValue: string): Promise<IAccessToken> {
+  const code: IAccessToken = (await db.AuthToken.findOne({where: {value: tokenValue}})).toJSON();
+  return code;
 }
 
-export async function saveAccessToken(accessToken: IAccessToken) {
-  accessTokens.push(accessToken);
+export async function saveAccessToken(accessToken: IAccessToken): Promise<void> {
+  await db.AuthToken.insertOrUpdate(accessToken);
 }
 
-export async function deleteAccessToken(tokenValue: string) {
-  const accessToken = await getAccessToken(tokenValue);
-  accessTokens.splice(accessTokens.indexOf(accessToken), 1);
+export async function deleteAccessToken(tokenValue: string): Promise<void> {
+  await db.AuthToken.destroy({where: {value: tokenValue}});
 }
 
-export async function getRefreshToken(tokenValue: string) {
-  return refreshTokens.filter(({value}) => value === tokenValue)[0];
+export async function getRefreshToken(tokenValue: string): Promise<IRefreshToken> {
+  const code: IRefreshToken = (await db.AuthToken.findOne({where: {value: tokenValue}})).toJSON();
+  return code;
 }
 
-export async function saveRefreshToken(refreshToken: IRefreshToken) {
-  refreshTokens.push(refreshToken);
+export async function saveRefreshToken(refreshToken: IRefreshToken): Promise<void> {
+  await db.AuthToken.insertOrUpdate(refreshToken);
 }
 
-export async function deleteRefreshToken(tokenValue: string) {
-  const refreshToken = await getRefreshToken(tokenValue);
-  refreshTokens.splice(refreshTokens.indexOf(refreshToken), 1);
+export async function deleteRefreshToken(tokenValue: string): Promise<void> {
+  await db.AuthToken.destroy({where: {value: tokenValue}});
 }

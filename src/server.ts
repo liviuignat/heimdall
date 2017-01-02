@@ -10,6 +10,7 @@ async function start() {
   await db.sequelize.sync({force: true});
   logger.info(JSON.stringify(await db.AuthClient.findAll()));
   logger.info(JSON.stringify(await db.User.findAll()));
+  logger.info(JSON.stringify(await db.AuthToken.findAll()));
 
   server.listen(port, (err: Error) => {
     if (err) {

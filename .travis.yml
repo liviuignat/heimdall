@@ -3,7 +3,13 @@ node_js:
   - "v6.9.2"
 
 services:
-  - sqlite3
+  - postgresql
+
+postgres:
+  adapter: postgresql
+  database: everreal-tests
+  username: postgres
+  password: password
 
 before_install:
   # Repo for newer Node.js versions

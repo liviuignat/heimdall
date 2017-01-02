@@ -16,7 +16,7 @@ import {
   ACCESS_TOKEN_EXPIRES_IN,
 } from 'services/authTokenService';
 
-export async function createAuthorizationToken(clientId: string, userId: string, redirectURI: string, scope: string) {
+export async function createAuthorizationToken(clientId: string, userId: string, redirectURI: string, scope: string[]) {
   const value = generateAuthorizationTokenValue();
   const authToken: IAuthorizationCode = {
     value,
@@ -30,7 +30,7 @@ export async function createAuthorizationToken(clientId: string, userId: string,
   return authToken;
 }
 
-export async function createAccessToken(clientId: string, userId: string, scope: string) {
+export async function createAccessToken(clientId: string, userId: string, scope: string[]) {
   const value = generateAccessTokenValue();
   const expirationDate = generateAuthTokenExpirationDate();
 
@@ -46,7 +46,7 @@ export async function createAccessToken(clientId: string, userId: string, scope:
   return accessToken;
 }
 
-export async function createRefreshToken(clientId: string, userId: string, scope: string) {
+export async function createRefreshToken(clientId: string, userId: string, scope: string[]) {
   const value = generateRefreshTokenValue();
 
   const refreshToken: IRefreshToken = {
@@ -91,7 +91,7 @@ export async function createGrantTokens(client: IAuthClient, code: string, redir
   };
 }
 
-export async function createGrantTokensByUsernameAndPassword(client: IAuthClient, username: string, password: string, scope: string) {
+export async function createGrantTokensByUsernameAndPassword(client: IAuthClient, username: string, password: string, scope: string[]) {
   const user = await getUserByEmailAndPassword(username, password);
 
   if (!user) {

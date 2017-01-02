@@ -74,7 +74,7 @@ server.exchange(oauth2orize.exchange.code((client: IAuthClient, code: string, re
  * from the token request for verification. If these values are validated, the
  * application issues an access token on behalf of the user who authorized the code.
  */
-server.exchange(oauth2orize.exchange.password((client: IAuthClient, username: string, password: string, scope: string, done) => {
+server.exchange(oauth2orize.exchange.password((client: IAuthClient, username: string, password: string, scope: string[], done) => {
   logger.info('server.exchange.password:entry');
 
   createGrantTokensByUsernameAndPassword(client, username, password, scope)
@@ -92,7 +92,7 @@ server.exchange(oauth2orize.exchange.password((client: IAuthClient, username: st
  * password/secret from the token request for verification. If these values are validated, the
  * application issues an access token on behalf of the client who authorized the code.
  */
-server.exchange(oauth2orize.exchange.clientCredentials((client: IAuthClient, scope: string, done) => {
+server.exchange(oauth2orize.exchange.clientCredentials((client: IAuthClient, scope: string[], done) => {
   logger.info('server.exchange.clientCredentials');
 
   createAccessToken(client.id, null, client.scope)
@@ -110,7 +110,7 @@ server.exchange(oauth2orize.exchange.clientCredentials((client: IAuthClient, sco
  * request for verification.  If this value is validated, the application issues an access
  * token on behalf of the client who authorized the code
  */
-server.exchange(oauth2orize.exchange.refreshToken((client: IAuthClient, refreshTokenValue: string, scope: string, done) => {
+server.exchange(oauth2orize.exchange.refreshToken((client: IAuthClient, refreshTokenValue: string, scope: string[], done) => {
   logger.info('server.exchange.refreshToken');
 
   createAccessTokenFromRefreshToken(client, refreshTokenValue)
@@ -136,7 +136,7 @@ server.exchange(oauth2orize.exchange.refreshToken((client: IAuthClient, refreshT
  * the client by ID from the database.
  */
 server.serializeClient((client: IAuthClient, done) => {
-    return done(null, client.id);
+  return done(null, client.id);
 });
 
 server.deserializeClient((id, done) => {

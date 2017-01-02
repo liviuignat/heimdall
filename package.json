@@ -12,8 +12,8 @@
     "start-dev": "node ./node_modules/better-npm-run start-dev",
     "watch-lint": "watch 'npm run lint' ./src",
     "lint": "tslint ./src/**/*.ts",
-    "test": "jest --watch",
-    "test-once": "jest"
+    "test": "node ./node_modules/better-npm-run test",
+    "test-once": "node ./node_modules/better-npm-run test-once"
   },
   "repository": {
     "type": "git",
@@ -48,6 +48,18 @@
         "NODE_ENV": "development",
         "NODE_PATH": "./src"
       }
+    },
+    "test": {
+      "command": "jest --watch",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    "test-once": {
+      "command": "jest",
+      "env": {
+        "NODE_ENV": "test"
+      }
     }
   },
   "dependencies": {
@@ -70,6 +82,7 @@
     "concurrently": "^3.1.0",
     "config": "^1.24.0",
     "cookie-parser": "^1.4.3",
+    "cross-env": "^3.1.3",
     "express": "^4.14.0",
     "node-uuid": "^1.4.7",
     "oauth2orize": "^1.5.1",
@@ -78,6 +91,7 @@
     "passport-http-bearer": "^1.0.1",
     "passport-local": "^1.0.0",
     "passport-oauth2-client-password": "^0.1.2",
+    "pg": "^6.1.2",
     "piping": "^1.0.0-rc.4",
     "sequelize": "^3.28.0",
     "sqlite3": "^3.1.8",

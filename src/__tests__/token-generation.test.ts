@@ -16,12 +16,12 @@ describe('WHEN testing token generation', () => {
       tokenResponse = await request.post('/api/oauth/token')
         .set('content-type', 'application/json')
         .send({
-          grant_type: "password",
+          grant_type: 'password',
           client_id: client.clientId,
           client_secret: client.clientSecret,
-          scope: "offline_access",
-          username: "liviu@ignat.email",
-          password: "jasjasdjasldjkas",
+          scope: 'offline_access',
+          username: 'liviu@ignat.email',
+          password: 'jasjasdjasldjkas',
         });
     });
 

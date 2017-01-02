@@ -37,6 +37,8 @@ export default function defineUser(sequelize: Sequelize.Sequelize): IUserModel {
     timestamps: true,
     createdAt: 'created_at',
     updatedAt: 'updated_at',
+    deletedAt: 'destroyTime',
+    paranoid: true,
     underscored: true,
     underscoredAll: true,
   });

@@ -26,6 +26,7 @@ cache:
 
 before_script:
   - "yarn install"
+  - psql -c 'create database "everreal-tests";' -U postgres
 
 script:
   - "yarn lint"

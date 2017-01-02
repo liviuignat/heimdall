@@ -1,6 +1,15 @@
 language: node_js
 node_js:
-  - "v6.9.1"
+  - "v6.9.2"
+
+services:
+  - postgresql
+
+postgres:
+  adapter: postgresql
+  database: everreal-tests
+  username: postgres
+  password: password
 
 before_install:
   # Repo for newer Node.js versions
@@ -17,7 +26,8 @@ cache:
 
 before_script:
   - "yarn install"
+  - psql -c 'create database "everreal-tests";' -U postgres
 
 script:
-  - "yarn run lint"
-  - "yarn run test-once"
+  - "yarn lint"
+  - "yarn test-once"

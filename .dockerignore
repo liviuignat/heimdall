@@ -6,3 +6,5 @@ yarn.lock
 node_modules
 README.md
 *.log
+db.development.sqlite
+db.test.sqlite

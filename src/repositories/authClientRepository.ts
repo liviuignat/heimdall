@@ -1,15 +1,7 @@
 import {IAuthClient} from 'interfaces';
+import db from 'data/database';
 
-const clients: IAuthClient[] = [
-  {
-      id: '1',
-      name: 'EverReal client',
-      clientId: 'ever_real_client',
-      clientSecret: 'everreal@123',
-      trustedClient: true,
-  },
-];
-
-export async function getAuthClientById(id: string) {
-  return Promise.resolve(clients.filter(({clientId}) => id === clientId)[0]);
+export async function getAuthClientById(clientId: string): Promise<IAuthClient> {
+  const client = (await db.AuthClient.findOne({where: {clientId}})).toJSON();
+  return client;
 }

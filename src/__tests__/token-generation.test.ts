@@ -1,16 +1,13 @@
 import {getAuthClientById} from 'repositories/authClientRepository';
 import expressApp from 'expressApp';
 import * as supertest from 'supertest-as-promised';
+import {initDatabase, firstClient} from './../testHelpers';
 
 const request = supertest(expressApp);
 
 describe('WHEN testing token generation', () => {
-  const clientId = 'ever_real_client';
-  let client;
-
-  beforeEach(async () => client = await getAuthClientById(clientId));
-
-  it('SHOULD have the correct test client', () => expect(client.clientId).toBe(clientId));
+  let client = firstClient;
+  beforeAll(async () => await initDatabase());
 
   describe('WHEN generating token with username and password', () => {
     let tokenResponse;
@@ -19,12 +16,12 @@ describe('WHEN testing token generation', () => {
       tokenResponse = await request.post('/api/oauth/token')
         .set('content-type', 'application/json')
         .send({
-          grant_type: "password",
+          grant_type: 'password',
           client_id: client.clientId,
           client_secret: client.clientSecret,
-          scope: "offline_access",
-          username: "liviu@ignat.email",
-          password: "jasjasdjasldjkas",
+          scope: 'offline_access',
+          username: 'liviu@ignat.email',
+          password: 'jasjasdjasldjkas',
         });
     });
 

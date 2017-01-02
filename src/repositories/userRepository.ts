@@ -1,41 +1,44 @@
 import {IUser} from 'interfaces';
+import db from 'data/database';
 
-const users: IUser[] = [{
-  id: '1',
-  firstName: 'Liviu',
-  lastName: 'Ignat',
-  password: 'jasjasdjasldjkas',
-  email: 'liviu@ignat.email',
-}];
+export async function getUserById(userId: string): Promise<IUser> {
+  const user = (await db.User.findById(userId)).toJSON();
 
-export async function getUserById(userId: string) {
-  const user = Object.assign({}, users.filter(({id}) => id === userId)[0]);
+  if (!user) {
+    return null;
+  }
+
   delete user.password;
-  return Promise.resolve(user);
+  return user;
 }
 
-export async function getUserByEmail(userEmail: string) {
-  const user = await searchUserByEmail(userEmail);
-  delete user.password;
-  return Promise.resolve(user);
-}
-
-export async function getUserByEmailAndPassword(userEmail: string, password: string) {
+export async function getUserByEmail(userEmail: string): Promise<IUser> {
   const user = await searchUserByEmail(userEmail);
 
   if (!user) {
     return null;
   }
 
-  if (user.password === password) {
-    delete user.password;
-    return Promise.resolve(user);
-  }
-
-  return Promise.resolve(null);
+  delete user.password;
+  return Promise.resolve(user);
 }
 
-async function searchUserByEmail(userEmail: string) {
-  const user = users.filter(({email}) => email === userEmail)[0];
-  return Promise.resolve(Object.assign({}, user));
+export async function getUserByEmailAndPassword(userEmail: string, password: string): Promise<IUser> {
+  const user = await searchUserByEmail(userEmail);
+
+  if (!user) {
+    return null;
+  }
+
+  if (user.password !== password) {
+    return null;
+  }
+
+  delete user.password;
+  return user;
+}
+
+async function searchUserByEmail(userEmail: string): Promise<IUser> {
+  const user = (await db.User.findOne({where: {email: userEmail}})).toJSON();
+  return user;
 }

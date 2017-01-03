@@ -34,3 +34,14 @@ export async function initDatabase() {
     logger.error(`====> Error: ${JSON.stringify(ex)}`);
   }
 };
+
+export const getTokenRequest = (user: IUser = firstUser, authClient = firstClient) => request.post('/api/oauth/token')
+  .set('content-type', 'application/json')
+  .send({
+    grant_type: 'password',
+    client_id: authClient.clientId,
+    client_secret: authClient.clientSecret,
+    scope: 'offline_access',
+    username: user.email,
+    password: user.password,
+  });

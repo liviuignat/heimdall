@@ -3,7 +3,7 @@ import {createUser, getUserByEmail, updateUser} from 'repositories';
 import {IUser} from 'interfaces';
 
 export async function getMe(req: Request, res: Response): Promise<Response> {
-  return req.user;
+  return res.json(req.user);
 }
 
 export async function registerUser(req: Request, res: Response, next: NextFunction): Promise<Response> {

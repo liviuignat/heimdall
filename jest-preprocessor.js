@@ -10,7 +10,6 @@ module.exports = {
         path,
         []
       );
-      debugger;
       return tscCode;
     }
     return src;

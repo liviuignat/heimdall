@@ -50,13 +50,13 @@
       }
     },
     "test": {
-      "command": "jest --watch",
+      "command": "jest --watch --runInBand",
       "env": {
         "NODE_ENV": "test"
       }
     },
     "test-once": {
-      "command": "jest --force-exit",
+      "command": "jest --force-exit --runInBand",
       "env": {
         "NODE_ENV": "test"
       }

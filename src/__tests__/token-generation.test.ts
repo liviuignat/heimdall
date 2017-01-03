@@ -1,29 +1,28 @@
 import {getAuthClientById} from 'repositories/authClientRepository';
-import {initDatabase, firstClient as authClient, request} from 'testHelpers';
+import {
+  initDatabase,
+  firstClient as authClient,
+  request,
+  getTokenRequest,
+} from 'testHelpers';
+
+const userData = {
+  email: 'liviu@ignat.email',
+  password: 'jasjasdjasldjkas',
+};
 
 describe('WHEN testing token generation', () => {
-  beforeAll(async () => await initDatabase());
+  beforeEach(async () => await initDatabase());
 
   describe('WHEN generating token with username and password', () => {
-    let tokenResponse;
+    let authToken;
 
-    beforeEach(async () => {
-      tokenResponse = await request.post('/api/oauth/token')
-        .set('content-type', 'application/json')
-        .send({
-          grant_type: 'password',
-          client_id: authClient.clientId,
-          client_secret: authClient.clientSecret,
-          scope: 'offline_access',
-          username: 'liviu@ignat.email',
-          password: 'jasjasdjasldjkas',
-        });
+    beforeEach(async () => authToken = (await getTokenRequest(userData)).body);
+
+    it('SHOULD have all the token information', () => {
+      expect(authToken.refresh_token).toBeDefined();
+      expect(authToken.access_token).toBeDefined();
+      expect(authToken.expires_in).toBeDefined();
     });
-
-    it('SHOULD have a refresh token in the response', () => expect(tokenResponse.body.refresh_token).toBeDefined());
-
-    it('SHOULD have an access token in the response', () => expect(tokenResponse.body.access_token).toBeDefined());
-
-    it('SHOULD have an expires in the response response', () => expect(tokenResponse.body.expires_in).toBeDefined());
   });
 });

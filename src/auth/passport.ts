@@ -1,9 +1,11 @@
 import * as passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local';
 import {BasicStrategy} from 'passport-http';
+import {Strategy as BearerStrategy} from 'passport-http-bearer';
 import {logger} from 'logger';
 import {getUserById, getUserByEmailAndPassword} from 'repositories/userRepository';
 import {getAuthClientById} from 'repositories/authClientRepository';
+import {getAccessToken, deleteAccessToken} from 'repositories/authTokenRepository';
 
 const passportOauth2ClientPassword = require('passport-oauth2-client-password');
 const ClientPasswordStrategy = passportOauth2ClientPassword.Strategy;
@@ -81,6 +83,64 @@ passport.use(new ClientPasswordStrategy((clientId, clientSecret, done) => {
   },
 ));
 
+/**
+ * BearerStrategy
+ *
+ * This strategy is used to authenticate either users or clients based on an access token
+ * (aka a bearer token).  If a user, they must have previously authorized a client
+ * application, which is issued an access token to make requests on behalf of
+ * the authorizing user.
+ */
+async function bearerStrategyCallback(accessToken: string): Promise<any> {
+  logger.info('BearerStrategy', accessToken);
+
+  const token = await getAccessToken(accessToken);
+
+  if (!token) {
+    throw false;
+  }
+
+  if (new Date() > token.expirationDate) {
+    await deleteAccessToken(accessToken);
+  }
+
+  // to keep current state simple, restricted scopes are not implemented,
+  const info = { scope: '*' };
+
+  if (token.userId !== null) {
+    const user = await getUserById(token.userId);
+
+    if (!user) {
+      throw false;
+    }
+
+    return {user, info};
+  } else if (token.clientId !== null) {
+    // The request came from a client only since userID is null
+    // therefore the client is passed back instead of a user
+    const client = await getAuthClientById(token.clientId);
+
+    if (!client) {
+      throw false;
+    }
+
+    return {client, info};
+  }
+}
+passport.use(new BearerStrategy((accessToken: string, done) => {
+  bearerStrategyCallback(accessToken).then(({user, client, info} = {}) => {
+    if (user) {
+      return done(null, user, info);
+    }
+
+    if (client) {
+      return done(null, client, info);
+    }
+
+    return done(null, false);
+  }).catch(err => done(err));
+}));
+
 // Register serialialization and deserialization functions.
 //
 // When a client redirects a user to user authorization endpoint, an
@@ -94,13 +154,13 @@ passport.use(new ClientPasswordStrategy((clientId, clientSecret, done) => {
 // simple matter of serializing the client's ID, and deserializing by finding
 // the client by ID from the database.
 passport.serializeUser((user, done) => {
-    logger.info('serializeUser');
-    done(null, user.id);
+  logger.info('serializeUser');
+  done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-    logger.info('deserializeUser');
-    getUserById(id)
-      .then(user => done(null, user))
-      .then(err => done(err, null));
+  logger.info('deserializeUser');
+  getUserById(id)
+    .then(user => done(null, user))
+    .then(err => done(err, null));
 });

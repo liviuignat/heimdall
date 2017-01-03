@@ -76,7 +76,7 @@
     "@types/express" "*"
     "@types/passport" "*"
 
-"@types/passport-http-bearer":
+"@types/passport-http-bearer@^1.0.30":
   version "1.0.30"
   resolved "https://registry.yarnpkg.com/@types/passport-http-bearer/-/passport-http-bearer-1.0.30.tgz#1e7121c84bb90d704d573081fba85abd0ba0baaa"
   dependencies:
@@ -2631,7 +2631,7 @@ passport-http:
   dependencies:
     passport-strategy "1.x.x"
 
-passport-http-bearer:
+passport-http-bearer@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/passport-http-bearer/-/passport-http-bearer-1.0.1.tgz#147469ea3669e2a84c6167ef99dbb77e1f0098a8"
   dependencies:

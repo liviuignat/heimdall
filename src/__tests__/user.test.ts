@@ -11,9 +11,9 @@ const createUserPayload = {
   email: 'liviu.ignat@everreal.co',
   password: 'jasjasdjasldjkas',
 };
-const createUserRequest = () => request.post('/api/users/register')
+const createUserRequest = (payload = createUserPayload) => request.post('/api/users/register')
   .set('content-type', 'application/json')
-  .send(createUserPayload);
+  .send(payload);
 
 const getMeRequest = (token: string) => request.get('/api/users/me')
   .set('content-type', 'application/json')
@@ -58,5 +58,9 @@ describe('WHEN testing user endpoints', () => {
         });
       });
     });
+  });
+
+  describe('WHEN creating the user with invalid email', () => {
+    it('SHOULD have a response status 400', async () => createUserRequest({email: '4983242@dasa', password: 'a'}).expect(400));
   });
 });

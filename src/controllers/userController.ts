@@ -1,3 +1,4 @@
+import * as joi from 'joi';
 import {Request, Response, NextFunction} from 'express';
 import {createUser, getUserByEmail, updateUser} from 'repositories';
 import {IUser} from 'interfaces';
@@ -18,18 +19,32 @@ export async function registerUser(req: Request, res: Response, next: NextFuncti
 }
 
 export async function resetPassword(req: Request, res: Response): Promise<Response> {
-  const {password} = req.body;
+  const {email, password} = req.body;
 
   try {
-    const user = await getUserByEmail(req.user.email);
+    const user = await getUserByEmail(email);
 
     user.password = password;
     await updateUser(user);
 
-    const updatedUser = await getUserByEmail(req.user.email);
+    const updatedUser = await getUserByEmail(email);
 
     return res.status(201).json(updatedUser);
   } catch (ex) {
     return res.status(400).send();
   }
 }
+
+export const registerValidation = {
+  body: {
+    email: joi.string().email().required(),
+    password: joi.string().regex(/[a-zA-Z0-9]{3,30}/).required(),
+  },
+};
+
+export const resetPasswordValidation = {
+  body: {
+    email: joi.string().email().required(),
+    password: joi.string().regex(/[a-zA-Z0-9]{3,30}/).required(),
+  },
+};

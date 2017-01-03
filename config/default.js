@@ -6,6 +6,7 @@ module.exports = {
     dialect: "postgres",
     host: "localhost",
     port: 5432,
+    logging: true,
     pool: {
       idle: 10000,
       max: 10,

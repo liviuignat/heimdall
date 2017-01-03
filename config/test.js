@@ -6,6 +6,7 @@ module.exports = {
     dialect: "postgres",
     host: "localhost",
     port: 5432,
+    logging: false,
     pool: {
       idle: 10000,
       max: 10,
@@ -13,6 +14,6 @@ module.exports = {
     },
   },
   logger: {
-    level: "info",
+    level: "warn",
   },
 };

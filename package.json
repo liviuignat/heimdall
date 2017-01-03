@@ -50,13 +50,13 @@
       }
     },
     "test": {
-      "command": "jest --watch",
+      "command": "jest --watch --runInBand",
       "env": {
         "NODE_ENV": "test"
       }
     },
     "test-once": {
-      "command": "jest --force-exit",
+      "command": "jest --force-exit --runInBand",
       "env": {
         "NODE_ENV": "test"
       }
@@ -67,7 +67,9 @@
     "@types/compression": "0.0.33",
     "@types/config": "^0.0.31",
     "@types/cookie-parser": "^1.3.30",
+    "@types/cors": "^0.0.33",
     "@types/express": "^4.0.33",
+    "@types/joi": "^10.0.0",
     "@types/node": "^6.0.46",
     "@types/node-uuid": "^0.0.28",
     "@types/passport": "^0.2.34",
@@ -82,8 +84,10 @@
     "concurrently": "^3.1.0",
     "config": "^1.24.0",
     "cookie-parser": "^1.4.3",
-    "cross-env": "^3.1.3",
+    "cors": "^2.8.1",
     "express": "^4.14.0",
+    "express-validation": "^1.0.1",
+    "joi": "^10.1.0",
     "node-uuid": "^1.4.7",
     "oauth2orize": "^1.5.1",
     "passport": "^0.3.2",

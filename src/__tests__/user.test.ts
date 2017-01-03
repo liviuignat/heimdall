@@ -11,9 +11,15 @@ const createUserPayload = {
   email: 'liviu.ignat@everreal.co',
   password: 'jasjasdjasldjkas',
 };
+
 const createUserRequest = (payload = createUserPayload) => request.post('/api/users/register')
   .set('content-type', 'application/json')
   .send(payload);
+
+const changePasswordRequest = (password: string, token: string) => request.put('/api/users/changepassword')
+  .set('content-type', 'application/json')
+  .set('Authorization', `Bearer ${token}`)
+  .send({password});
 
 const getMeRequest = (token: string) => request.get('/api/users/me')
   .set('content-type', 'application/json')
@@ -39,15 +45,15 @@ describe('WHEN testing user endpoints', () => {
 
       describe('WHEN generating the token for the new user', () => {
         let authToken;
-        beforeEach(async () => authToken = (await getTokenRequest(createUserPayload)).body);
-        it('SHOULD have an access token in the response', () => expect(authToken.access_token).toBeDefined());
+        beforeEach(async () => authToken = (await getTokenRequest(createUserPayload)).body.access_token);
+        it('SHOULD have an access token in the response', () => expect(authToken).toBeDefined());
 
         describe('WHEN asking for "/me" endpoint', () => {
-          it('SHOULD have a response status 200', async () => getMeRequest(authToken.access_token).expect(200));
+          it('SHOULD have a response status 200', async () => getMeRequest(authToken).expect(200));
 
           describe('WHEN request finished with success', () => {
             let me: IUser = null;
-            beforeEach(async () => me = (await getMeRequest(authToken.access_token)).body);
+            beforeEach(async () => me = (await getMeRequest(authToken)).body);
 
             it('SHOULD not have a password property set', () => expect(me.password).not.toBeDefined());
             it('SHOULD have required user information', () => {
@@ -55,6 +61,25 @@ describe('WHEN testing user endpoints', () => {
               expect(me.email).toEqual(createUserPayload.email);
             });
           });
+        });
+
+        describe('WHEN changing password for the new user', () => {
+          const newPassword = 'newpass';
+          it('SHOULD return staus code 200', () => changePasswordRequest(newPassword, authToken).expect(200));
+
+          describe('WHEN password is changed with success', () => {
+            beforeEach(async () => (await changePasswordRequest(newPassword, authToken)).body);
+
+            it('SHOULD be able to generate a new token and get "/me', async () => {
+              const newAuthToken = (await getTokenRequest({email: createUserPayload.email, password: newPassword})).body.access_token;
+              const me = (await getMeRequest(newAuthToken)).body;
+              expect(me.email).toEqual(createUserPayload.email);
+            });
+          });
+        });
+
+        describe('WHEN password is not valid', () => {
+          it('SHOULD return staus code 400', async () => changePasswordRequest('sm', authToken).expect(400));
         });
       });
     });

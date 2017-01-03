@@ -18,8 +18,9 @@ export async function registerUser(req: Request, res: Response, next: NextFuncti
   }
 }
 
-export async function resetPassword(req: Request, res: Response): Promise<Response> {
-  const {email, password} = req.body;
+export async function changePassword(req: Request, res: Response): Promise<Response> {
+  const {password} = req.body;
+  const {email} = req.user;
 
   try {
     const user = await getUserByEmail(email);
@@ -29,7 +30,7 @@ export async function resetPassword(req: Request, res: Response): Promise<Respon
 
     const updatedUser = await getUserByEmail(email);
 
-    return res.status(201).json(updatedUser);
+    return res.status(200).json(updatedUser);
   } catch (ex) {
     return res.status(400).send();
   }
@@ -42,9 +43,8 @@ export const registerValidation = {
   },
 };
 
-export const resetPasswordValidation = {
+export const changePasswordValidation = {
   body: {
-    email: joi.string().email().required(),
     password: joi.string().regex(/[a-zA-Z0-9]{3,30}/).required(),
   },
 };

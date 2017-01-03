@@ -1,7 +1,11 @@
+import * as supertest from 'supertest-as-promised';
+import expressApp from 'expressApp';
 import * as uuid from 'node-uuid';
 import db from 'data/database';
 import {IAuthClient, IUser}from 'interfaces';
 import {logger} from 'logger';
+
+export const request = supertest(expressApp);
 
 export const firstClient: IAuthClient = {
   id: uuid.v1(),

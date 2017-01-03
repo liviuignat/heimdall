@@ -1,12 +1,7 @@
 import {getAuthClientById} from 'repositories/authClientRepository';
-import expressApp from 'expressApp';
-import * as supertest from 'supertest-as-promised';
-import {initDatabase, firstClient} from './../testHelpers';
-
-const request = supertest(expressApp);
+import {initDatabase, firstClient as authClient, request} from 'testHelpers';
 
 describe('WHEN testing token generation', () => {
-  let client = firstClient;
   beforeAll(async () => await initDatabase());
 
   describe('WHEN generating token with username and password', () => {
@@ -17,8 +12,8 @@ describe('WHEN testing token generation', () => {
         .set('content-type', 'application/json')
         .send({
           grant_type: 'password',
-          client_id: client.clientId,
-          client_secret: client.clientSecret,
+          client_id: authClient.clientId,
+          client_secret: authClient.clientSecret,
           scope: 'offline_access',
           username: 'liviu@ignat.email',
           password: 'jasjasdjasldjkas',

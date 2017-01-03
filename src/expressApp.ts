@@ -4,6 +4,7 @@ import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
 import * as bodyParser from 'body-parser';
 import * as oauth2 from 'auth/oauth2';
+import {setupRoutes} from 'controllers';
 
 const app = express();
 app.use(cookieParser());
@@ -17,5 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/oauth/token', oauth2.token);
+
+setupRoutes(app);
 
 export default app;

@@ -15,6 +15,7 @@ export interface IUser {
   password?: string;
   firstName?: string;
   lastName?: string;
+  isActive?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

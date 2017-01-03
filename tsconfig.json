@@ -5,6 +5,7 @@
     "baseUrl": "./src",
     "rootDir": "./src",
     "declaration": false,
+    "sourceMap": true,
     "lib": ["es7", "es2017"]
   },
   "files": [

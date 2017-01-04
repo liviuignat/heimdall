@@ -3,22 +3,22 @@ import {Request, Response, NextFunction} from 'express';
 import {createUser, getUserByEmail, updateUser} from 'repositories';
 import {IUser} from 'interfaces';
 
-export async function getMe(req: Request, res: Response): Promise<Response> {
+export async function getMe(req: Request, res: Response): Promise<void | Response> {
   return res.json(req.user);
 }
 
-export async function registerUser(req: Request, res: Response, next: NextFunction): Promise<Response> {
+export async function registerUser(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
   const newUser: IUser = req.body;
 
   try {
     const user = await createUser(newUser);
     return res.status(201).json(user);
-  } catch (ex) {
-    return res.status(400).send();
+  } catch (err) {
+    return Promise.resolve(next(err));
   }
 }
 
-export async function changePassword(req: Request, res: Response): Promise<Response> {
+export async function changePassword(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
   const {password} = req.body;
   const {email} = req.user;
 
@@ -31,8 +31,8 @@ export async function changePassword(req: Request, res: Response): Promise<Respo
     const updatedUser = await getUserByEmail(email);
 
     return res.status(200).json(updatedUser);
-  } catch (ex) {
-    return res.status(400).send();
+  } catch (err) {
+    return Promise.resolve(next(err));
   }
 }
 

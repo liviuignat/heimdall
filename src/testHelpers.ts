@@ -1,6 +1,6 @@
 import * as supertest from 'supertest-as-promised';
 import expressApp from 'expressApp';
-import * as uuid from 'node-uuid';
+import * as uuid from 'uuid';
 import db from 'data/database';
 import {IAuthClient, IUser}from 'interfaces';
 import {logger} from 'logger';

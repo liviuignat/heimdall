@@ -2,9 +2,10 @@ import * as express from 'express';
 import * as joi from 'joi';
 import * as passport from 'passport';
 import * as userController from 'controllers/userController';
+import * as errorController from 'controllers/errorController';
 const validate = require('express-validation');
 
-export function setupRoutes(app: express.Application): void {
+export function setupApiRoutes(app: express.Application): void {
   const authMiddleware = passport.authenticate('bearer', { session: false });
 
   app.get('/api/users/me', authMiddleware, userController.getMe);
@@ -13,4 +14,6 @@ export function setupRoutes(app: express.Application): void {
     authMiddleware,
     validate(userController.changePasswordValidation),
     userController.changePassword);
+
+  app.use(errorController.errorHandler);
 };

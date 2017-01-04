@@ -1,4 +1,4 @@
-import * as uuid from 'node-uuid';
+import * as uuid from 'uuid';
 
 export const ACCESS_TOKEN_EXPIRES_IN = 3600;
 export const AUTHORIZATION_CODE_LENGTH = 16;

@@ -1,12 +1,12 @@
 module.exports = {
   database: {
-    database: "everreal",
-    username: "postgres",
-    password: "password",
-    dialect: "postgres",
-    host: "localhost",
+    database: 'everreal',
+    username: 'postgres',
+    password: 'password',
+    dialect: 'postgres',
+    host: 'localhost',
     port: 5432,
-    logging: true,
+    logging: false,
     pool: {
       idle: 10000,
       max: 10,
@@ -14,6 +14,19 @@ module.exports = {
     },
   },
   logger: {
-    level: "info",
+    level: 'info',
   },
+  token: {
+    accessTokenExpiresIn: 3600,
+    authorizationTokenExpiresIn: 3600,
+    refreshTokenExpiresIn: 52560000,
+    timeToCheckExpiredTokens: 3600,
+  },
+  defaultClients: [
+    {
+      clientSecret: 'b4faec59e09b5c2190e38fe024e9a937',
+      name: 'EverReal Default Client',
+      trustedClient: true,
+    },
+  ],
 };

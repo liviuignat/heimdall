@@ -1,5 +1,4 @@
 import * as Sequelize from 'sequelize';
-import {IAuthClient} from 'interfaces';
 
 export interface IAuthClientInstance extends Sequelize.Instance<IAuthClient>, IAuthClient {
 }
@@ -17,11 +16,7 @@ export default function defineAuthClient(sequelize: Sequelize.Sequelize): IAuthC
       type: Sequelize.STRING(256),
       allowNull: false,
     },
-    clientId: {
-      type: Sequelize.STRING(256),
-      allowNull: false,
-      field: 'client_id',
-    },
+    description: Sequelize.STRING(1000),
     clientSecret: {
       type: Sequelize.STRING(256),
       allowNull: false,

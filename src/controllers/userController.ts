@@ -1,7 +1,6 @@
 import * as joi from 'joi';
 import {Request, Response, NextFunction} from 'express';
 import {createUser, getUserByEmail, updateUser} from 'repositories';
-import {IUser} from 'interfaces';
 
 export async function getMe(req: Request, res: Response): Promise<void | Response> {
   return res.json(req.user);

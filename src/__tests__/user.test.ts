@@ -1,10 +1,10 @@
-import {IUser, IAccessToken} from 'interfaces';
 import {getAuthClientById} from 'repositories/authClientRepository';
 import {
   initDatabase,
   firstClient as authClient,
   request,
   getTokenRequest,
+  getMeRequest,
 } from 'testHelpers';
 
 const createUserPayload = {
@@ -20,11 +20,6 @@ const changePasswordRequest = (password: string, token: string) => request.put('
   .set('content-type', 'application/json')
   .set('Authorization', `Bearer ${token}`)
   .send({password});
-
-const getMeRequest = (token: string) => request.get('/api/users/me')
-  .set('content-type', 'application/json')
-  .set('Authorization', `Bearer ${token}`)
-  .send(createUserPayload);
 
 describe('WHEN testing user endpoints', () => {
   beforeEach(async () => await initDatabase());

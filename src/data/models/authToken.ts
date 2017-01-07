@@ -1,5 +1,4 @@
 import * as Sequelize from 'sequelize';
-import {IAuthorizationCode, IRefreshToken, IAccessToken} from 'interfaces';
 
 export interface IAuthToken extends IAuthorizationCode, IRefreshToken, IAccessToken { }
 
@@ -10,7 +9,7 @@ export interface IAuthTokenModel extends Sequelize.Model<IAuthTokenInstance, IAu
 export default function defineAuthToken(sequelize: Sequelize.Sequelize): IAuthTokenModel {
   return sequelize.define<IAuthTokenInstance, IAuthToken>('AuthToken', {
     value: {
-      type: Sequelize.UUID,
+      type: Sequelize.STRING(1024),
       allowNull: false,
       primaryKey: true,
     },

@@ -1,3 +1,5 @@
+jest.mock('services/notificationService');
+
 import {getAuthClientById} from 'repositories/authClientRepository';
 import {
   initDatabase,

@@ -15,7 +15,8 @@ export async function createInitialData() {
 
 async function start() {
   await db.sequelize.sync({force: true});
-  await createInitialData();
+  const clients = await createInitialData();
+  logger.info(JSON.stringify(clients));
 
   server.listen(port, (err: Error) => {
     if (err) {

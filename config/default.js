@@ -16,6 +16,11 @@ module.exports = {
   logger: {
     level: 'info',
   },
+  notification: {
+    email: 'everreal.dev@gmail.com',
+    from: '"EverReal" <everreal.dev@gmail.com>',
+    password: 'everrealsecret',
+  },
   token: {
     accessTokenExpiresIn: 3600,
     authorizationTokenExpiresIn: 3600,

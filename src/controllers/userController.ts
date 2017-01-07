@@ -1,6 +1,7 @@
 import * as joi from 'joi';
 import {Request, Response, NextFunction} from 'express';
 import {createUser, getUserByEmail, updateUser} from 'repositories';
+import {sendNewRegisteredUserEmail} from 'services/notificationService';
 
 export async function getMe(req: Request, res: Response): Promise<void | Response> {
   return res.json(req.user);
@@ -11,6 +12,10 @@ export async function registerUser(req: Request, res: Response, next: NextFuncti
 
   try {
     const user = await createUser(newUser);
+
+    // Don't wait to send the email
+    sendNewRegisteredUserEmail(newUser);
+
     return res.status(201).json(user);
   } catch (err) {
     return Promise.resolve(next(err));

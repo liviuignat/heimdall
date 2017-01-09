@@ -14,9 +14,16 @@ import {
   generateAuthTokenExpirationDate,
   ACCESS_TOKEN_EXPIRES_IN,
 } from 'services/authTokenService';
+import * as validate from 'validate';
 
-export async function createAuthorizationToken(clientId: string, userId: string, redirectURI: string, scope: string[]) {
-  const value = generateAuthorizationTokenValue();
+interface IAccessTokenResponse {
+  token: string;
+  refreshToken: string;
+  expiresIn: number;
+};
+
+export async function createAuthorizationToken(clientId: string, userId: string, redirectURI: string, scope: string[]): Promise<IAuthorizationCode> {
+  const value = await generateAuthorizationTokenValue(userId);
   const authToken: IAuthorizationCode = {
     value,
     clientId,
@@ -29,9 +36,9 @@ export async function createAuthorizationToken(clientId: string, userId: string,
   return authToken;
 }
 
-export async function createAccessToken(clientId: string, userId: string, scope: string[]) {
-  const value = generateAccessTokenValue();
+export async function createAccessToken(clientId: string, userId: string, scope: string[]): Promise<IAccessToken> {
   const expirationDate = generateAuthTokenExpirationDate();
+  const value = await generateAccessTokenValue(userId);
 
   const accessToken: IAccessToken = {
     value,
@@ -45,8 +52,8 @@ export async function createAccessToken(clientId: string, userId: string, scope:
   return accessToken;
 }
 
-export async function createRefreshToken(clientId: string, userId: string, scope: string[]) {
-  const value = generateRefreshTokenValue();
+export async function createRefreshToken(clientId: string, userId: string, scope: string[]): Promise<IRefreshToken> {
+  const value = await generateRefreshTokenValue(userId);
 
   const refreshToken: IRefreshToken = {
     value,
@@ -59,48 +66,33 @@ export async function createRefreshToken(clientId: string, userId: string, scope
   return refreshToken;
 }
 
-export async function createGrantTokens(client: IAuthClient, code: string, redirectURI: string) {
+export async function createGrantTokens(client: IAuthClient, code: string, redirectURI: string): Promise<IAccessTokenResponse> {
   const authCode = await getAuthorizationCode(code);
-
-  if (!authCode) {
-    throw new Error('Auth code does not exist');
-  }
-
-  if (client.id !== authCode.clientId) {
-    throw new Error('Auth code clientId does not match');
-  }
-
-  if (redirectURI !== authCode.redirectURI) {
-    throw new Error('Auth code redirectURI does not match');
-  }
-
   await deleteAuthorizationCode(code);
-
+  await validate.validateAuthCode(code, authCode, client, redirectURI);
   const token = await createAccessToken(authCode.clientId, authCode.userId, authCode.scope);
 
   let refreshToken = null;
-  if (authCode.scope && authCode.scope.indexOf("offline_access") >= 0) {
+  if (await validate.isRefreshToken(authCode)) {
     refreshToken = await createRefreshToken(authCode.clientId, authCode.userId, authCode.scope);
   }
 
   return {
-    token,
-    refreshToken,
+    token: token && token.value,
+    refreshToken: refreshToken && refreshToken.value,
     expiresIn: ACCESS_TOKEN_EXPIRES_IN,
   };
 }
 
-export async function createGrantTokensByUsernameAndPassword(client: IAuthClient, username: string, password: string, scope: string[]) {
+export async function createGrantTokensByUsernameAndPassword(client: IAuthClient, username: string, password: string, scope: string[]): Promise<IAccessTokenResponse> {
   const user = await getUserByEmailAndPassword(username, password);
 
-  if (!user) {
-    throw new Error('user ' + username + 'does not exist');
-  }
+  await validate.userExists(user);
 
   const token = await createAccessToken(client.id, user.id, scope);
 
   let refreshToken = null;
-  if (scope && scope.indexOf("offline_access") >= 0) {
+  if (await validate.isRefreshToken(token)) {
     refreshToken = await createRefreshToken(client.id, user.id, scope);
   }
 
@@ -111,22 +103,14 @@ export async function createGrantTokensByUsernameAndPassword(client: IAuthClient
   };
 }
 
-export async function createAccessTokenFromRefreshToken(client: IAuthClient, refreshTokenValue: string) {
+export async function createAccessTokenFromRefreshToken(client: IAuthClient, refreshTokenValue: string): Promise<IAccessTokenResponse> {
   const refreshToken = await getRefreshToken(refreshTokenValue);
-
-  if (!refreshToken) {
-    throw new Error('Refresh token not found');
-  }
-
-  if (client.id !== refreshToken.clientId) {
-    throw new Error('Refresh token not found because client id is not the same');
-  }
-
+  await validate.validateRefreshToken(refreshToken, refreshTokenValue, client);
   const token = await createAccessToken(refreshToken.clientId, refreshToken.userId, refreshToken.scope);
 
   return {
-    token,
-    refreshToken,
+    token: token && token.value,
+    refreshToken: refreshToken && refreshToken.value,
     expiresIn: ACCESS_TOKEN_EXPIRES_IN,
   };
 }

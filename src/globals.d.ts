@@ -21,6 +21,7 @@ interface IUser {
 }
 
 interface IAuthorizationCode {
+  id?: string;
   value: string;
   userId: string;
   clientId: string;
@@ -29,6 +30,7 @@ interface IAuthorizationCode {
 }
 
 interface IRefreshToken {
+  id?: string;
   value: string;
   userId: string;
   clientId: string;
@@ -37,4 +39,11 @@ interface IRefreshToken {
 
 interface IAccessToken extends IRefreshToken {
   expirationDate?: Date;
+}
+
+interface IJwtToken {
+  jti: string;
+  sub: string;
+  exp: number;
+  iat: number;
 }

@@ -4,14 +4,25 @@
     "module": "commonjs",
     "baseUrl": "./src",
     "rootDir": "./src",
+    "jsx": "react",
     "declaration": false,
-    "sourceMap": true,
-    "lib": ["es7", "es2017"]
+    "sourceMap": false,
+    "inlineSourceMap": true,
+    "lib": ["es7", "es2017", "dom"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "src/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
-  ]
+    "node_modules",
+    "dist",
+    "src/dist"
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "useBabel": true,
+    "useCache": false,
+    "emitRequireType": false
+  }
 }

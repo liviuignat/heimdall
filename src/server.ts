@@ -6,7 +6,7 @@ import {createClientIfNotExists} from 'repositories';
 import {logger} from 'logger';
 
 const server = http.createServer(app);
-const port = process.env.PORT || 3000;
+const port = config.get<number>('port');
 
 export async function createInitialData() {
   const defaultClients = config.get<IAuthClient[]>('defaultClients') || [];

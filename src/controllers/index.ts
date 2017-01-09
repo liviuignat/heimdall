@@ -20,11 +20,11 @@ export function setupApiRoutes(app: express.Application): void {
   // Mimicking google's token revoke endpoint from https://developers.google.com/identity/protocols/OAuth2WebServer
   app.get('/api/tokenrevoke', tokenController.revokeToken);
 
-  app.get('/',        siteController.index);
-  app.get('/login',   siteController.loginForm);
-  app.post('/login',  siteController.login);
-  app.get('/logout',  siteController.logout);
-  app.get('/account', siteController.account);
+  // app.get('/',        siteController.index);
+  // app.get('/login',   siteController.loginForm);
+  // app.post('/login',  siteController.login);
+  // app.get('/logout',  siteController.logout);
+  // app.get('/account', siteController.account);
 
   app.get('/api/users/me', authMiddleware, userController.getMe);
   app.post('/api/users/register', validate(userController.registerValidation), userController.registerUser);

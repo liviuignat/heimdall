@@ -1,10 +1,9 @@
-import {IAuthorizationCode, IAccessToken, IRefreshToken} from 'interfaces';
 import db from 'data/database';
 import {logger} from 'logger';
 
 export async function getAuthorizationCode(tokenValue: string): Promise<IAuthorizationCode> {
-  const code: IAuthorizationCode = (await db.AuthToken.findOne({where: {value: tokenValue}})).toJSON();
-  return code;
+  const code = await db.AuthToken.findOne({where: {value: tokenValue}});
+  return code && code.toJSON();
 }
 
 export async function saveAuthorizationCode(authorizationToken: IAuthorizationCode): Promise<void> {
@@ -16,8 +15,8 @@ export async function deleteAuthorizationCode(tokenValue: string): Promise<void>
 }
 
 export async function getAccessToken(tokenValue: string): Promise<IAccessToken> {
-  const code: IAccessToken = (await db.AuthToken.findOne({where: {value: tokenValue}})).toJSON();
-  return code;
+  const code = await db.AuthToken.findOne({where: {value: tokenValue}});
+  return code && code.toJSON();
 }
 
 export async function saveAccessToken(accessToken: IAccessToken): Promise<void> {
@@ -29,8 +28,8 @@ export async function deleteAccessToken(tokenValue: string): Promise<void> {
 }
 
 export async function getRefreshToken(tokenValue: string): Promise<IRefreshToken> {
-  const code: IRefreshToken = (await db.AuthToken.findOne({where: {value: tokenValue}})).toJSON();
-  return code;
+  const code = await db.AuthToken.findOne({where: {value: tokenValue}});
+  return code && code.toJSON();
 }
 
 export async function saveRefreshToken(refreshToken: IRefreshToken): Promise<void> {

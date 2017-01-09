@@ -1,10 +1,10 @@
 module.exports = {
   database: {
-    database: "everreal-tests",
-    username: "postgres",
-    password: "password",
-    dialect: "postgres",
-    host: "localhost",
+    database: 'everreal-tests',
+    username: 'postgres',
+    password: 'password',
+    dialect: 'postgres',
+    host: 'localhost',
     port: 5432,
     logging: false,
     pool: {
@@ -14,6 +14,6 @@ module.exports = {
     },
   },
   logger: {
-    level: "warn",
+    level: 'warn',
   },
 };

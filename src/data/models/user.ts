@@ -1,5 +1,4 @@
 import * as Sequelize from 'sequelize';
-import {IUser} from 'interfaces';
 
 export interface IUserInstance extends Sequelize.Instance<IUser>, IUser {
 }

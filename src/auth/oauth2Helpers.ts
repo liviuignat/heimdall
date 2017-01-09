@@ -1,4 +1,3 @@
-import {IAuthorizationCode, IAuthClient, IAccessToken, IRefreshToken} from 'interfaces';
 import {
   getAuthorizationCode,
   getRefreshToken,

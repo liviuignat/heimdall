@@ -1,15 +1,15 @@
-export interface IAuthClient {
-  id: string;
-  name: string;
-  clientId: string;
-  clientSecret: string;
-  trustedClient: boolean;
+interface IAuthClient {
+  id?: string;
+  name?: string;
+  clientSecret?: string;
+  trustedClient?: boolean;
+  description?: string;
   scope?: string[];
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-export interface IUser {
+interface IUser {
   id?: string;
   email: string;
   password?: string;
@@ -20,7 +20,7 @@ export interface IUser {
   updatedAt?: Date;
 }
 
-export interface IAuthorizationCode {
+interface IAuthorizationCode {
   value: string;
   userId: string;
   clientId: string;
@@ -28,13 +28,13 @@ export interface IAuthorizationCode {
   redirectURI?: string;
 }
 
-export interface IRefreshToken {
+interface IRefreshToken {
   value: string;
   userId: string;
   clientId: string;
   scope?: string[];
 }
 
-export interface IAccessToken extends IRefreshToken {
+interface IAccessToken extends IRefreshToken {
   expirationDate?: Date;
 }

@@ -1,5 +1,4 @@
 import * as passport from 'passport';
-import {IUser} from 'interfaces';
 
 export const info = [
     passport.authenticate('bearer', {session: false}),

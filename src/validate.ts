@@ -38,7 +38,7 @@ export async function clientExists(client) {
   return client;
 };
 
-export async function refreshToken(token: IRefreshToken, refreshToken: string, client: IAuthClient) {
+export async function validateRefreshToken(token: IRefreshToken, refreshToken: string, client: IAuthClient) {
   await verifyToken(refreshToken);
   if (client.id !== token.clientId) {
     logAndThrow(new ValidationError('RefreshToken clientID does not match client id given', 'heimdall.validation.refresh.token.id.does.not.match'));
@@ -57,8 +57,8 @@ export async function validateAuthCode(code: string, authCode: IAuthorizationCod
   return authCode;
 };
 
-export async function isRefreshToken(scope: string[]) {
-  return scope != null && scope.includes('offline_access');
+export async function isRefreshToken(token: IAccessToken): Promise<boolean> {
+  return token && token.scope && token.scope.includes('offline_access');
 }
 
 export async function tokenForHttp(token: string): Promise<string> {

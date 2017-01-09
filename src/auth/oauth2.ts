@@ -13,7 +13,6 @@ import {ACCESS_TOKEN_EXPIRES_IN} from 'services/authTokenService';
 
 const login = require('connect-ensure-login');
 const oauth2orize = require('oauth2orize');
-
 const server = oauth2orize.createServer();
 
 /**

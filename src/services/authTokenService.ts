@@ -10,16 +10,16 @@ export const AUTHORIZATION_TOKEN_EXPIRES_IN = parseInt(config.get<string>('token
 const privateKey = fs.readFileSync(path.join(__dirname, './../../certs/privatekey.pem'));
 const publicKey = fs.readFileSync(path.join(__dirname, './../../certs/certificate.pem'));
 
-export async function generateAuthorizationTokenValue(): Promise<string> {
-  return await createToken(AUTHORIZATION_TOKEN_EXPIRES_IN);
+export async function generateAuthorizationTokenValue(userId: string): Promise<string> {
+  return await createToken(AUTHORIZATION_TOKEN_EXPIRES_IN, userId);
 }
 
-export async function generateAccessTokenValue(): Promise<string> {
-  return createToken(ACCESS_TOKEN_EXPIRES_IN);
+export async function generateAccessTokenValue(userId: string): Promise<string> {
+  return createToken(ACCESS_TOKEN_EXPIRES_IN, userId);
 }
 
-export async function generateRefreshTokenValue(): Promise<string> {
-  return createToken(REFRESH_TOKEN_EXPIRES_IN);
+export async function generateRefreshTokenValue(userId: string): Promise<string> {
+  return createToken(REFRESH_TOKEN_EXPIRES_IN, userId);
 }
 
 export function generateAuthTokenExpirationDate(): Date {
@@ -46,9 +46,9 @@ export async function createToken(exp = ACCESS_TOKEN_EXPIRES_IN, sub = ''): Prom
   });
 };
 
-export async function decodeToken(token: string): Promise<any> {
+export async function decodeToken(token: string): Promise<IJwtToken> {
   const result = jwt.decode(token, {complete: true, json: true});
-  return result;
+  return result.payload;
 }
 
 export async function verifyToken(token: string): Promise<any> {

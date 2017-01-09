@@ -8,10 +8,14 @@ export interface IAuthTokenModel extends Sequelize.Model<IAuthTokenInstance, IAu
 
 export default function defineAuthToken(sequelize: Sequelize.Sequelize): IAuthTokenModel {
   return sequelize.define<IAuthTokenInstance, IAuthToken>('AuthToken', {
+    id: {
+      type: Sequelize.UUID,
+      allowNull: false,
+      primaryKey: true,
+    },
     value: {
       type: Sequelize.STRING(1024),
       allowNull: false,
-      primaryKey: true,
     },
     userId: {
       type: Sequelize.UUID,

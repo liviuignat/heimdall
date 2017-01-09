@@ -34,7 +34,7 @@ export async function changePassword(req: Request, res: Response, next: NextFunc
     const user = await getUserByEmail(email);
 
     if (user === null) {
-      throw new ValidationError('User with email does not exist', 'validation.reset.password.user.not.exist');
+      throw new ValidationError('User with email does not exist', 'heimdall.validation.reset.password.user.not.exist');
     }
 
     user.password = password;

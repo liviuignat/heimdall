@@ -16,7 +16,7 @@ import {
 } from 'services/authTokenService';
 
 export async function createAuthorizationToken(clientId: string, userId: string, redirectURI: string, scope: string[]) {
-  const value = generateAuthorizationTokenValue();
+  const value = await generateAuthorizationTokenValue();
   const authToken: IAuthorizationCode = {
     value,
     clientId,
@@ -30,7 +30,7 @@ export async function createAuthorizationToken(clientId: string, userId: string,
 }
 
 export async function createAccessToken(clientId: string, userId: string, scope: string[]) {
-  const value = generateAccessTokenValue();
+  const value = await generateAccessTokenValue();
   const expirationDate = generateAuthTokenExpirationDate();
 
   const accessToken: IAccessToken = {
@@ -46,7 +46,7 @@ export async function createAccessToken(clientId: string, userId: string, scope:
 }
 
 export async function createRefreshToken(clientId: string, userId: string, scope: string[]) {
-  const value = generateRefreshTokenValue();
+  const value = await generateRefreshTokenValue();
 
   const refreshToken: IRefreshToken = {
     value,

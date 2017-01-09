@@ -1,4 +1,5 @@
 import {logger} from 'logger';
+import {ValidationError} from 'errors';
 
 export function errorHandler(err: Error, req: any, res: any, next: any) {
   if (err && err.message && err.message.toLowerCase() === 'validation error') {
@@ -7,8 +8,15 @@ export function errorHandler(err: Error, req: any, res: any, next: any) {
     return res.status(400).json(response);
   }
 
-  logger.error(JSON.stringify(err));
+  logger.error(formatError(err));
   return res.status(500).json('Unhandled error');
+}
+
+function formatError(err): string {
+  if (err instanceof Error) {
+    return JSON.stringify(err, Object.getOwnPropertyNames(err));
+  }
+  return JSON.stringify(err);
 }
 
 function formatValidationErrorResponse(err) {
@@ -36,12 +44,29 @@ function formatSequelizeError(err) {
 }
 
 function formatValidationError(err) {
-  const {errors}  = err;
-  const validationError = Object.assign({}, {
-    type: 'ValidationError',
-    locale: `validation.${err.errors[0].types[0]}`,
-    errors: errors.map(({field, messages, types}) => ({field, messages, types})),
-  });
+  const {isValidationError, errors}  = err;
 
-  return validationError;
+  if (isValidationError) {
+    const error: ValidationError = err;
+    const validationError = Object.assign({}, {
+      isValidationError,
+      type: 'ValidationError',
+      locale: error.errorLocale,
+      error: error.errorMessage,
+    });
+
+    return validationError;
+  }
+
+  if (errors && errors.length) {
+    const validationError = Object.assign({}, {
+      type: 'ValidationError',
+      locale: `validation.${err.errors[0].types[0]}`,
+      errors: errors.map(({field, messages, types}) => ({field, messages, types})),
+    });
+
+    return validationError;
+  }
+
+  return err;
 }

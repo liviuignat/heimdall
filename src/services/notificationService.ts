@@ -17,9 +17,22 @@ export async function sendNewRegisteredUserEmail(user: IUser) {
   try {
     const template = await getTemplate('58715d78be537a2800834de6', user);
     const sentEmailInfo = await sendEmail(user.email, 'EverReal - New account created', template);
-    logger.info(`newRegisteredUserEmail: ${JSON.stringify(sentEmailInfo)}`);
+    logger.info(`NewRegisteredUserEmail: ${JSON.stringify(sentEmailInfo)}`);
   } catch (err) {
-    logger.error(`Error sending newRegisteredUserEmail: ${JSON.stringify(err)}`);
+    logger.error(`Error sending NewRegisteredUserEmail: ${JSON.stringify(err)}`);
+    throw err;
+  }
+}
+
+export async function sendUserResetPasswordEmail(user: IUser, newPassword: string) {
+  try {
+    const template = await getTemplate('58715d82be537a2800834de8', {
+      newPassword,
+    });
+    const sentEmailInfo = await sendEmail(user.email, 'EverReal - Reset pssword', template);
+    logger.info(`UserResetPasswordEmail: ${JSON.stringify(sentEmailInfo)}`);
+  } catch (err) {
+    logger.error(`Error sending UserResetPasswordEmail: ${JSON.stringify(err)}`);
     throw err;
   }
 }

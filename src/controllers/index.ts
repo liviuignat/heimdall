@@ -26,12 +26,10 @@ export function setupApiRoutes(app: express.Application): void {
   app.get('/logout',  siteController.logout);
   app.get('/account', siteController.account);
 
-  app.get('/api/users/me',        authMiddleware, userController.getMe);
+  app.get('/api/users/me', authMiddleware, userController.getMe);
   app.post('/api/users/register', validate(userController.registerValidation), userController.registerUser);
-  app.put('/api/users/changepassword',
-    authMiddleware,
-    validate(userController.changePasswordValidation),
-    userController.changePassword);
+  app.put('/api/users/resetpassword', validate(userController.resetPasswordValidation), userController.resetPassword);
+  app.put('/api/users/changepassword', authMiddleware, validate(userController.changePasswordValidation), userController.changePassword);
 
   app.use(errorController.errorHandler);
 };

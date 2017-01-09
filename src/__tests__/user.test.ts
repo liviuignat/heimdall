@@ -23,6 +23,10 @@ const changePasswordRequest = (password: string, token: string) => request.put('
   .set('Authorization', `Bearer ${token}`)
   .send({password});
 
+const resetPasswordRequest = (email: string) => request.put('/api/users/resetpassword')
+  .set('content-type', 'application/json')
+  .send({email});
+
 describe('WHEN testing user endpoints', () => {
   beforeEach(async () => await initDatabase());
 
@@ -71,6 +75,32 @@ describe('WHEN testing user endpoints', () => {
               const newAuthToken = (await getTokenRequest({email: createUserPayload.email, password: newPassword})).body.access_token;
               const me = (await getMeRequest(newAuthToken)).body;
               expect(me.email).toEqual(createUserPayload.email);
+            });
+          });
+        });
+
+        describe('WHEN resetting password for the new user', () => {
+          it('SHOULD return staus code 200', () => resetPasswordRequest(createUserPayload.email).expect(200));
+
+          describe('WHEN password is changed with success', () => {
+            beforeEach(async () => (await resetPasswordRequest(createUserPayload.email)).body);
+
+            it('SHOULD be not be able to generate a new token with the old password',
+              async () => getTokenRequest(createUserPayload).expect(403));
+          });
+        });
+
+        describe('WHEN resetting password for an unexisting email', () => {
+          const unexistingEmail = 'email.does.not.exist@everreal.co';
+          it('SHOULD return staus code 400', () => resetPasswordRequest(unexistingEmail).expect(400));
+
+          describe('WHEN password is changed with success', () => {
+            let errorResponse = null;
+            beforeEach(async () => errorResponse = (await resetPasswordRequest(unexistingEmail)).body);
+
+            it('SHOULD return a well formatted error message', () => {
+              expect(errorResponse.errorMessage).toBeDefined();
+              expect(errorResponse.errorLocale).toBeDefined();
             });
           });
         });

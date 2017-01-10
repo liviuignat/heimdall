@@ -1,5 +1,5 @@
 import * as uuid from 'uuid';
-import db from 'data/database';
+import db from 'server/data/database';
 
 export async function getUserById(userId: string): Promise<IUser> {
   const userData = await db.User.findById(userId);

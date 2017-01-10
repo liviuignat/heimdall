@@ -1,5 +1,5 @@
-import {logger} from 'logger';
-import {ValidationError} from 'errors';
+import {logger} from 'server/logger';
+import {ValidationError} from 'server/errors';
 
 export function errorHandler(err: Error, req: any, res: any, next: any) {
   if (err && err.message && err.message.toLowerCase() === 'validation error') {

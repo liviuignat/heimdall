@@ -1,9 +1,9 @@
 import * as config from 'config';
 import * as Sequelize from 'sequelize';
-import defineUser from 'data/models/user';
-import defineAuthClient from 'data/models/authClient';
-import defineAuthToken from 'data/models/authToken';
-import {logger} from 'logger';
+import defineUser from 'server/data/models/user';
+import defineAuthClient from 'server/data/models/authClient';
+import defineAuthToken from 'server/data/models/authToken';
+import {logger} from 'server/logger';
 
 const dbConfig: any = config.get('database');
 const sequelize = new Sequelize(

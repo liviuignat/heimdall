@@ -1,11 +1,11 @@
-import {getAuthClientById} from 'repositories/authClientRepository';
+import {getAuthClientById} from 'server/repositories/authClientRepository';
 import {
   initDatabase,
   firstClient as authClient,
   request,
   getTokenRequest,
   getMeRequest,
-} from 'testHelpers';
+} from 'server/testHelpers';
 
 const userData = {
   email: 'liviu@ignat.email',

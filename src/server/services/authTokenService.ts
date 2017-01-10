@@ -7,8 +7,8 @@ import * as config from 'config';
 export const REFRESH_TOKEN_EXPIRES_IN = parseInt(config.get<string>('token.refreshTokenExpiresIn'), 10);
 export const ACCESS_TOKEN_EXPIRES_IN = parseInt(config.get<string>('token.accessTokenExpiresIn'), 10);
 export const AUTHORIZATION_TOKEN_EXPIRES_IN = parseInt(config.get<string>('token.authorizationTokenExpiresIn'), 10);
-const privateKey = fs.readFileSync(path.join(__dirname, './../../certs/privatekey.pem'));
-const publicKey = fs.readFileSync(path.join(__dirname, './../../certs/certificate.pem'));
+const privateKey = fs.readFileSync(path.join(__dirname, './../../../certs/privatekey.pem'));
+const publicKey = fs.readFileSync(path.join(__dirname, './../../../certs/certificate.pem'));
 
 export async function generateAuthorizationTokenValue(userId: string): Promise<string> {
   return await createToken(AUTHORIZATION_TOKEN_EXPIRES_IN, userId);

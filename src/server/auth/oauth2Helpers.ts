@@ -5,16 +5,16 @@ import {
   saveAccessToken,
   saveRefreshToken,
   deleteAuthorizationCode,
-} from 'repositories/authTokenRepository';
-import {getUserByEmailAndPassword} from 'repositories/userRepository';
+} from 'server/repositories/authTokenRepository';
+import {getUserByEmailAndPassword} from 'server/repositories/userRepository';
 import {
   generateAuthorizationTokenValue,
   generateAccessTokenValue,
   generateRefreshTokenValue,
   generateAuthTokenExpirationDate,
   ACCESS_TOKEN_EXPIRES_IN,
-} from 'services/authTokenService';
-import * as validate from 'validate';
+} from 'server/services/authTokenService';
+import * as validate from 'server/validate';
 
 interface IAccessTokenResponse {
   token: string;

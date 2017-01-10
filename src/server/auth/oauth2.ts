@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as passport from 'passport';
-import {logger} from 'logger';
-import {getAuthClientById} from 'repositories/authClientRepository';
+import {logger} from 'server/logger';
+import {getAuthClientById} from 'server/repositories/authClientRepository';
 import {
   createAuthorizationToken,
   createAccessToken,
@@ -9,7 +9,7 @@ import {
   createGrantTokensByUsernameAndPassword,
   createAccessTokenFromRefreshToken,
 } from './oauth2Helpers';
-import {ACCESS_TOKEN_EXPIRES_IN} from 'services/authTokenService';
+import {ACCESS_TOKEN_EXPIRES_IN} from 'server/services/authTokenService';
 
 const login = require('connect-ensure-login');
 const oauth2orize = require('oauth2orize');

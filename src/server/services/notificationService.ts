@@ -1,7 +1,7 @@
 import * as request from 'superagent';
 import * as config from 'config';
 import * as nodemailer from 'nodemailer';
-import {logger} from 'logger';
+import {logger} from 'server/logger';
 
 interface IEmailConfig {
   email: string;

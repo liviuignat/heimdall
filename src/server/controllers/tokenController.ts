@@ -1,12 +1,12 @@
 import {Request, Response, NextFunction} from 'express';
-import * as validate from 'validate';
+import * as validate from 'server/validate';
 import {
   getAccessToken,
   getAuthClientById,
   deleteAccessToken,
   deleteRefreshToken,
-} from 'repositories';
-import {logger} from 'logger';
+} from 'server/repositories';
+import {logger} from 'server/logger';
 
 export async function getTokenInfo(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
   try {

@@ -1,9 +1,9 @@
 import * as joi from 'joi';
 import * as randomstring from 'randomstring';
 import {Request, Response, NextFunction} from 'express';
-import {createUser, getUserByEmail, updateUser} from 'repositories';
-import {sendNewRegisteredUserEmail, sendUserResetPasswordEmail} from 'services/notificationService';
-import {ValidationError} from 'errors';
+import {createUser, getUserByEmail, updateUser} from 'server/repositories';
+import {sendNewRegisteredUserEmail, sendUserResetPasswordEmail} from 'server/services/notificationService';
+import {ValidationError} from 'server/errors';
 
 const md5 = require('blueimp-md5');
 

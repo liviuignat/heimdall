@@ -1,8 +1,8 @@
 import * as http from 'http';
 import app from 'expressApp';
 import * as config from 'config';
-import {logger} from 'logger';
-import {initializeDatabase} from 'repositories/initialDataRepository';
+import {logger} from 'server/logger';
+import {initializeDatabase} from 'server/repositories/initialDataRepository';
 
 const server = http.createServer(app);
 const port = config.get<number>('port');

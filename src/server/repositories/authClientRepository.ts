@@ -1,5 +1,5 @@
 import * as uuid from 'uuid';
-import db from 'data/database';
+import db from 'server/data/database';
 
 export async function getAuthClientById(clientId: string): Promise<IAuthClient> {
   const client = await db.AuthClient.findOne({where: {id: clientId}});

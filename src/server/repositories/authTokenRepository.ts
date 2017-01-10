@@ -1,6 +1,6 @@
-import db from 'data/database';
-import {logger} from 'logger';
-import {decodeToken} from 'services/authTokenService';
+import db from 'server/data/database';
+import {logger} from 'server/logger';
+import {decodeToken} from 'server/services/authTokenService';
 
 export async function getAuthorizationCode(tokenValue: string): Promise<IAuthorizationCode> {
   const jwtToken = await decodeToken(tokenValue);

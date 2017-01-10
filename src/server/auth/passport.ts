@@ -2,10 +2,10 @@ import * as passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local';
 import {BasicStrategy} from 'passport-http';
 import {Strategy as BearerStrategy} from 'passport-http-bearer';
-import {logger} from 'logger';
-import {getUserById, getUserByEmailAndPassword} from 'repositories/userRepository';
-import {getAuthClientById} from 'repositories/authClientRepository';
-import {getAccessToken, deleteAccessToken} from 'repositories/authTokenRepository';
+import {logger} from 'server/logger';
+import {getUserById, getUserByEmailAndPassword} from 'server/repositories/userRepository';
+import {getAuthClientById} from 'server/repositories/authClientRepository';
+import {getAccessToken, deleteAccessToken} from 'server/repositories/authTokenRepository';
 
 const passportOauth2ClientPassword = require('passport-oauth2-client-password');
 const ClientPasswordStrategy = passportOauth2ClientPassword.Strategy;

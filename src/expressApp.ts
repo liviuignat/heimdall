@@ -1,4 +1,4 @@
-import 'auth/passport';
+import 'server/auth/passport';
 import * as path from 'path';
 import * as express from 'express';
 import * as compression from 'compression';
@@ -7,7 +7,7 @@ import * as bodyParser from 'body-parser';
 import * as favicon from 'serve-favicon';
 import * as serveStatic from 'serve-static';
 import * as cors from 'cors';
-import {setupApiRoutes} from 'controllers';
+import {setupApiRoutes} from 'server/controllers';
 import {reactComponentMiddleware} from 'universal/serverMiddleware';
 
 const app = express();

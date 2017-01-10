@@ -1,7 +1,7 @@
 import * as config from 'config';
-import db from 'data/database';
-import {createClientIfNotExists} from 'repositories';
-import {logger} from 'logger';
+import db from 'server/data/database';
+import {createClientIfNotExists} from 'server/repositories';
+import {logger} from 'server/logger';
 
 export async function initializeDatabase() {
   await db.sequelize.sync({force: true});

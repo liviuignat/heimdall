@@ -1,8 +1,8 @@
 import * as supertest from 'supertest-as-promised';
 import expressApp from 'expressApp';
 import * as uuid from 'uuid';
-import db from 'data/database';
-import {logger} from 'logger';
+import db from 'server/data/database';
+import {logger} from 'server/logger';
 
 export const request = supertest(expressApp);
 

@@ -1,7 +1,7 @@
 import * as config from 'config';
-import {logger} from 'logger';
-import {verifyToken} from 'services/authTokenService';
-import {ValidationError} from 'errors';
+import {logger} from 'server/logger';
+import {verifyToken} from 'server/services/authTokenService';
+import {ValidationError} from 'server/errors';
 
 export async function logAndThrow(error: ValidationError) {
   logger.info(JSON.stringify(error, Object.getOwnPropertyNames(error)));

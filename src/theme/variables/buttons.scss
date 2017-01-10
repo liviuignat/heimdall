@@ -1,0 +1,25 @@
+$font-size: 14px;
+$height: 32px;
+$line-height: 26px;
+$border-radius: 2px;
+$color: $blue;
+
+@mixin primary-button() {
+  border: none;
+  outline: none;
+  background: $color;
+  color: #fff;
+  text-decoration: none;
+  height: $height;
+  line-height: $line-height;
+  font-size: $font-size;
+  cursor: pointer;
+  margin: 0;
+
+  &:active {
+    background: lighten($color, 10%);
+  }
+  &:hover {
+    background: lighten($color, 5%);
+  }
+}

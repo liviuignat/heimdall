@@ -1,0 +1,62 @@
+$h1-text-size: 250%;
+$h2-text-size: 175%;
+$h3-text-size: 150%;
+$h4-text-size: 135%;
+$h5-text-size: 110%;
+$body-text-size: 16px;
+$caption-text-size: 13px;
+
+@mixin h1-text() {
+  font-size: $h1-text-size * 75/100;
+  line-height: 1.428571429;
+
+  @media #{$screen-xs} {
+    font-size: $h1-text-size;
+  }
+}
+
+@mixin h2-text() {
+  font-size: $h2-text-size * 75/100;
+  line-height: 1.428571429;
+
+  @media #{$screen-xs} {
+    font-size: $h2-text-size;
+  }
+}
+
+@mixin h3-text() {
+  font-size: $h3-text-size * 75/100;
+  line-height: 1.428571429;
+
+  @media #{$screen-xs} {
+    font-size: $h3-text-size;
+  }
+}
+
+@mixin h4-text() {
+  font-size: $h4-text-size * 75/100;
+  line-height: 1.428571429;
+
+  @media #{$screen-xs} {
+    font-size: $h4-text-size;
+  }
+}
+
+@mixin h5-text() {
+  font-size: $h5-text-size * 75/100;
+  line-height: 1.428571429;
+
+  @media #{$screen-xs} {
+    font-size: $h5-text-size;
+  }
+}
+
+@mixin body-text() {
+  font-size: $body-text-size;
+  line-height: 1.428571429;
+}
+
+@mixin caption-text() {
+  font-size: $caption-text-size;
+  line-height: 1.428571429;
+}

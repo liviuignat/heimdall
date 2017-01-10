@@ -47,3 +47,9 @@ interface IJwtToken {
   exp: number;
   iat: number;
 }
+
+declare var webpackIsomorphicTools: any;
+declare var __DEVTOOLS__: any;
+declare var __DEVELOPMENT__: any;
+declare var __SERVER__: any;
+declare var __CLIENT__: any;

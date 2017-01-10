@@ -1,0 +1,59 @@
+@mixin backgroud-page($url, $transparency: 0, $background-position: center center) {
+  background: linear-gradient(rgba(0, 0, 0, $transparency), rgba(0, 0, 0, $transparency)), url($url);
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+  background-position: $background-position;
+  margin: 0;
+  align-items: center;
+}
+
+
+@mixin container-relative() {
+  margin: 0px auto;
+}
+
+@mixin container-small() {
+  max-width: 100%;
+  @media #{$screen-sm} {
+    max-width: 360px;
+  }
+}
+
+@mixin container-medium($max-width: 600px) {
+  max-width: 100%;
+  @media #{$screen-sm} {
+    max-width: $max-width;
+  }
+}
+
+@mixin container-large($max-width: 800px) {
+  max-width: 100%;
+  @media #{$screen-md} {
+    max-width: $max-width;
+  }
+}
+
+@mixin container-x-large($max-width: 1200px) {
+  max-width: 100%;
+  @media #{$screen-md} {
+    max-width: $max-width;
+  }
+}
+
+@mixin container-spacings($padding: 80px 4px 4px 4px) {
+  padding: $padding;
+}
+
+@mixin clearfix() {
+  display: block;
+
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}

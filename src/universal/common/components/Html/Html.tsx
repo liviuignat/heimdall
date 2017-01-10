@@ -35,8 +35,10 @@ export default class Html extends React.Component<IHtmlPropTypes, any> {
 
           <link rel="shortcut icon" href="/favicon.ico" />
           <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-          <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic,700,700italic,500,500italic" rel="stylesheet" type="text/css" />
+          <link href="https://fonts.googleapis.com/css?family=Helvetica+Neue:400,300,300italic,400italic,700,700italic,500,500italic" rel="stylesheet" type="text/css" />
+          <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" type="text/css" />
 
+          <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.fr,Intl.~locale.de"/>
           {Object.keys(assets.styles).map((style, key) =>
             <link href={assets.styles[style]} key={key} media="screen, projection"
                   rel="stylesheet" type="text/css" charSet="UTF-8" />,

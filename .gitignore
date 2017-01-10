@@ -1,7 +1,10 @@
+.DS_Store
 .idea
 .vscode
-node_modules
 *.log
+node_modules
 src/static/dist
 db.development.sqlite
 db.test.sqlite
+webpack-assets.json
+webpack-stats.json

@@ -3,6 +3,6 @@ module.exports = {
 
   },
   logger: {
-    level: 'error',
+    level: 'warn',
   },
 };

@@ -4,8 +4,9 @@ import * as injectTapEventPlugin from 'react-tap-event-plugin';
 import {createMemoryHistory} from 'react-router';
 import {match} from 'react-router';
 import {Provider} from 'react-redux';
-import {createStore} from './createStore';
+import {createStore} from './helpers/createStore';
 import {getRoutes} from './routes';
+import ApiClient from './helpers/ApiClient';
 import Html from './common/components/Html/Html';
 
 const {ReduxAsyncConnect, loadOnServer} = require('redux-async-connect');
@@ -14,8 +15,7 @@ injectTapEventPlugin();
 
 export function reactComponentMiddleware() {
   return (req, res, next) => {
-    // TODO: Create client
-    const client = null;
+    const client = new ApiClient(req, res);
     const location = req.originalUrl;
     const history = createMemoryHistory(location);
     const store = createStore(history, client);

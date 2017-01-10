@@ -1,19 +1,23 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as injectTapEventPlugin from 'react-tap-event-plugin';
-import {Router, browserHistory} from 'react-router';
+import {createHistory} from 'history';
+import {Router, useRouterHistory} from 'react-router';
 import {syncHistoryWithStore} from 'react-router-redux';
 import {Provider} from 'react-redux';
-import {createStore} from './createStore';
+import {createStore} from './helpers/createStore';
+import ApiClient from './helpers/ApiClient';
 import {getRoutes} from './routes';
 
 injectTapEventPlugin();
 
 const {ReduxAsyncConnect} = require('redux-async-connect');
 
-const client = null;
-const initialData = (window as any).__data;
-const store = createStore(null, client, initialData);
+const client = new ApiClient();
+const initialStoreData = (window as any).__data;
+const browserHistory = useRouterHistory(createHistory)({basename: `/`});
+
+const store = createStore(browserHistory, client, initialStoreData);
 const history = syncHistoryWithStore(browserHistory, store);
 const destinationElement = document.getElementById('content');
 
@@ -25,6 +29,17 @@ let component = (
     {getRoutes(store)}
   </Router>
 );
+
+if (__DEVTOOLS__) {
+  const DevTools = require('./common/components/DevTools/DevTools').default;
+  component = (
+    <div>
+      {component}
+      <DevTools />
+    </div>
+  );
+}
+
 
 ReactDOM.render(
   <Provider store={store} key="provider">

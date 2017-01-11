@@ -1,6 +1,6 @@
 @import '../../../../theme/variables.scss';
 
-.LoginPage {
+.RegisterPage {
   @include container-medium();
   @include container-spacings($padding: 16px);
   @include container-relative();

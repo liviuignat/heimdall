@@ -35,7 +35,7 @@ function formatSequelizeError(err) {
   const {name, errors} = err;
   const sequelizeError = Object.assign({}, {
     type: 'DataValidationError',
-    locale: `validation.${errors[0].message.replace(' ', '.')}`,
+    locale: `validation.${errors[0].message.replace(new RegExp(' ', 'g'), '.')}`,
     name: err.name,
     errors: errors.map(({message, type, path}) => ({message, type, path})),
   });

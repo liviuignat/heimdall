@@ -1,6 +1,6 @@
 import * as config from 'config';
 import db from 'server/data/database';
-import {createClientIfNotExists} from 'server/repositories';
+import {getAuthClientById} from 'server/repositories';
 import {logger} from 'server/logger';
 
 export async function initializeDatabase() {
@@ -16,3 +16,14 @@ export async function initializeDatabase() {
 
   return returnValue;
 }
+
+async function createClientIfNotExists(client: IAuthClient): Promise<IAuthClient> {
+  const existingClient = await getAuthClientById(client.id);
+
+  if (!existingClient) {
+    return await await db.AuthClient.create(client);
+  }
+
+  return existingClient;
+}
+

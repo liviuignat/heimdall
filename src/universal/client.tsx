@@ -5,13 +5,13 @@ import {createHistory} from 'history';
 import {Router, useRouterHistory} from 'react-router';
 import {syncHistoryWithStore} from 'react-router-redux';
 import {Provider} from 'react-redux';
-import {createStore} from './helpers/createStore';
-import ApiClient from './helpers/ApiClient';
-import {getRoutes} from './routes';
+import {createStore} from 'universal/helpers/createStore';
+import ApiClient from 'universal/helpers/ApiClient';
+import {getRoutes} from 'universal/routes';
 
 injectTapEventPlugin();
 
-const {ReduxAsyncConnect} = require('redux-async-connect');
+const {ReduxAsyncConnect} = require('redux-connect');
 
 const client = new ApiClient();
 const initialStoreData = (window as any).__data;
@@ -31,7 +31,7 @@ let component = (
 );
 
 if (__DEVTOOLS__) {
-  const DevTools = require('./common/components/DevTools/DevTools').default;
+  const DevTools = require('universal/common/components/DevTools/DevTools').default;
   component = (
     <div>
       {component}

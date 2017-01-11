@@ -53,3 +53,15 @@ declare var __DEVTOOLS__: any;
 declare var __DEVELOPMENT__: any;
 declare var __SERVER__: any;
 declare var __CLIENT__: any;
+
+declare module 'redux-form-material-ui' {
+  export class AutoComplete extends React.Component<any, any> {}
+  export class Checkbox extends React.Component<any, any> {}
+  export class TimePicker extends React.Component<any, any> {}
+  export class DatePicker extends React.Component<any, any> {}
+  export class RadioButtonGroup extends React.Component<any, any> {}
+  export class SelectField extends React.Component<any, any> {}
+  export class Slider extends React.Component<any, any> {}
+  export class TextField extends React.Component<any, any> {}
+  export class Toggle extends React.Component<any, any> {}
+}

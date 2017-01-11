@@ -3973,6 +3973,10 @@ lru-cache@^4.0.1:
     pseudomap "^1.0.1"
     yallist "^2.0.0"
 
+lru-memoize@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/lru-memoize/-/lru-memoize-1.0.1.tgz#25afa87290562ab6addac4f323d16e8724306a9d"
+
 macaddress@^0.2.8:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/macaddress/-/macaddress-0.2.8.tgz#5904dc537c39ec6dbefeae902327135fa8511f12"
@@ -5401,9 +5405,24 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
-redux-async-connect@^1.0.0-rc4:
-  version "1.0.0-rc4"
-  resolved "https://registry.yarnpkg.com/redux-async-connect/-/redux-async-connect-1.0.0-rc4.tgz#a22cd737b54486cf8826aa05a65937aea721ff4c"
+reduce-reducers@^0.1.0:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/reduce-reducers/-/reduce-reducers-0.1.2.tgz#fa1b4718bc5292a71ddd1e5d839c9bea9770f14b"
+
+redux-actions@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/redux-actions/-/redux-actions-1.2.0.tgz#4f421f1aa74c827d5e8abce6c009d5872c4af3e6"
+  dependencies:
+    invariant "^2.2.1"
+    lodash "^4.13.1"
+    reduce-reducers "^0.1.0"
+
+redux-connect@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/redux-connect/-/redux-connect-5.0.0.tgz#2b4319320390226a434777897efd5ca604366ca9"
+  dependencies:
+    babel-runtime "^6.20.0"
+    redux-actions "^1.2.0"
 
 redux-devtools-dock-monitor@^1.1.1:
   version "1.1.1"
@@ -5444,6 +5463,10 @@ redux-devtools@^3.3.1:
     react-redux "^4.0.0"
     redux "^3.5.2"
     redux-devtools-instrument "^1.0.1"
+
+redux-form-material-ui@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/redux-form-material-ui/-/redux-form-material-ui-4.1.2.tgz#a4e3ced6122468dd27b1a188e5ae03d4dc10e6fc"
 
 redux-form@^6.4.3:
   version "6.4.3"

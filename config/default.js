@@ -30,7 +30,9 @@ module.exports = {
   },
   defaultClients: [
     {
-      clientSecret: 'b4faec59e09b5c2190e38fe024e9a937',
+      id: 'dbf8fc00-d7e1-11e6-be11-4df610fa68f6',
+      clientSecret: '9864b910-d742-11e6-b754-976f8d441951',
+      description: 'EverReal Default client',
       name: 'EverReal Default Client',
       trustedClient: true,
     },

@@ -1,6 +1,6 @@
 import {createStore as _createStore, applyMiddleware, compose} from 'redux';
 import {routerMiddleware} from 'react-router-redux';
-import reducer from './../reducer';
+import reducer from 'universal/reducer';
 const {clientMiddleware} = require('er-common-components/lib/redux/clientMiddleware');
 
 export function createStore(history, client, data = {}) {
@@ -10,7 +10,7 @@ export function createStore(history, client, data = {}) {
   if (__DEVELOPMENT__ && __CLIENT__ && __DEVTOOLS__) {
     const globalWindow: any = window as any;
     const {persistState} = require('redux-devtools');
-    const DevTools = require('./../common/components/DevTools/DevTools').default;
+    const DevTools = require('universal/common/components/DevTools/DevTools').default;
     finalCreateStore = compose<any, any, any, any>(
       applyMiddleware(...middleware),
       globalWindow.devToolsExtension ? globalWindow.devToolsExtension() : DevTools.instrument(),
@@ -23,7 +23,7 @@ export function createStore(history, client, data = {}) {
   const store = finalCreateStore(reducer, data);
 
   if (__DEVELOPMENT__ && (module as any).hot) {
-    (module as any).hot.accept('./../reducer', () => store.replaceReducer(require('./../reducer')));
+    (module as any).hot.accept('universal/reducer', () => store.replaceReducer(require('universal/reducer')));
   }
 
   return store;

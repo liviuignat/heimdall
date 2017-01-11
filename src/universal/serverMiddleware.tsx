@@ -4,12 +4,12 @@ import * as injectTapEventPlugin from 'react-tap-event-plugin';
 import {createMemoryHistory} from 'react-router';
 import {match} from 'react-router';
 import {Provider} from 'react-redux';
-import {createStore} from './helpers/createStore';
-import {getRoutes} from './routes';
-import ApiClient from './helpers/ApiClient';
-import Html from './common/components/Html/Html';
+import {createStore} from 'universal/helpers/createStore';
+import {getRoutes} from 'universal/routes';
+import ApiClient from 'universal/helpers/ApiClient';
+import Html from 'universal/common/components/Html/Html';
 
-const {ReduxAsyncConnect, loadOnServer} = require('redux-async-connect');
+const {ReduxAsyncConnect, loadOnServer} = require('redux-connect');
 
 injectTapEventPlugin();
 

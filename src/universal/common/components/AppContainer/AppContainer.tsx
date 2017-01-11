@@ -6,7 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {getDefaultMuiTheme} from 'theme/materialTheme';
 import {getAppMetadata} from 'appMetadata';
 const {connect} = require('react-redux');
-const {asyncConnect} = require('redux-async-connect');
+const {asyncConnect} = require('redux-connect');
 
 @asyncConnect([{
   promise: ({store: {getState, dispatch}}) => Promise.resolve(),

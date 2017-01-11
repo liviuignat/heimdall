@@ -20,13 +20,3 @@ export async function createAuthClient(client: IAuthClient): Promise<IAuthClient
   const newClient = await db.AuthClient.create(client);
   return newClient && newClient.toJSON();
 }
-
-export async function createClientIfNotExists(client: IAuthClient): Promise<IAuthClient> {
-  const existingClient = await getAuthClientById(client.id);
-
-  if (!existingClient) {
-    return await createAuthClient(client);
-  }
-
-  return existingClient;
-}

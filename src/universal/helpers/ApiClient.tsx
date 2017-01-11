@@ -5,11 +5,11 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 function getUrl(path) {
   const adjustedPath = path[0] !== '/' ? '/' + path : path;
   if (__SERVER__) {
-    const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 4010;
     const HOST = process.env.HOST || 'localhost';
     return 'http://' + `${HOST}:${PORT}${adjustedPath}`;
   }
-  return '${adjustedPath}';
+  return `${adjustedPath}`;
 }
 
 interface IRequestData {
@@ -55,7 +55,6 @@ export default class ApiClient {
             }
 
             resolve(body || text);
-
           });
         });
       });

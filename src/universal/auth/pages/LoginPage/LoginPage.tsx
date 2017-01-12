@@ -1,35 +1,41 @@
 import * as React from 'react';
 import * as Helmet from 'react-helmet';
 import {Paper} from 'universal/common/components';
-import {reset} from 'redux-form';
 import {loginUserAction} from 'universal/auth/actions';
 import LoginForm, {LOGIN_FORM_NAME} from './LoginForm';
 const {connect} = require('react-redux');
+const md5 = require('blueimp-md5');
 const {Component, PropTypes} = React;
 
 @connect(
   ({auth}) => ({
+    username: auth.username,
+    encodedPassword: auth.encodedPassword,
     isLoggingIn: auth.isLoggingIn,
     loginError: auth.loginError,
   }),
   {
-    reset,
     loginUserAction,
   })
 export default class LoginPage extends Component<any, any> {
   public static propTypes = {
+    username: PropTypes.string.isRequired,
+    encodedPassword: PropTypes.string.isRequired,
     isLoggingIn: PropTypes.bool.isRequired,
     loginError: PropTypes.string.isRequired,
-    reset: PropTypes.func.isRequired,
     loginUserAction: PropTypes.func.isRequired,
   };
 
-  public async handleSubmit(data) {
-    const {email, password} = data;
-    const response = await this.props.loginUserAction(email, password);
-    if (response && response.result) {
-      this.props.reset(LOGIN_FORM_NAME);
+  public componentDidUpdate(prevProps, prevState) {
+    const {username, encodedPassword} = this.props;
+    if (username && encodedPassword && username !== prevProps.username && encodedPassword !== prevProps.encodedPassword) {
+      (this.refs as any).form.submit();
     }
+  }
+
+  public handleSubmit(data) {
+    const {email, password} = data;
+    const response = this.props.loginUserAction(email, password);
   }
 
   public render() {
@@ -37,6 +43,8 @@ export default class LoginPage extends Component<any, any> {
     const {
       isLoggingIn,
       loginError,
+      username,
+      encodedPassword,
     } = this.props;
 
     return (
@@ -48,6 +56,11 @@ export default class LoginPage extends Component<any, any> {
           isLoading={isLoggingIn}
           errorMessage={loginError}
           onSubmit={data => this.handleSubmit(data)}/>
+
+        <form ref="form" style={{display: 'none'}} action="/login" method="post">
+          <input name="username" value={username} />
+          <input name="password" type="password" value={encodedPassword} />
+        </form>
       </Paper>
     );
   }

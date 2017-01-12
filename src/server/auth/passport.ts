@@ -159,8 +159,14 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  logger.info('deserializeUser');
+  logger.info('deserializeUser', id);
   getUserById(id)
-    .then(user => done(null, user))
-    .then(err => done(err, null));
+    .then(user => {
+      logger.info(`deserializeUser:success:${JSON.stringify(user)}`);
+      return done(null, user);
+    })
+    .catch(err => {
+      logger.info(`deserializeUser:fail`);
+      return done(err, null);
+    });
 });

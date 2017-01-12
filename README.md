@@ -2,7 +2,7 @@
 ### Node JS Authentication service built on Express and TypeScript
 #### Following full OAuth2 specs
 
-[![Build Status](https://api.travis-ci.org/liviuignat/heimdall.svg?branch=master)](https://api.travis-ci.org/liviuignat/heimdall)
+[![Build Status](https://travis-ci.org/liviuignat/heimdall.svg?branch=master)](https://travis-ci.org/liviuignat/heimdall)
 
 #### Prerequisites
 Install NodeJS and Docker locally

@@ -4,7 +4,7 @@ import {getAuthClientById} from 'server/repositories';
 import {logger} from 'server/logger';
 
 export async function initializeDatabase() {
-  await db.sequelize.sync({force: true});
+  await db.sequelize.sync({force: false});
 
   const clients = config.get<IAuthClient[]>('defaultClients') || [];
   const defaultClients = await Promise.all((clients).map(client => createClientIfNotExists(client)));

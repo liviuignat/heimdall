@@ -15,8 +15,17 @@ injectTapEventPlugin();
 
 export function reactComponentMiddleware() {
   return (req, res, next) => {
+    const location: string = req.originalUrl;
+
+    if (location && location.startsWith('/dialog')) {
+      return next();
+    }
+
+    if (location && location.startsWith('/api')) {
+      return next();
+    }
+
     const client = new ApiClient(req, res);
-    const location = req.originalUrl;
     const history = createMemoryHistory(location);
     const store = createStore(history, client);
     const routes = getRoutes(store);

@@ -2,8 +2,9 @@ import * as actionTypes from './actionTypes';
 const md5 = require('blueimp-md5');
 
 export function registerUserAction(user: IUser) {
+  const encodedPassword = md5(user.password);
   const data = Object.assign({}, user, {
-    password: md5(user.password),
+    password: encodedPassword,
   });
 
   return {
@@ -15,7 +16,11 @@ export function registerUserAction(user: IUser) {
     promise: client => (async () => {
       await client.post('/api/users/register', {data});
       await login(client, user.email, user.password);
-      return true;
+
+      return {
+        username: user.email,
+        encodedPassword,
+      };
     })(),
   };
 }
@@ -30,7 +35,11 @@ export function loginUserAction(email: string, password: string) {
     promise: client => (async () => {
       try {
         await login(client, email, password);
-        return true;
+
+        return {
+          username: email,
+          encodedPassword: md5(password),
+        };
       } catch (err) {
         throw 'validation.invalid.user.or.password';
       }
@@ -68,7 +77,6 @@ async function login(client, email: string, password: string, encodePassword = t
     },
   };
 
-  const token = await client.post('/api/oauth/token', tokenPayload);
-  console.log(token);
+  const token = await client.post('/oauth/token', tokenPayload);
   return token;
 }

@@ -28,8 +28,14 @@ server.grant(oauth2orize.grant.code((client: IAuthClient, redirectURI: string, u
   logger.info('server.grant.code');
 
   createAuthorizationToken(client.id, user.id, redirectURI, client.scope)
-    .then(token => done(null, token.value))
-    .catch((err: Error) => done(err));
+    .then(token => {
+      logger.info('server.grant.code:success');
+      done(null, token.value);
+    })
+    .catch((err: Error) => {
+      logger.info('server.grant.code:error', JSON.stringify(err, Object.getOwnPropertyNames(err)));
+      done(err);
+    });
 }));
 
 /**
@@ -45,7 +51,10 @@ server.grant(oauth2orize.grant.token((client: IAuthClient, user: IUser, ares, do
 
   createAccessToken(client.id, user.id, client.scope)
     .then(token => done(null, token.value, { expires_in: ACCESS_TOKEN_EXPIRES_IN }))
-    .catch((err: Error) => done(err));
+    .catch((err: Error) => {
+      logger.info('server.grant.code:error', JSON.stringify(err));
+      done(err);
+    });
 }));
 
 /**
@@ -136,10 +145,12 @@ server.exchange(oauth2orize.exchange.refreshToken((client: IAuthClient, refreshT
  * the client by ID from the database.
  */
 server.serializeClient((client: IAuthClient, done) => {
+  logger.info('serializeClient');
   return done(null, client.id);
 });
 
 server.deserializeClient((id, done) => {
+  logger.info('deserializeClient');
   getAuthClientById(id)
     .then(client => done(null, client))
     .catch(err => done(err));
@@ -216,8 +227,11 @@ export const authorization = [
         // the server. For simplicity, this example does not.
         return done(null, client, redirectURI);
       })
-      .catch(err => done(err));
-  }), (req, res, next) => {
+      .catch(err => {
+        return done(err);
+      });
+  }),
+  (req, res, next) => {
     // Render the decision dialog if the client isn't a trusted client
     // TODO:  Make a mechanism so that if this isn't a trusted client, the user can record that
     // they have consented but also make a mechanism so that if the user revokes access to any of
@@ -230,12 +244,11 @@ export const authorization = [
             callback(null, { allow: true });
           })(req, res, next);
         } else {
-          res.json({transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client});
-          // res.render('dialog', { transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client });
+          res.render('dialog', { transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client });
         }
       })
       .catch(() => {
-        res.json({ transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client });
-        // res.render('dialog', { transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client })
+        res.render('dialog', { transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client });
       });
-  }];
+    },
+  ];

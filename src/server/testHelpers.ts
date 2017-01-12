@@ -33,7 +33,7 @@ export async function initDatabase() {
   }
 };
 
-export const getTokenRequest = (user: IUser = firstUser, authClient = firstClient) => request.post('/api/oauth/token')
+export const getTokenRequest = (user: IUser = firstUser, authClient = firstClient) => request.post('/oauth/token')
   .set('content-type', 'application/json')
   .send({
     grant_type: 'password',

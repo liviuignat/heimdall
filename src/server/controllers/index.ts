@@ -27,5 +27,5 @@ export function setupApiRoutes(app: express.Application): void {
   app.put('/api/users/resetpassword', validate(userController.resetPasswordValidation), userController.resetPassword);
   app.put('/api/users/changepassword', authMiddleware, validate(userController.changePasswordValidation), userController.changePassword);
 
-  // app.use(errorController.errorHandler);
+  app.use(errorController.errorHandler);
 };

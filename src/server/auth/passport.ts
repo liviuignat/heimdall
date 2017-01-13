@@ -74,10 +74,12 @@ passport.use(new ClientPasswordStrategy((clientId, clientSecret, done) => {
         throw new Error(`ClientPasswordStrategy - secret invalid ${clientId}`);
       }
 
+      logger.info(`ClientPasswordStrategy:success`);
+
       return done(null, client);
     })
     .catch(err => {
-      logger.error(JSON.stringify(err));
+      logger.error(`ClientPasswordStrategy:error ${JSON.stringify(err)}`);
       done(err, false);
     });
   },

@@ -11,7 +11,7 @@ export function setupApiRoutes(app: express.Application): void {
   const authMiddleware = passport.authenticate('bearer', { session: false });
 
   app.get('/', (req, res) => res.status(200).send(`Hello from Heimdall`));
-  app.post('/login', (req, res, next) => passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
+  app.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
 
   app.get('/dialog/authorize', oauth2.authorization);
   app.post('/dialog/authorize/decision', oauth2.decision);

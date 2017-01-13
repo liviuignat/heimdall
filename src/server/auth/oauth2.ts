@@ -87,7 +87,10 @@ server.exchange(oauth2orize.exchange.password((client: IAuthClient, username: st
   logger.info('server.exchange.password:entry');
 
   createGrantTokensByUsernameAndPassword(client, username, password, scope)
-    .then(({token, refreshToken, expiresIn}) => done(null, token, refreshToken, {expires_in: expiresIn}))
+    .then(({token, refreshToken, expiresIn}) => {
+      logger.info('server.exchange.password:success');
+      done(null, token, refreshToken, {expires_in: expiresIn});
+    })
     .catch(err => {
       logger.info('server.exchange.password:error', JSON.stringify(err));
       return done(null, false);

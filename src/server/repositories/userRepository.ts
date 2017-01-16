@@ -1,31 +1,34 @@
 import * as uuid from 'uuid';
 import db from 'server/data/database';
 
+const attributes = [
+  'id',
+  'email',
+  'firstName',
+  'lastName',
+  'createdAt',
+  'updatedAt',
+];
+
 export async function getUserById(userId: string): Promise<IUser> {
-  const userData = await db.User.findById(userId);
-
-  if (!userData) {
-    return null;
-  }
-
-  const user = userData.toJSON();
-  delete user.password;
-  return user;
+  const user = await db.User.findById(userId, {attributes});
+  return user && user.toJSON();
 }
 
-export async function getUserByEmail(userEmail: string): Promise<IUser> {
-  const user = await searchUserByEmail(userEmail);
-
-  if (!user) {
-    return null;
-  }
-
-  delete user.password;
-  return Promise.resolve(user);
+export async function getUserByEmail(email: string): Promise<IUser> {
+  const user = await db.User.findOne({where: {email} , attributes});
+  return user && user.toJSON();
 }
 
-export async function getUserByEmailAndPassword(userEmail: string, password: string): Promise<IUser> {
-  const user = await searchUserByEmail(userEmail);
+export async function getUserByEmailAndPassword(email: string, password: string): Promise<IUser> {
+  const dbUser = await db.User.findOne({
+    where: {email},
+    attributes: [
+      ...attributes,
+      'password',
+    ],
+  });
+  const user = dbUser && dbUser.toJSON();
 
   if (!user) {
     return null;
@@ -54,9 +57,4 @@ export async function updateUser(user: IUser): Promise<IUser> {
 export async function deactivateUser(user: IUser): Promise<void> {
   const {id} = user;
   await db.User.destroy({where: {id}});
-}
-
-async function searchUserByEmail(userEmail: string): Promise<IUser> {
-  const user = await db.User.findOne({where: {email: userEmail}});
-  return user && user.toJSON();
 }

@@ -34,9 +34,9 @@ export default function defineUser(sequelize: Sequelize.Sequelize): IUserModel {
   {
     tableName: 'users',
     timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
-    deletedAt: 'destroyTime',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt',
     paranoid: true,
     underscored: true,
     underscoredAll: true,

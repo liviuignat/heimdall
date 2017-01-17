@@ -1,18 +1,15 @@
-FROM node:6.9.1
-RUN apt-get update
+FROM node:6.9.2-slim
 
-ADD package.json /tmp/package.json
-RUN cd /tmp && npm install --no-optional --production
-RUN mkdir -p /src/app && cp -a /tmp/node_modules /src/app/
+RUN mkdir -p /src/app && cd /src/app
+WORKDIR /src/app
+COPY . /src/app
+RUN npm install --production
 
 WORKDIR /src/app
 ADD . /src/app
 
-ENV SERVICE_NAME=heimdall
-ENV SERVICE_TAGS=heimdall
-ENV NODE_ENV production
-ENV NODE_PATH ./src
-ENV PORT=3000
+RUN npm run build
 
-EXPOSE 3000
+ENV PORT=9200
+EXPOSE 9200
 CMD ["npm", "run", "start"]

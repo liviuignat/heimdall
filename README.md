@@ -36,7 +36,8 @@ yarn test-once
 ```sh
 docker build -t heimdall .
 
-docker run -d -p 3000:3000 --name heimdall \
-  -e PORT=3000 \
+# override configuration file by setting CONF environment variable with the stringified JSON
+docker run -d -p 9200:9200 --name heimdall \
+  -e CONF='{"database":{"host":"192.168.0.14","port":5432,"database":"everreal","username":"postgres","password":"password","dialect":"postgres","logging":false,"pool":{"idle":10000,"max":10,"min":0}}}' \
   heimdall
 ```

@@ -5,6 +5,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {getDefaultMuiTheme} from 'theme/materialTheme';
 import {getAppMetadata} from 'appMetadata';
+import AppHeader from 'universal/common/components/AppHeader/AppHeader';
+import AppFooter from 'universal/common/components/AppFooter/AppFooter';
 const {connect} = require('react-redux');
 const {asyncConnect} = require('redux-connect');
 
@@ -35,9 +37,10 @@ export default class AppContainer extends React.Component<any, any> {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className={css.AppContainer}>
           <Helmet {...appMetadata} />
-          <div>
-            {children}
-          </div>
+          
+          <AppHeader />
+          {children}
+          <AppFooter />
         </div>
       </MuiThemeProvider>
     );

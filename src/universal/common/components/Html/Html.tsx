@@ -47,7 +47,7 @@ export default class Html extends React.Component<IHtmlPropTypes, any> {
           {Object.keys(assets.styles).length === 0 ? <style dangerouslySetInnerHTML={{__html: css._style}} /> : null}
         </head>
         <body>
-          <div id="content" dangerouslySetInnerHTML={{__html: content}}/>
+          <div className={css.MainWrapper} id="content" dangerouslySetInnerHTML={{__html: content}}/>
 
           <script dangerouslySetInnerHTML={{__html: init}} charSet="UTF-8"/>
           <script src={assets.javascript.main} charSet="UTF-8"/>

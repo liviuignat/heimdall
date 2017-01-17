@@ -6,6 +6,10 @@
 @import 'variables/buttons';
 @import 'variables/headlines';
 
+html {
+  height: 100%;
+}
+
 body {
   color: $color-grey900;
   font-family: $font-family;

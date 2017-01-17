@@ -60,6 +60,10 @@ describe('WHEN testing user endpoints', () => {
             it('SHOULD have required user information', () => {
               expect(me.id).toBeDefined();
               expect(me.email).toEqual(createUserPayload.email);
+              expect(me.createdAt).toBeDefined();
+              expect(me.updatedAt).toBeDefined();
+              expect(me.firstName).toBeNull();
+              expect(me.lastName).toBeNull();
             });
           });
         });

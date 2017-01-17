@@ -32,8 +32,10 @@ export default function defineAuthClient(sequelize: Sequelize.Sequelize): IAuthC
   {
     tableName: 'oauth_clients',
     timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    deletedAt: 'deletedAt',
+    paranoid: true,
     underscored: true,
     underscoredAll: true,
   });

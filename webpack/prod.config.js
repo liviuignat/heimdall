@@ -18,7 +18,8 @@ module.exports = {
   context: path.resolve(__dirname, '..'),
   entry: {
     'main': [
-      './src/universal/client.tsx'
+      './src/universal/client.tsx',
+      'font-awesome-webpack!./src/theme/font-awesome.config.prod.js',
     ]
   },
   output: {

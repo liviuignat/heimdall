@@ -1,0 +1,12 @@
+@import '../../../../theme/variables.scss';
+
+.AppLogo {
+  display: flex;
+
+  .AppLogo_text {
+    padding-left: 8px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: auto 0;
+  }
+}

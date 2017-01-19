@@ -1,0 +1,73 @@
+@import '../../../../theme/variables.scss';
+$header-height: 70px;
+
+.AppHeader {
+  height: $header-height;
+  display: flex;
+  background-color:rgba(255, 255, 255, 0.8);
+  width: 100%;
+  transition: all 0.3s ease;
+  padding: 0 8px;
+  z-index: 1;
+  box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.1);
+
+  @media #{$screen-xs} {
+    padding: 0 36px;
+  }
+
+  * {
+    transition: all 0.3s ease;
+  }
+
+  &[data-is-scrolled="true"] {
+    background-color:rgba(255, 255, 255, 1);
+    height: 55px;
+    box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.1);
+  }
+
+  .LogoContainer {
+    width: 150px;
+    vertical-align: middle;
+    margin: auto;
+    letter-spacing: 3px;
+
+    > a {
+      @include link($text-color: $color-grey900, $text-decoration: none, $text-color__hover: $color-grey900);
+    }
+  }
+
+  .MenuList {
+    flex: 1;
+    height: 100%;
+    display: block;
+    list-style-position: outside;
+    list-style-type: none;
+    text-align: right;
+    padding: 0;
+    margin: 0;
+    line-height: normal;
+    direction: ltr;
+
+    .MenuItem {
+      height: 100%;
+      display: inline-block;
+      direction: ltr;
+      list-style-position: outside;
+      list-style-type: none;
+      font-size: 15px;
+
+      > div {
+        height: 100%;
+        display: table;
+        > a {
+          @include link($text-color: $color-grey900, $text-decoration: none, $text-color__hover: $color-cyan700);
+          padding: 0 14px;
+          font-weight: 500;
+          text-transform: uppercase;
+          display: table-cell;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}

@@ -21,11 +21,13 @@ const store = createStore(browserHistory, client, initialStoreData);
 const history = syncHistoryWithStore(browserHistory, store);
 const destinationElement = document.getElementById('content');
 
-const renderer: any = (props) => <ReduxAsyncConnect {...props} helpers={{client}} filter={item => !item.deferred} />;
+const filter = item => !item.deferred;
+const renderer: any = (props) => <ReduxAsyncConnect {...props} helpers={{client}} filter={filter} />;
 let component = (
   <Router
     render={renderer}
-    history={history}>
+    history={history}
+  >
     {getRoutes(store)}
   </Router>
 );
@@ -39,7 +41,6 @@ if (__DEVTOOLS__) {
     </div>
   );
 }
-
 
 ReactDOM.render(
   <Provider store={store} key="provider">

@@ -29,9 +29,10 @@ export default class ResetPasswordForm extends React.Component<any, any> {
       <form onSubmit={handleSubmit}>
         <div>
           <Field
+            withRef
+            ref="email"
             fullWidth
             name="email"
-            ref="email" withRef
             component={TextField}
             hintText="Email"
             floatingLabelText="Email"
@@ -46,7 +47,8 @@ export default class ResetPasswordForm extends React.Component<any, any> {
           type="submit"
           backgroundColor="#FD7400"
           labelColor="white"
-          label="Sign Up" />
+          label="Sign Up"
+        />
 
         {errorMessage && <div className="error-message">{errorMessage}</div>}
       </form>

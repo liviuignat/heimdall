@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import {AppLogo} from 'universal/common/components';
 
 export default class AppHeader extends React.Component<any, any> {
-  render() {
+  public render() {
     const css = require('./AppHeader.scss');
 
     return (
@@ -12,8 +12,7 @@ export default class AppHeader extends React.Component<any, any> {
           <a href="/"><AppLogo /></a>
         </div>
 
-        <ul className={css.MenuList}>
-        </ul>
+        <ul className={css.MenuList} />
       </div>
     );
   }

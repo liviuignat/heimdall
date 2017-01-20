@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Link} from 'react-router';
 
 export default class AppFooter extends React.Component<any, any> {
-    render() {
+    public render() {
       const css = require('./AppFooter.scss');
 
       return (

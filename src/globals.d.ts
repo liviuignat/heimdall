@@ -1,3 +1,5 @@
+/* tslint:disable */
+
 interface IAuthClient {
   id?: string;
   name?: string;

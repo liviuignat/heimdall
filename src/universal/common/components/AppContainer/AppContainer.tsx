@@ -37,10 +37,11 @@ export default class AppContainer extends React.Component<any, any> {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className={css.AppContainer}>
           <Helmet {...appMetadata} />
-          
+
           <AppHeader />
           {children}
           <AppFooter />
+
         </div>
       </MuiThemeProvider>
     );

@@ -46,6 +46,7 @@ export default class LoginPage extends Component<any, any> {
       username,
       encodedPassword,
     } = this.props;
+    const onSubmit = data => this.handleSubmit(data);
 
     return (
       <Paper className={css.LoginPage}>
@@ -55,7 +56,8 @@ export default class LoginPage extends Component<any, any> {
         <LoginForm
           isLoading={isLoggingIn}
           errorMessage={loginError}
-          onSubmit={data => this.handleSubmit(data)}/>
+          onSubmit={onSubmit}
+        />
 
         <form ref="form" style={{display: 'none'}} action="/login" method="post">
           <input name="username" value={username} />

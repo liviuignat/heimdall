@@ -26,4 +26,3 @@ async function createClientIfNotExists(client: IAuthClient): Promise<IAuthClient
 
   return existingClient;
 }
-

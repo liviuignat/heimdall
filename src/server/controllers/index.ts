@@ -5,7 +5,9 @@ import * as oauth2 from 'server/auth/oauth2';
 import * as userController from 'server/controllers/userController';
 import * as tokenController from 'server/controllers/tokenController';
 import * as errorController from 'server/controllers/errorController';
+const metadata = require('./../../../package.json');
 const validate = require('express-validation');
+const {aliveMiddleware} = require('er-common-components/lib/middleware');
 
 export function setupApiRoutes(app: express.Application): void {
   const authMiddleware = passport.authenticate('bearer', { session: false });
@@ -26,6 +28,8 @@ export function setupApiRoutes(app: express.Application): void {
   app.post('/api/users/register', validate(userController.registerValidation), userController.registerUser);
   app.put('/api/users/resetpassword', validate(userController.resetPasswordValidation), userController.resetPassword);
   app.put('/api/users/changepassword', authMiddleware, validate(userController.changePasswordValidation), userController.changePassword);
+
+  app.get('/api/alive', aliveMiddleware({metadata}));
 
   app.use(errorController.errorHandler);
 };

@@ -39,10 +39,16 @@ export default class Html extends React.Component<IHtmlPropTypes, any> {
           <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" type="text/css" />
 
           <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.fr,Intl.~locale.de"/>
-          {Object.keys(assets.styles).map((style, key) =>
-            <link href={assets.styles[style]} key={key} media="screen, projection"
-                  rel="stylesheet" type="text/css" charSet="UTF-8" />,
-          )}
+          {Object.keys(assets.styles).map((style, key) => (
+            <link
+              href={assets.styles[style]}
+              key={key}
+              media="screen, projection"
+              rel="stylesheet"
+              type="text/css"
+              charSet="UTF-8"
+            />
+          ))}
 
           {Object.keys(assets.styles).length === 0 ? <style dangerouslySetInnerHTML={{__html: css._style}} /> : null}
         </head>

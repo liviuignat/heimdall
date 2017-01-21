@@ -8,14 +8,14 @@
   },
   "scripts": {
     "start": "node ./node_modules/better-npm-run start",
+    "build": "node ./node_modules/better-npm-run build",
     "dev": "concurrently --kill-others \"npm run watch-lint\" \"npm run watch-client\" \"npm run start-dev\"",
     "start-dev": "node ./node_modules/better-npm-run start-dev",
     "watch-lint": "watch 'npm run lint' ./src",
-    "lint": "tslint ./src/**/*.ts",
+    "lint": "./node_modules/tslint/bin/tslint 'src/**/*.ts?(x)'",
     "test": "node ./node_modules/better-npm-run test",
     "test-once": "node ./node_modules/better-npm-run test-once",
-    "watch-client": "node ./node_modules/better-npm-run watch-client",
-    "build": "./node_modules/.bin/webpack --verbose --colors --display-error-details --config webpack/prod.config.js"
+    "watch-client": "node ./node_modules/better-npm-run watch-client"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,13 @@
   "betterScripts": {
     "start": {
       "command": "node ./index.js",
+      "env": {
+        "NODE_PATH": "./src",
+        "NODE_ENV": "production"
+      }
+    },
+    "build": {
+      "command": "./node_modules/.bin/webpack --verbose --colors --display-error-details --config webpack/prod.config.js",
       "env": {
         "NODE_PATH": "./src",
         "NODE_ENV": "production"
@@ -203,6 +210,7 @@
     "ts-jest": "^0.1.11",
     "tslint": "^4.0.2",
     "tslint-eslint-rules": "^3.0.0",
+    "tslint-react": "^2.3.0",
     "watch": "^1.0.1"
   },
   "jest": {

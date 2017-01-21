@@ -38,6 +38,7 @@ export default class ResetPasswordPage extends React.Component<any, any> {
       isResetingPassword,
       resetPasswordError,
     } = this.props;
+    const onSubmit = data => this.handleSubmit(data);
 
     return (
       <Paper className={css.ResetPasswordPage}>
@@ -47,7 +48,8 @@ export default class ResetPasswordPage extends React.Component<any, any> {
         <ResetPasswordForm
           isLoading={isResetingPassword}
           errorMessage={resetPasswordError}
-          onSubmit={data => this.handleSubmit(data)}/>
+          onSubmit={onSubmit}
+        />
       </Paper>
     );
   }

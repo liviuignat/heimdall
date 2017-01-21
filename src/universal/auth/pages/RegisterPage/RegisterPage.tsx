@@ -45,6 +45,7 @@ export default class RegisterPage extends Component<any, any> {
       username,
       encodedPassword,
     } = this.props;
+    const onSubmit = data => this.handleSubmit(data);
 
     return (
       <Paper className={css.RegisterPage}>
@@ -55,7 +56,8 @@ export default class RegisterPage extends Component<any, any> {
         <RegisterForm
           isLoading={isRegistering}
           errorMessage={registerError}
-          onSubmit={data => this.handleSubmit(data)}/>
+          onSubmit={onSubmit}
+        />
 
         <form ref="form" style={{display: 'none'}} action="/login" method="post">
           <input name="username" value={username} />

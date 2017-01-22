@@ -1,0 +1,4 @@
+{
+  "validation.email.invalid": "Email is not correct",
+  "validation.required": "Field is required"
+}

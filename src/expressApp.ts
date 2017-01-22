@@ -11,6 +11,11 @@ import * as cors from 'cors';
 import * as passport from 'passport';
 import {setupApiRoutes} from 'server/controllers';
 import {reactComponentMiddleware} from 'universal/serverMiddleware';
+const {languageMiddleware} = require('er-common-components/lib/middleware');
+const {initLocaleData} = require('er-common-components/lib/translations');
+const {getAllTranslations} = require('er-common-components/lib/translations/getAllTranslations');
+
+initLocaleData();
 
 const app = express();
 const MemoryStore = expressSession.MemoryStore;
@@ -32,6 +37,7 @@ app.use(cors());
 app.use(compression());
 app.use(favicon(path.join(__dirname, 'static', 'favicon.png')));
 app.use(serveStatic(path.join(__dirname, 'static')));
+app.use(languageMiddleware({defaultLanguage: 'en-US', allTranslations: getAllTranslations()}));
 
 setupApiRoutes(app);
 app.use(reactComponentMiddleware());

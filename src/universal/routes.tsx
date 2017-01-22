@@ -5,13 +5,21 @@ import LoginPage from 'universal/auth/pages/LoginPage/LoginPage';
 import RegisterPage from 'universal/auth/pages/RegisterPage/RegisterPage';
 import ResetPasswordPage from 'universal/auth/pages/ResetPasswordPage/ResetPasswordPage';
 
-export function getRoutes(store) {
+function getRoutesList({path = ''} = {}) {
   return (
-    <Route path="/" component={AppContainer}>
-
+    <Route path={path}>
       <Route path="login" component={LoginPage}/>
       <Route path="register" component={RegisterPage}/>
       <Route path="resetpassword" component={ResetPasswordPage}/>
+    </Route>
+  );
+};
+
+export function getRoutes() {
+  return (
+    <Route path="/" component={AppContainer}>
+      {getRoutesList()}
+      {getRoutesList({path: ':language'})}
     </Route>
   );
 }

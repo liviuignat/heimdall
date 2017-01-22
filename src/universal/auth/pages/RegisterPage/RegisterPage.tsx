@@ -22,7 +22,6 @@ export default class RegisterPage extends Component<any, any> {
     encodedPassword: PropTypes.string.isRequired,
     isRegistering: PropTypes.bool.isRequired,
     registerError: PropTypes.string.isRequired,
-    reset: PropTypes.func.isRequired,
     registerUserAction: PropTypes.func.isRequired,
   };
 

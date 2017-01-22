@@ -2300,9 +2300,9 @@ enhanced-resolve@~0.9.0:
     memory-fs "^0.2.0"
     tapable "^0.1.8"
 
-er-common-components@^1.1.12:
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/er-common-components/-/er-common-components-1.1.12.tgz#6d67611c5a4949a095fc6a0cf2a51d548537486a"
+er-common-components@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/er-common-components/-/er-common-components-1.3.1.tgz#90f7b3290e6e078d61cdf532b8eab5607cd7a95e"
   dependencies:
     babel-runtime "^6.18.0"
     classnames "^2.2.5"
@@ -4342,13 +4342,13 @@ moment-timezone@^0.5.4:
   dependencies:
     moment ">= 2.6.0"
 
-moment@2.x.x, "moment@>= 2.6.0", moment@^2.13.0, moment@^2.17.1:
-  version "2.17.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.17.1.tgz#fed9506063f36b10f066c8b59a144d7faebe1d82"
-
-moment@^2.11.2:
+moment@2.x.x, "moment@>= 2.6.0", moment@^2.11.2, moment@^2.13.0:
   version "2.15.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.15.2.tgz#1bfdedf6a6e345f322fe956d5df5bd08a8ce84dc"
+
+moment@^2.17.1:
+  version "2.17.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.17.1.tgz#fed9506063f36b10f066c8b59a144d7faebe1d82"
 
 ms@0.7.1, ms@^0.7.1:
   version "0.7.1"
@@ -5569,8 +5569,8 @@ react-inline-css@^2.3.0:
   resolved "https://registry.yarnpkg.com/react-inline-css/-/react-inline-css-2.3.0.tgz#c85b50dc0c5254871586d45b6698258cc50af621"
 
 react-intl@^2.1.5:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-2.2.2.tgz#266a38334671937bec92729eb4973b4360c07996"
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-2.2.3.tgz#8eebb03cddc38b337ed22fab78037ab53a594270"
   dependencies:
     intl-format-cache "^2.0.5"
     intl-messageformat "^1.3.0"

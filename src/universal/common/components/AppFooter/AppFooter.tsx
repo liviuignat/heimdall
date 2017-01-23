@@ -12,7 +12,7 @@ export default class AppFooter extends React.Component<any, any> {
 
         <div className={css.AppFooter_section}>
           <div className={css.AppFooter_logo}>
-            <a href="https://www.everreal.de">EVER<b>REAL</b></a>
+            <a href="https://www.everreal.co">EVER<b>REAL</b></a>
           </div>
           <div className={css.AppFooter_copyright}>© EVERREAL {new Date().getFullYear()}</div>
 

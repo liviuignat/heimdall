@@ -9,7 +9,7 @@ export default class AppHeader extends React.Component<any, any> {
     return (
       <div className={css.AppHeader}>
         <div className={css.LogoContainer}>
-          <a href="/"><AppLogo /></a>
+          <a href="https://www.everreal.co"><AppLogo /></a>
         </div>
 
         <ul className={css.MenuList} />

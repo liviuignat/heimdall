@@ -88,12 +88,4 @@ body {
       outline:none;
     }
   }
-
-  .clearfix {
-    @include clearfix();
-  }
-
-  .error-message {
-    @include error-message();
-  }
 }

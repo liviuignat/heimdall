@@ -6,7 +6,7 @@ export function mapValidationMessagesToLocale(intl, validations = []) {
   const {formatMessage} = intl;
   return validations.map((validation) => (value, formData) => {
     const response = validation(value, formData) || {};
-    const id = response.key;
-    return id ? formatMessage({id}) : '';
+    const {key, values = {}} = response;
+    return key ? formatMessage({id: key}, values) : '';
   });
 }

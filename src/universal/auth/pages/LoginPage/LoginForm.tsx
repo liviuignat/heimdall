@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {reduxForm} from 'redux-form';
-import {FormattedMessage, FormTextField, RaisedButton} from 'universal/common/components';
+import {ErrorMessage, FormattedMessage, FormTextField, RaisedButton} from 'universal/common/components';
 const {required, email} = require('er-common-components/lib/helpers/validation');
 
 export const LOGIN_FORM_NAME = 'LOGIN_FORM_NAME';
@@ -30,8 +30,8 @@ export default class LoginForm extends React.Component<any, any> {
             ref="email"
             fullWidth
             name="email"
-            hintText="Email"
-            floatingLabelText="Email"
+            hintText={<FormattedMessage id="App.email" />}
+            floatingLabelText={<FormattedMessage id="App.email" />}
             disabled={isLoading}
             validate={[required, email]}
           />
@@ -45,8 +45,8 @@ export default class LoginForm extends React.Component<any, any> {
             disabled={isLoading}
             name="password"
             type="password"
-            hintText="Password"
-            floatingLabelText="Password"
+            hintText={<FormattedMessage id="App.password" />}
+            floatingLabelText={<FormattedMessage id="App.password" />}
             validate={[required]}
           />
         </div>
@@ -57,10 +57,10 @@ export default class LoginForm extends React.Component<any, any> {
           type="submit"
           backgroundColor="#FD7400"
           labelColor="white"
-          label="Login"
+          label={<FormattedMessage id="App.login" />}
         />
 
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        {errorMessage && <ErrorMessage><FormattedMessage id={errorMessage} /></ErrorMessage>}
       </form>
     );
   }

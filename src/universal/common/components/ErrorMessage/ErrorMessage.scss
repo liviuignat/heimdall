@@ -1,0 +1,5 @@
+@import '../../../../theme/variables.scss';
+
+.ErrorMessage {
+  @include error-message();
+}

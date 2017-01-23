@@ -4,6 +4,11 @@ import * as uuid from 'uuid';
 import db from 'server/data/database';
 import {logger} from 'server/logger';
 
+(global as any).__DEVELOPMENT__ = process.env.NODE_ENV !== 'production';
+(global as any).__CLIENT__ = false;
+(global as any).__SERVER__ = true;
+(global as any).__DISABLE_SSR__ = false;
+
 export const request = supertest(expressApp);
 
 export const firstClient: IAuthClient = {

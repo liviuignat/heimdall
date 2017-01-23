@@ -30,6 +30,13 @@ export function setupApiRoutes(app: express.Application): void {
   app.put('/api/users/changepassword', authMiddleware, validate(userController.changePasswordValidation), userController.changePassword);
 
   app.get('/api/alive', aliveMiddleware({metadata}));
+  app.get('/assets/translations/locale/:language/index.js', (req, res) => {
+    const {language} = req.params;
+    const messages = (req as any).getTranslation({language});
+    const locale = {language, messages};
+    const script = `window.__locale = ${JSON.stringify(locale)}`;
+    res.send(script);
+  });
 
   app.use(errorController.errorHandler);
 };

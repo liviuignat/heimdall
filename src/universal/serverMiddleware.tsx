@@ -10,6 +10,7 @@ import ApiClient from 'universal/helpers/ApiClient';
 import Html from 'universal/common/components/Html/Html';
 
 const {ReduxAsyncConnect, loadOnServer} = require('redux-connect');
+const {IntlProvider} = require('er-common-components/lib/translations');
 
 injectTapEventPlugin();
 
@@ -28,14 +29,15 @@ export function reactComponentMiddleware() {
     const client = new ApiClient(req, res);
     const history = createMemoryHistory(location);
     const store = createStore(history, client);
-    const routes = getRoutes(store);
+    const routes = getRoutes();
+    const requestLanguage = req.getLanguage();
 
     if (__DEVELOPMENT__) {
       webpackIsomorphicTools.refresh();
     }
 
     function hydrateOnClient() {
-      const html = ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store} />);
+      const html = ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store} language={requestLanguage} />);
       res.send(`<!doctype html>\n ${html}`);
     }
 
@@ -47,13 +49,21 @@ export function reactComponentMiddleware() {
         res.status(500);
         return hydrateOnClient();
       } else if (renderProps) {
-        const component = (
-          <Provider store={store} key="provider">
-            <ReduxAsyncConnect {...renderProps} />
-          </Provider>
-        );
-        const html = <Html assets={webpackIsomorphicTools.assets()} component={component} store={store} />;
-        return res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(html));
+        loadOnServer(Object.assign({}, renderProps, {store, helpers: {client}}))
+          .then(() => {
+            req.setLanguage({language: (renderProps.params as any).language});
+            const language = req.getLanguage();
+            const languageMessages = req.getTranslation({language});
+            const component = (
+              <Provider store={store} key="provider">
+                <IntlProvider locale={language} messages={languageMessages}>
+                  <ReduxAsyncConnect {...renderProps} />
+                </IntlProvider>
+              </Provider>
+            );
+            const html = <Html assets={webpackIsomorphicTools.assets()} component={component} store={store} language={language} />;
+            return res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(html));
+          });
       } else {
         return next();
       }

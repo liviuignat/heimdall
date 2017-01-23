@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {Field, reduxForm} from 'redux-form';
-import {TextField} from 'redux-form-material-ui';
-import {RaisedButton} from 'universal/common/components';
-const validation = require('er-common-components/lib/helpers/validation');
+import {reduxForm} from 'redux-form';
+import {FormTextField, RaisedButton} from 'universal/common/components';
+const {required, email, minLength, repeatPasswordValidation} = require('er-common-components/lib/helpers/validation');
 
 export const REGISTER_FORM_NAME = 'REGISTER_FORM_NAME';
 
@@ -22,20 +21,15 @@ export default class RegisterForm extends React.Component<any, any> {
       errorMessage,
       handleSubmit,
     } = this.props;
-    const required = value => (validation.required(value) || {}).text;
-    const email = value => (validation.email(value) || {}).text;
-    const minLength = min => value => (validation.minLength(min)(value) || {}).text;
-    const repeatPasswordValidation = field => (value, formData) => (validation.repeatPasswordValidation(field)(value, formData) || {}).text;
 
     return (
       <form onSubmit={handleSubmit}>
         <div>
-          <Field
+          <FormTextField
             withRef
             ref="email"
             fullWidth
             name="email"
-            component={TextField}
             hintText="Email"
             floatingLabelText="Email"
             disabled={isLoading}
@@ -44,14 +38,13 @@ export default class RegisterForm extends React.Component<any, any> {
         </div>
 
         <div>
-          <Field
+          <FormTextField
             withRef
             ref="password"
             fullWidth
             disabled={isLoading}
             name="password"
             type="password"
-            component={TextField}
             hintText="Password"
             floatingLabelText="Password"
             validate={[required, minLength(6)]}
@@ -59,14 +52,13 @@ export default class RegisterForm extends React.Component<any, any> {
         </div>
 
         <div>
-          <Field
+          <FormTextField
             withRef
             ref="repeatPassword"
             fullWidth
             disabled={isLoading}
             name="repeatPassword"
             type="password"
-            component={TextField}
             hintText="Repeat password"
             floatingLabelText="Repeat password"
             validate={[repeatPasswordValidation('password')]}

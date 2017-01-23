@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {reduxForm} from 'redux-form';
-import {FormTextField, RaisedButton} from 'universal/common/components';
+import {ErrorMessage, FormTextField, FormattedMessage, RaisedButton} from 'universal/common/components';
 const {required, email, minLength, repeatPasswordValidation} = require('er-common-components/lib/helpers/validation');
 
 export const REGISTER_FORM_NAME = 'REGISTER_FORM_NAME';
@@ -30,8 +30,8 @@ export default class RegisterForm extends React.Component<any, any> {
             ref="email"
             fullWidth
             name="email"
-            hintText="Email"
-            floatingLabelText="Email"
+            hintText={<FormattedMessage id="RegisterPage.label.email" />}
+            floatingLabelText={<FormattedMessage id="RegisterPage.label.email" />}
             disabled={isLoading}
             validate={[required, email]}
           />
@@ -45,8 +45,8 @@ export default class RegisterForm extends React.Component<any, any> {
             disabled={isLoading}
             name="password"
             type="password"
-            hintText="Password"
-            floatingLabelText="Password"
+            hintText={<FormattedMessage id="RegisterPage.label.password" />}
+            floatingLabelText={<FormattedMessage id="RegisterPage.label.password" />}
             validate={[required, minLength(6)]}
           />
         </div>
@@ -59,8 +59,8 @@ export default class RegisterForm extends React.Component<any, any> {
             disabled={isLoading}
             name="repeatPassword"
             type="password"
-            hintText="Repeat password"
-            floatingLabelText="Repeat password"
+            hintText={<FormattedMessage id="RegisterPage.label.repeat.password" />}
+            floatingLabelText={<FormattedMessage id="RegisterPage.label.repeat.password" />}
             validate={[repeatPasswordValidation('password')]}
           />
         </div>
@@ -71,10 +71,10 @@ export default class RegisterForm extends React.Component<any, any> {
           type="submit"
           backgroundColor="#FD7400"
           labelColor="white"
-          label="Sign Up"
+          label={<FormattedMessage id="App.signup" />}
         />
 
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        {errorMessage && <ErrorMessage><FormattedMessage id={errorMessage} /></ErrorMessage>}
       </form>
     );
   }

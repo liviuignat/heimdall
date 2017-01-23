@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Helmet from 'react-helmet';
-import {Paper} from 'universal/common/components';
+import {FormattedMessage, Paper} from 'universal/common/components';
 import {registerUserAction} from 'universal/auth/actions';
 import RegisterForm, {REGISTER_FORM_NAME} from './RegisterForm';
 const {connect} = require('react-redux');
@@ -32,8 +32,10 @@ export default class RegisterPage extends Component<any, any> {
     }
   }
 
-  public async handleSubmit(data) {
-    const response = await this.props.registerUserAction(data);
+  public async handleSubmit(data: IUser) {
+    if (data && data.email) {
+      const response = await this.props.registerUserAction(data);
+    }
   }
 
   public render() {
@@ -50,7 +52,7 @@ export default class RegisterPage extends Component<any, any> {
       <Paper className={css.RegisterPage}>
         <Helmet title="EverReal - Register" />
 
-        <h3>Sign up to EverReal</h3>
+        <h3><FormattedMessage id="RegisterPage.page.title" /></h3>
 
         <RegisterForm
           isLoading={isRegistering}

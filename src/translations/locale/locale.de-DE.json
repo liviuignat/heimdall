@@ -1,4 +1,27 @@
 {
+  "App.about.us": "Über uns",
+  "App.company": "Unternehmen",
+  "App.imprint": "Impressum",
+  "App.privacy.policy": "Datenschutz",
+  "App.signup": "Registrieren",
+  "App.login": "Anmelden",
+  "App.email": "E-Mail",
+  "App.password": "Passwort",
+  "App.link.about.us": "https://www.everreal.co/de-DE/ueber-uns",
+  "App.link.imprint": "https://www.everreal.co/de-DE/impressum",
+  "App.link.privacy.policy": "https://www.everreal.co/de-DE/datenschutz",
+  "LoginPage.page.title": "Einloggen bei EverReal",
+  "RegisterPage.page.title": "Melden Sie sich bei EverReal an",
+  "RegisterPage.label.email": "Ihre E-Mail",
+  "RegisterPage.label.password": "Passwort erstellen",
+  "RegisterPage.label.repeat.password": "Password bestätigen",
+  "ResetPasswordPage.page.title": "Haben Sie Ihr Passwort vergessen?",
+  "ResetPasswordPage.page.submit.button": "Passwort zurücksetzen",
   "validation.email.invalid": "Bitte geben Sie die E-Mail Adresse an",
-  "validation.required": "Pflichtfeld"
+  "validation.required": "Pflichtfeld",
+  "validation.string.min.length": "Das Feld muss mindestens {min} Zeichen lang sein",
+  "validation.repeat.password": "Die Passwörter stimmen nicht überein. Erneut versuchen?",
+  "validation.email.must.be.unique": "Jemand ist bereits mit dieser E-Mail registriert.",
+  "validation.invalid.user.or.password": "Ungültiger Benutzername oder Passwort.",
+  "validation.invalid.user.email": "Es wurde kein passendes Benutzerkonto gefunden."
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Helmet from 'react-helmet';
-import {Paper} from 'universal/common/components';
+import {FormattedMessage, Paper} from 'universal/common/components';
 import {loginUserAction} from 'universal/auth/actions';
 import LoginForm, {LOGIN_FORM_NAME} from './LoginForm';
 const {connect} = require('react-redux');
@@ -35,7 +35,10 @@ export default class LoginPage extends Component<any, any> {
 
   public handleSubmit(data) {
     const {email, password} = data;
-    const response = this.props.loginUserAction(email, password);
+
+    if (email && password) {
+      const response = this.props.loginUserAction(email, password);
+    }
   }
 
   public render() {
@@ -51,7 +54,7 @@ export default class LoginPage extends Component<any, any> {
     return (
       <Paper className={css.LoginPage}>
         <Helmet title="EverReal - Log in" />
-        <h3>Login Page</h3>
+        <h3>{<FormattedMessage id="LoginPage.page.title" />}</h3>
 
         <LoginForm
           isLoading={isLoggingIn}

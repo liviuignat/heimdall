@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {reduxForm} from 'redux-form';
-import {FormTextField, RaisedButton} from 'universal/common/components';
+import {ErrorMessage, FormattedMessage, FormTextField, RaisedButton} from 'universal/common/components';
 const {required, email} = require('er-common-components/lib/helpers/validation');
 
 export const RESET_PASSWORD_FORM_NAME = 'RESET_PASSWORD_FORM_NAME';
@@ -30,8 +30,8 @@ export default class ResetPasswordForm extends React.Component<any, any> {
             ref="email"
             fullWidth
             name="email"
-            hintText="Email"
-            floatingLabelText="Email"
+            hintText={<FormattedMessage id="App.email" />}
+            floatingLabelText={<FormattedMessage id="App.email" />}
             disabled={isLoading}
             validate={[required, email]}
           />
@@ -43,10 +43,10 @@ export default class ResetPasswordForm extends React.Component<any, any> {
           type="submit"
           backgroundColor="#FD7400"
           labelColor="white"
-          label="Sign Up"
+          label={<FormattedMessage id="ResetPasswordPage.page.submit.button" />}
         />
 
-        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        {errorMessage && <ErrorMessage><FormattedMessage id={errorMessage} /></ErrorMessage>}
       </form>
     );
   }

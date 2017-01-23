@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Helmet from 'react-helmet';
-import {Paper} from 'universal/common/components';
+import {FormattedMessage, Paper} from 'universal/common/components';
 import {reset} from 'redux-form';
 import {resetUserPassword} from 'universal/auth/actions';
 import ResetPasswordForm, {RESET_PASSWORD_FORM_NAME} from './ResetPasswordForm';
@@ -26,9 +26,12 @@ export default class ResetPasswordPage extends React.Component<any, any> {
 
   public async handleSubmit(data) {
     const {email} = data;
-    const response = await this.props.resetUserPassword(email);
-    if (response && response.result) {
-      this.props.reset(RESET_PASSWORD_FORM_NAME);
+
+    if (email) {
+      const response = await this.props.resetUserPassword(email);
+      if (response && response.result) {
+        this.props.reset(RESET_PASSWORD_FORM_NAME);
+      }
     }
   }
 
@@ -43,7 +46,7 @@ export default class ResetPasswordPage extends React.Component<any, any> {
     return (
       <Paper className={css.ResetPasswordPage}>
         <Helmet title="EverReal - reset password" />
-        <h3>Reset your password</h3>
+        <h3><FormattedMessage id="ResetPasswordPage.page.title" /></h3>
 
         <ResetPasswordForm
           isLoading={isResetingPassword}

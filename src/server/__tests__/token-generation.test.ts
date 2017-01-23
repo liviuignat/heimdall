@@ -1,7 +1,5 @@
-import {getAuthClientById} from 'server/repositories/authClientRepository';
 import {
   initDatabase,
-  firstClient as authClient,
   request,
   getTokenRequest,
   getMeRequest,

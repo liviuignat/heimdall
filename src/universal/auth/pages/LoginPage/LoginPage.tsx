@@ -1,10 +1,9 @@
 import * as React from 'react';
 import * as Helmet from 'react-helmet';
-import {FormattedMessage, Paper} from 'universal/common/components';
+import {FormattedLink, FormattedMessage, Paper} from 'universal/common/components';
 import {loginUserAction} from 'universal/auth/actions';
-import LoginForm, {LOGIN_FORM_NAME} from './LoginForm';
+import LoginForm from './LoginForm';
 const {connect} = require('react-redux');
-const md5 = require('blueimp-md5');
 const {Component, PropTypes} = React;
 
 @connect(
@@ -37,7 +36,7 @@ export default class LoginPage extends Component<any, any> {
     const {email, password} = data;
 
     if (email && password) {
-      const response = this.props.loginUserAction(email, password);
+      this.props.loginUserAction(email, password);
     }
   }
 
@@ -61,6 +60,11 @@ export default class LoginPage extends Component<any, any> {
           errorMessage={loginError}
           onSubmit={onSubmit}
         />
+
+        <div className={css.Links_container}>
+          <FormattedLink href="/register" className={css.Links_register}><FormattedMessage id="LoginPage.label.register" /></FormattedLink>
+          <FormattedLink href="/resetpassword" className={css.Links_resetPassword}><FormattedMessage id="LoginPage.label.reset.password" /></FormattedLink>
+        </div>
 
         <form ref="form" style={{display: 'none'}} action="/login" method="post">
           <input name="username" value={username} />

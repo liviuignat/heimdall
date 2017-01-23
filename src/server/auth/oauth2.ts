@@ -1,4 +1,3 @@
-import * as express from 'express';
 import * as passport from 'passport';
 import {logger} from 'server/logger';
 import {getAuthClientById} from 'server/repositories/authClientRepository';

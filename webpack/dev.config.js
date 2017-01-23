@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const WebpackIsomorphicTools = require('webpack-isomorphic-tools');
 const assetsPath = path.resolve(__dirname, '../src/static/dist');
 const host = 'localhost';
-const port = parseInt(process.env.PORT) + 1 || 3001;
+const port = parseInt(process.env.PORT) + 1 || 9201;
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools'));
 

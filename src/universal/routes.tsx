@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {IndexRoute, Route} from 'react-router';
+import {Route} from 'react-router';
 import AppContainer from 'universal/common/components/AppContainer/AppContainer';
 import LoginPage from 'universal/auth/pages/LoginPage/LoginPage';
 import RegisterPage from 'universal/auth/pages/RegisterPage/RegisterPage';

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Link} from 'react-router';
 import {FormattedLink, FormattedMessage} from 'universal/common/components';
 
 export default class AppFooter extends React.Component<any, any> {

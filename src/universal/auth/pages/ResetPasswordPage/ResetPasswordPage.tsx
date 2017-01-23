@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Helmet from 'react-helmet';
-import {FormattedMessage, Paper} from 'universal/common/components';
+import {FormattedLink, FormattedMessage, Paper} from 'universal/common/components';
 import {reset} from 'redux-form';
 import {resetUserPassword} from 'universal/auth/actions';
 import ResetPasswordForm, {RESET_PASSWORD_FORM_NAME} from './ResetPasswordForm';
@@ -16,7 +16,7 @@ const {Component, PropTypes} = React;
     reset,
     resetUserPassword,
   })
-export default class ResetPasswordPage extends React.Component<any, any> {
+export default class ResetPasswordPage extends Component<any, any> {
   public static propTypes = {
     isResetingPassword: PropTypes.bool.isRequired,
     resetPasswordError: PropTypes.string.isRequired,
@@ -53,6 +53,11 @@ export default class ResetPasswordPage extends React.Component<any, any> {
           errorMessage={resetPasswordError}
           onSubmit={onSubmit}
         />
+
+        <div className={css.Links_container}>
+          <FormattedLink href="/login" className={css.Links_login}><FormattedMessage id="LoginPage.label.login" /></FormattedLink>
+          <FormattedLink href="/register" className={css.Links_register}><FormattedMessage id="LoginPage.label.register" /></FormattedLink>
+        </div>
       </Paper>
     );
   }

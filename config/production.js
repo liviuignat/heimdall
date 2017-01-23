@@ -9,6 +9,7 @@ try {
 }
 
 const prodDefault = {
+  loggedInRedirectUrl: 'https://www.everreal.co/properties/decision',
   logger: {
     level: 'warn',
   },

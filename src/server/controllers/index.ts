@@ -1,7 +1,7 @@
 import * as express from 'express';
-import * as joi from 'joi';
 import * as passport from 'passport';
 import * as oauth2 from 'server/auth/oauth2';
+import * as siteController from 'server/controllers/siteController';
 import * as userController from 'server/controllers/userController';
 import * as tokenController from 'server/controllers/tokenController';
 import * as errorController from 'server/controllers/errorController';
@@ -12,7 +12,7 @@ const {aliveMiddleware} = require('er-common-components/lib/middleware');
 export function setupApiRoutes(app: express.Application): void {
   const authMiddleware = passport.authenticate('bearer', { session: false });
 
-  app.get('/', (req, res) => res.status(200).send(`Hello from Heimdall`));
+  app.get('/', siteController.getHome);
   app.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
 
   app.get('/dialog/authorize', oauth2.authorization);
@@ -30,13 +30,7 @@ export function setupApiRoutes(app: express.Application): void {
   app.put('/api/users/changepassword', authMiddleware, validate(userController.changePasswordValidation), userController.changePassword);
 
   app.get('/api/alive', aliveMiddleware({metadata}));
-  app.get('/assets/translations/locale/:language/index.js', (req, res) => {
-    const {language} = req.params;
-    const messages = (req as any).getTranslation({language});
-    const locale = {language, messages};
-    const script = `window.__locale = ${JSON.stringify(locale)}`;
-    res.send(script);
-  });
+  app.get('/assets/translations/locale/:language/index.js', siteController.getLocalizedTranslationScript);
 
   app.use(errorController.errorHandler);
 };

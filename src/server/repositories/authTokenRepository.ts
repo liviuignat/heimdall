@@ -51,3 +51,13 @@ export async function deleteRefreshToken(tokenValue: string): Promise<void> {
   const jwtToken = await decodeToken(tokenValue);
   await db.AuthToken.destroy({where: {id: jwtToken.jti}});
 }
+
+export async function deleteExpiredTokens(): Promise<void> {
+  await db.AuthToken.destroy({
+    where: {
+      expirationDate: {
+        $lt: new Date(),
+      },
+    },
+  });
+}

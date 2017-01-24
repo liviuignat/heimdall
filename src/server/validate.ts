@@ -1,4 +1,3 @@
-import * as config from 'config';
 import {logger} from 'server/logger';
 import {verifyToken} from 'server/services/authTokenService';
 import {ValidationError} from 'server/errors';
@@ -66,6 +65,7 @@ export async function tokenForHttp(token: string): Promise<string> {
     await verifyToken(token);
   } catch (err) {
     const error  = new Error('invalid_token');
+    throw error;
   }
   return token;
 }

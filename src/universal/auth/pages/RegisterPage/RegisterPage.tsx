@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as Helmet from 'react-helmet';
-import {FormattedMessage, Paper} from 'universal/common/components';
+import {FormattedLink, FormattedMessage, Paper} from 'universal/common/components';
 import {registerUserAction} from 'universal/auth/actions';
-import RegisterForm, {REGISTER_FORM_NAME} from './RegisterForm';
+import RegisterForm from './RegisterForm';
 const {connect} = require('react-redux');
 const {Component, PropTypes} = React;
 
@@ -34,7 +34,7 @@ export default class RegisterPage extends Component<any, any> {
 
   public async handleSubmit(data: IUser) {
     if (data && data.email) {
-      const response = await this.props.registerUserAction(data);
+      await this.props.registerUserAction(data);
     }
   }
 
@@ -59,6 +59,11 @@ export default class RegisterPage extends Component<any, any> {
           errorMessage={registerError}
           onSubmit={onSubmit}
         />
+
+        <div className={css.Links_container}>
+          <FormattedLink href="/login" className={css.Links_login}><FormattedMessage id="LoginPage.label.login" /></FormattedLink>
+          <FormattedLink href="/resetpassword" className={css.Links_resetPassword}><FormattedMessage id="LoginPage.label.reset.password" /></FormattedLink>
+        </div>
 
         <form ref="form" style={{display: 'none'}} action="/login" method="post">
           <input name="username" value={username} />

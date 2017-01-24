@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Link} from 'react-router';
 import {AppLogo} from 'universal/common/components';
 
 export default class AppHeader extends React.Component<any, any> {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {FormattedLink, FormattedMessage} from 'universal/common/components';
+import {FormattedLink, FormattedMessage, LanguageLink} from 'universal/common/components';
 
 export default class AppFooter extends React.Component<any, any> {
   public render() {
@@ -17,14 +17,14 @@ export default class AppFooter extends React.Component<any, any> {
 
           <ul className={css.AppFooter_sectionLinks}>
             <li>
-              <a href="/de-DE/login" title="Deutsch">
+              <LanguageLink language="de-DE" title="Deutsch">
                 <img src="https://s3.eu-central-1.amazonaws.com/s3-production/assets/images/common/flags/de.png" alt="de" />&nbsp;Deutsch
-              </a>
+              </LanguageLink>
             </li>
             <li>
-              <a href="/en-US/login" title="English">
+              <LanguageLink language="en-US" title="English">
                 <img src="https://s3.eu-central-1.amazonaws.com/s3-production/assets/images/common/flags/en.png" alt="en" />&nbsp;English
-              </a>
+              </LanguageLink>
             </li>
           </ul>
         </div>

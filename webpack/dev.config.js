@@ -9,13 +9,13 @@ const port = parseInt(process.env.PORT) + 1 || 9201;
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools'));
 
-
 module.exports = {
   devtool: 'inline-source-map',
   context: path.resolve(__dirname, '..'),
   entry: {
     'main': [
       'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr',
+      'react-hot-loader/patch',
       'font-awesome-webpack!./src/theme/font-awesome.config.js',
       './src/universal/client.tsx'
     ]

@@ -146,6 +146,7 @@
     "file-loader": "^0.9.0",
     "font-awesome": "^4.7.0",
     "font-awesome-webpack": "^0.0.4",
+    "history": "3.2.1",
     "imports-loader": "^0.7.0",
     "joi": "^10.1.0",
     "json-loader": "^0.5.4",

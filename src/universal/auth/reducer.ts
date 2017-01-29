@@ -9,6 +9,7 @@ const initialState = {
   isLoggingIn: false,
   loginError: '',
   isResetingPassword: false,
+  isResetPasswordSuccess: false,
   resetPasswordError: '',
 };
 
@@ -66,11 +67,13 @@ export function reducer(state = initialState, action) {
     case actionTypes.AUTH_RESET_PASSWORD_SUCCESS:
       return Object.assign({}, state, {
         isResetingPassword: false,
+        isResetPasswordSuccess: true,
         resetPasswordError: '',
       });
     case actionTypes.AUTH_RESET_PASSWORD_FAIL:
       return Object.assign({}, state, {
         isResetingPassword: false,
+        isResetPasswordSuccess: false,
         resetPasswordError: errorFomatter(action.error),
       });
 

@@ -10,6 +10,7 @@ const {Component, PropTypes} = React;
 @connect(
   ({auth}) => ({
     isResetingPassword: auth.isResetingPassword,
+    isResetPasswordSuccess: auth.isResetPasswordSuccess,
     resetPasswordError: auth.resetPasswordError,
   }),
   {
@@ -39,20 +40,27 @@ export default class ResetPasswordPage extends Component<any, any> {
     const css = require('./ResetPasswordPage.scss');
     const {
       isResetingPassword,
+      isResetPasswordSuccess,
       resetPasswordError,
     } = this.props;
     const onSubmit = data => this.handleSubmit(data);
+
+    const component = isResetPasswordSuccess ?
+        <div className={css.SuccessMessage}>
+          Yay! Check your email!
+        </div> :
+        <ResetPasswordForm
+          isLoading={isResetingPassword}
+          errorMessage={resetPasswordError}
+          onSubmit={onSubmit}
+        />;
 
     return (
       <Paper className={css.ResetPasswordPage}>
         <Helmet title="EverReal - reset password" />
         <h3><FormattedMessage id="ResetPasswordPage.page.title" /></h3>
 
-        <ResetPasswordForm
-          isLoading={isResetingPassword}
-          errorMessage={resetPasswordError}
-          onSubmit={onSubmit}
-        />
+        {component}
 
         <div className={css.Links_container}>
           <FormattedLink href="/login" className={css.Links_login}><FormattedMessage id="LoginPage.label.login" /></FormattedLink>

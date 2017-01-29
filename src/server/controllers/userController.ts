@@ -1,11 +1,9 @@
+import * as uuid from 'uuid';
 import * as joi from 'joi';
-import * as randomstring from 'randomstring';
 import {Request, Response, NextFunction} from 'express';
 import {createUser, getUserByEmail, updateUser} from 'server/repositories';
 import {sendNewRegisteredUserEmail, sendUserResetPasswordEmail} from 'server/services/notificationService';
 import {ValidationError} from 'server/errors';
-
-const md5 = require('blueimp-md5');
 
 export async function getMe(req: Request, res: Response): Promise<void | Response> {
   return res.json(req.user);
@@ -59,13 +57,13 @@ export async function resetPassword(req: Request, res: Response, next: NextFunct
       throw new ValidationError('User with email does not exist', 'validation.reset.password.user.not.exist');
     }
 
-    const newPassword = randomstring.generate();
-
-    user.password = md5(newPassword);
+    const resetPasswordToken = uuid.v1();
+    user.resetPasswordToken = resetPasswordToken;
     await updateUser(user);
 
     // Don't wait to send the email
-    sendUserResetPasswordEmail(user, newPassword);
+    const changePasswordUrl = req.get('Referrer').replace('resetpassword', `changepassword/${user.resetPasswordToken}`);
+    sendUserResetPasswordEmail(user, changePasswordUrl);
 
     const updatedUser = await getUserByEmail(email);
 

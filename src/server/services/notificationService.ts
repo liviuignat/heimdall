@@ -24,12 +24,13 @@ export async function sendNewRegisteredUserEmail(user: IUser) {
   }
 }
 
-export async function sendUserResetPasswordEmail(user: IUser, newPassword: string) {
+export async function sendUserResetPasswordEmail(user: IUser, changePasswordUrl: string) {
   try {
     const template = await getTemplate('58715d82be537a2800834de8', {
-      newPassword,
+      name: user.firstName,
+      changePasswordUrl,
     });
-    const sentEmailInfo = await sendEmail(user.email, 'EverReal - Reset pssword', template);
+    const sentEmailInfo = await sendEmail(user.email, 'EverReal - Reset password', template);
     logger.info(`UserResetPasswordEmail: ${JSON.stringify(sentEmailInfo)}`);
   } catch (err) {
     logger.error(`Error sending UserResetPasswordEmail: ${JSON.stringify(err)}`);

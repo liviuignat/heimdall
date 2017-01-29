@@ -26,11 +26,11 @@ export function reactComponentMiddleware() {
       return next();
     }
 
-    const client = new ApiClient(req, res);
+    const requestLanguage = req.getLanguage();
+    const client = new ApiClient(req, res, requestLanguage);
     const history = createMemoryHistory(location);
     const store = createStore(history, client);
     const routes = getRoutes();
-    const requestLanguage = req.getLanguage();
 
     if (__DEVELOPMENT__) {
       webpackIsomorphicTools.refresh();

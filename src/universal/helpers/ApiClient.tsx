@@ -24,7 +24,7 @@ interface IResponseData {
 }
 
 export default class ApiClient {
-  constructor(req = null, res = null) {
+  constructor(req = null, res = null, language: string = 'en-US') {
     methods.forEach((method) =>
       this[method] = (path, requestData: IRequestData = {}) => {
         const {params, data} = requestData;
@@ -43,6 +43,7 @@ export default class ApiClient {
 
           request.set('Content-Type', 'application/json');
           request.set('Accept', 'application/json, text/javascript');
+          request.set('Accept-Language', language);
 
           if (data) {
             request.send(data);

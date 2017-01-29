@@ -13,10 +13,10 @@ const {initLocaleData} = require('er-common-components/lib/translations');
 injectTapEventPlugin();
 initLocaleData();
 
-const client = new ApiClient();
 const {language = '', messages = []} = (window as any).__locale;
 const initialStoreData = (window as any).__data;
 const browserHistory = useRouterHistory(createHistory)({basename: `/${language}`});
+const client = new ApiClient(null, null, language);
 const store = createStore(browserHistory, client, initialStoreData);
 const history = syncHistoryWithStore(browserHistory, store);
 const destinationElement = document.getElementById('content');

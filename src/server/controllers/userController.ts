@@ -62,7 +62,7 @@ export async function resetPassword(req: Request, res: Response, next: NextFunct
     await updateUser(user);
 
     // Don't wait to send the email
-    const changePasswordUrl = req.get('Referrer').replace('resetpassword', `changepassword/${user.resetPasswordToken}`);
+    const changePasswordUrl = req.get('Referrer').replace('resetpassword', `changepassword/${user.id}/${user.resetPasswordToken}`);
     sendUserResetPasswordEmail(user, changePasswordUrl);
 
     const updatedUser = await getUserByEmail(email);

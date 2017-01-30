@@ -48,7 +48,7 @@ export async function createToken(exp = ACCESS_TOKEN_EXPIRES_IN, sub = ''): Prom
 
 export async function decodeToken(token: string): Promise<IJwtToken> {
   const result = jwt.decode(token, {complete: true, json: true});
-  return result.payload;
+  return result && result.payload;
 }
 
 export async function verifyToken(token: string): Promise<any> {

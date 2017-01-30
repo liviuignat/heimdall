@@ -18,7 +18,7 @@ interface IUser {
   firstName?: string;
   lastName?: string;
   isActive?: string;
-  resetPasswordToken?: string;
+  resetPasswordId?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

@@ -1,7 +1,7 @@
 import * as uuid from 'uuid';
 import * as joi from 'joi';
 import {Request, Response, NextFunction} from 'express';
-import {createUser, getUserByEmail, updateUser} from 'server/repositories';
+import {createUser, getUserWithResetPasswordIdById, getUserByEmail, updateUser} from 'server/repositories';
 import {sendNewRegisteredUserEmail, sendUserResetPasswordEmail} from 'server/services/notificationService';
 import {ValidationError} from 'server/errors';
 
@@ -25,20 +25,23 @@ export async function registerUser(req: Request, res: Response, next: NextFuncti
 }
 
 export async function changePassword(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
-  const {password} = req.body;
-  const {email} = req.user;
+  // TODO: check that userId & resetPasswordId have valid UUID structure
+  const {password, userId, resetPasswordId} = req.body;
 
   try {
-    const user = await getUserByEmail(email);
+    const user = await getUserWithResetPasswordIdById(userId);
 
     if (user === null) {
-      throw new ValidationError('User with email does not exist', 'heimdall.validation.reset.password.user.not.exist');
+      throw new ValidationError('User with id does not exist', 'heimdall.validation.change.password.user.not.exist');
+    }
+
+    if (user.resetPasswordId !== resetPasswordId) {
+      throw new ValidationError('Invalid reset token.', 'heimdall.validation.change.password.invalid.reset.token');
     }
 
     user.password = password;
-    await updateUser(user);
-
-    const updatedUser = await getUserByEmail(email);
+    user.resetPasswordId = null;
+    const updatedUser = await updateUser(user);
 
     return res.status(200).json(updatedUser);
   } catch (err) {
@@ -49,6 +52,7 @@ export async function changePassword(req: Request, res: Response, next: NextFunc
 // TODO: Don't allow the user to reset password in the future, but do a two step password change
 export async function resetPassword(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
   const {email} = req.body;
+  const language = req.headers['accept-language'];
 
   try {
     const user = await getUserByEmail(email);
@@ -57,13 +61,13 @@ export async function resetPassword(req: Request, res: Response, next: NextFunct
       throw new ValidationError('User with email does not exist', 'validation.reset.password.user.not.exist');
     }
 
-    const resetPasswordToken = uuid.v1();
-    user.resetPasswordToken = resetPasswordToken;
+    const resetPasswordId = uuid.v1();
+    user.resetPasswordId = resetPasswordId;
     await updateUser(user);
 
     // Don't wait to send the email
-    const changePasswordUrl = req.get('Referrer').replace('resetpassword', `changepassword/${user.id}/${user.resetPasswordToken}`);
-    sendUserResetPasswordEmail(user, changePasswordUrl);
+    const changePasswordUrl = req.get('Referrer').replace('resetpassword', `changepassword/${user.id}/${user.resetPasswordId}`);
+    sendUserResetPasswordEmail(user, changePasswordUrl, language);
 
     const updatedUser = await getUserByEmail(email);
 

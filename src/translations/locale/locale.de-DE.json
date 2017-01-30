@@ -7,6 +7,7 @@
   "App.login": "Anmelden",
   "App.email": "E-Mail",
   "App.password": "Passwort",
+  "App.retypepassword": "Re-type Password",
   "App.link.about.us": "https://www.everreal.co/de-DE/ueber-uns",
   "App.link.imprint": "https://www.everreal.co/de-DE/impressum",
   "App.link.privacy.policy": "https://www.everreal.co/de-DE/datenschutz",
@@ -20,11 +21,18 @@
   "RegisterPage.label.repeat.password": "Password bestätigen",
   "ResetPasswordPage.page.title": "Haben Sie Ihr Passwort vergessen?",
   "ResetPasswordPage.page.submit.button": "Passwort zurücksetzen",
+  "ResetPasswordPage.label.successMessage": "Yay! Check your email!",
+  "ChangePasswordPage.page.title": "Change password",
+  "ChangePasswordPage.page.submit.button": "Change password",
+  "ChangePasswordPage.label.login": "Login",
+  "ChangePasswordPage.label.successMessage": "Yay! We successfully changed your password! Click the link below to go to Login.",
   "validation.email.invalid": "Bitte geben Sie die E-Mail Adresse an",
   "validation.required": "Pflichtfeld",
   "validation.string.min.length": "Das Feld muss mindestens {min} Zeichen lang sein",
   "validation.repeat.password": "Die Passwörter stimmen nicht überein. Erneut versuchen?",
   "validation.email.must.be.unique": "Jemand ist bereits mit dieser E-Mail registriert.",
   "validation.invalid.user.or.password": "Ungültiger Benutzername oder Passwort.",
-  "validation.invalid.user.email": "Es wurde kein passendes Benutzerkonto gefunden."
+  "validation.invalid.user.email": "Es wurde kein passendes Benutzerkonto gefunden.",
+  "heimdall.validation.change.password.invalid.reset.token": "Invalid password reset token. Try resending the reset password email.",
+  "heimdall.validation.change.password.user.not.exist": "Invalid user id. Try resending the reset password email."
 }

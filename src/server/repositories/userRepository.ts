@@ -15,6 +15,16 @@ export async function getUserById(userId: string): Promise<IUser> {
   return user && user.toJSON();
 }
 
+export async function getUserWithResetPasswordIdById(userId: string): Promise<IUser> {
+  const user = await db.User.findById(userId, {
+    attributes: [
+      ...attributes,
+      'resetPasswordId',
+    ],
+  });
+  return user && user.toJSON();
+}
+
 export async function getUserByEmail(email: string): Promise<IUser> {
   const user = await db.User.findOne({where: {email} , attributes});
   return user && user.toJSON();

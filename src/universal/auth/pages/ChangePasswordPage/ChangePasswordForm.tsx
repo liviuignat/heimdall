@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {reduxForm} from 'redux-form';
 import {ErrorMessage, FormattedMessage, FormTextField, RaisedButton} from 'universal/common/components';
-const {required, email} = require('er-common-components/lib/helpers/validation');
+const {required, repeatPasswordValidation} = require('er-common-components/lib/helpers/validation');
 
-export const RESET_PASSWORD_FORM_NAME = 'RESET_PASSWORD_FORM_NAME';
+export const CHANGE_PASSWORD_FORM_NAME = 'CHANGE_PASSWORD_FORM_NAME';
 
 @reduxForm({
-  form: RESET_PASSWORD_FORM_NAME,
+  form: CHANGE_PASSWORD_FORM_NAME,
 })
 export default class ChangePasswordForm extends React.Component<any, any> {
   public static propTypes = {
@@ -22,18 +22,35 @@ export default class ChangePasswordForm extends React.Component<any, any> {
       handleSubmit,
     } = this.props;
 
+    // TODO: Add validation that makes sure both password fields have the same value (repeatPasswordValidation?)
+    // TODO: Add password rules
     return (
       <form onSubmit={handleSubmit}>
         <div>
           <FormTextField
             withRef
-            ref="email"
+            ref="password"
             fullWidth
-            name="email"
-            hintText={<FormattedMessage id="App.email" />}
-            floatingLabelText={<FormattedMessage id="App.email" />}
             disabled={isLoading}
-            validate={[required, email]}
+            name="password"
+            type="password"
+            hintText={<FormattedMessage id="App.password" />}
+            floatingLabelText={<FormattedMessage id="App.password" />}
+            validate={[required, repeatPasswordValidation]}
+          />
+        </div>
+
+        <div>
+          <FormTextField
+            withRef
+            ref="retypepassword"
+            fullWidth
+            disabled={isLoading}
+            name="retypepassword"
+            type="password"
+            hintText={<FormattedMessage id="App.retypepassword" />}
+            floatingLabelText={<FormattedMessage id="App.retypepassword" />}
+            validate={[required, repeatPasswordValidation]}
           />
         </div>
 
@@ -43,7 +60,7 @@ export default class ChangePasswordForm extends React.Component<any, any> {
           type="submit"
           backgroundColor="#FD7400"
           labelColor="white"
-          label={<FormattedMessage id="ResetPasswordPage.page.submit.button" />}
+          label={<FormattedMessage id="ChangePasswordPage.page.submit.button" />}
         />
 
         {errorMessage && <ErrorMessage><FormattedMessage id={errorMessage} /></ErrorMessage>}

@@ -1,37 +1,39 @@
 import * as React from 'react';
 import * as Helmet from 'react-helmet';
-import {FormattedLink, FormattedMessage, Paper} from 'universal/common/components';
+import {FormattedMessage, Paper, FormattedLink} from 'universal/common/components';
 import {reset} from 'redux-form';
-import {resetUserPassword} from 'universal/auth/actions';
-import ChangePasswordForm, {RESET_PASSWORD_FORM_NAME} from './ChangePasswordForm';
+import {changeUserPassword} from 'universal/auth/actions';
+import ChangePasswordForm, {CHANGE_PASSWORD_FORM_NAME} from './ChangePasswordForm';
 const {connect} = require('react-redux');
 const {Component, PropTypes} = React;
 
 @connect(
   ({auth}) => ({
-    isResetingPassword: auth.isResetingPassword,
-    isResetPasswordSuccess: auth.isResetPasswordSuccess,
-    resetPasswordError: auth.resetPasswordError,
+    isChangingPassword: auth.isChangingPassword,
+    isChangePasswordSuccess: auth.isChangePasswordSuccess,
+    changePasswordError: auth.changePasswordError,
   }),
   {
     reset,
-    resetUserPassword,
+    changeUserPassword,
   })
-export default class ResetPasswordPage extends Component<any, any> {
+export default class ChangePasswordPage extends Component<any, any> {
   public static propTypes = {
-    isResetingPassword: PropTypes.bool.isRequired,
-    resetPasswordError: PropTypes.string.isRequired,
+    isChangingPassword: PropTypes.bool.isRequired,
+    changePasswordError: PropTypes.string.isRequired,
     reset: PropTypes.func.isRequired,
-    resetUserPassword: PropTypes.func.isRequired,
+    changeUserPassword: PropTypes.func.isRequired,
   };
 
   public async handleSubmit(data) {
-    const {email} = data;
+    const {password} = data;
+    const userId = this.props.params.userId;
+    const resetPasswordId = this.props.params.resetPasswordId;
 
-    if (email) {
-      const response = await this.props.resetUserPassword(email);
+    if (password) {
+      const response = await this.props.changeUserPassword(password, userId, resetPasswordId);
       if (response && response.result) {
-        this.props.reset(RESET_PASSWORD_FORM_NAME);
+        this.props.reset(CHANGE_PASSWORD_FORM_NAME);
       }
     }
   }
@@ -39,33 +41,31 @@ export default class ResetPasswordPage extends Component<any, any> {
   public render() {
     const css = require('./ChangePasswordPage.scss');
     const {
-      isResetingPassword,
-      isResetPasswordSuccess,
-      resetPasswordError,
+      isChangingPassword,
+      isChangePasswordSuccess,
+      changePasswordError,
     } = this.props;
     const onSubmit = data => this.handleSubmit(data);
 
-    const component = isResetPasswordSuccess ?
+    const component = isChangePasswordSuccess ?
         <div className={css.SuccessMessage}>
-          Yay! Check your email!
+          <p><FormattedMessage id="ChangePasswordPage.label.successMessage" /></p>
+          <div className={css.Links_container}>
+            <FormattedLink href="/login" className={css.Links_login}><FormattedMessage id="ChangePasswordPage.label.login" /></FormattedLink>
+          </div>
         </div> :
         <ChangePasswordForm
-          isLoading={isResetingPassword}
-          errorMessage={resetPasswordError}
+          isLoading={isChangingPassword}
+          errorMessage={changePasswordError}
           onSubmit={onSubmit}
         />;
 
     return (
-      <Paper className={css.ResetPasswordPage}>
-        <Helmet title="EverReal - reset password" />
-        <h3><FormattedMessage id="ResetPasswordPage.page.title" /></h3>
+      <Paper className={css.ChangePasswordPage}>
+        <Helmet title="EverReal - change password" />
+        <h3><FormattedMessage id="ChangePasswordPage.page.title" /></h3>
 
         {component}
-
-        <div className={css.Links_container}>
-          <FormattedLink href="/login" className={css.Links_login}><FormattedMessage id="LoginPage.label.login" /></FormattedLink>
-          <FormattedLink href="/register" className={css.Links_register}><FormattedMessage id="LoginPage.label.register" /></FormattedLink>
-        </div>
       </Paper>
     );
   }

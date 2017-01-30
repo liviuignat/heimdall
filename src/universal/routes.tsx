@@ -12,7 +12,7 @@ function getRoutesList({path = ''} = {}) {
       <Route path="login" component={LoginPage}/>
       <Route path="register" component={RegisterPage}/>
       <Route path="resetpassword" component={ResetPasswordPage}/>
-      <Route path="changepassword/:userId/:resetToken" component={ChangePasswordPage}/>
+      <Route path="changepassword/:userId/:resetPasswordId" component={ChangePasswordPage}/>
     </Route>
   );
 };

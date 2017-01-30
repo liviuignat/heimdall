@@ -30,7 +30,7 @@ export default function defineUser(sequelize: Sequelize.Sequelize): IUserModel {
       type: Sequelize.STRING(256),
       field: 'last_name',
     },
-    resetPasswordToken: {
+    resetPasswordId: {
       type: Sequelize.UUID,
     },
   },

@@ -27,7 +27,7 @@ export function setupApiRoutes(app: express.Application): void {
   app.get('/api/users/me', authMiddleware, userController.getMe);
   app.post('/api/users/register', validate(userController.registerValidation), userController.registerUser);
   app.put('/api/users/resetpassword', validate(userController.resetPasswordValidation), userController.resetPassword);
-  app.put('/api/users/changepassword', authMiddleware, validate(userController.changePasswordValidation), userController.changePassword);
+  app.put('/api/users/changepassword', validate(userController.changePasswordValidation), userController.changePassword);
 
   app.get('/api/alive', aliveMiddleware({metadata}));
   app.get('/assets/translations/locale/:language/index.js', siteController.getLocalizedTranslationScript);

@@ -11,6 +11,9 @@ const initialState = {
   isResetingPassword: false,
   isResetPasswordSuccess: false,
   resetPasswordError: '',
+  isChangingPassword: false,
+  isChangePasswordSuccess: false,
+  changePasswordError: '',
 };
 
 export function reducer(state = initialState, action) {
@@ -75,6 +78,24 @@ export function reducer(state = initialState, action) {
         isResetingPassword: false,
         isResetPasswordSuccess: false,
         resetPasswordError: errorFomatter(action.error),
+      });
+
+    case actionTypes.AUTH_CHANGE_PASSWORD:
+      return Object.assign({}, state, {
+        isChangingPassword: true,
+        changePasswordError: '',
+      });
+    case actionTypes.AUTH_CHANGE_PASSWORD_SUCCESS:
+      return Object.assign({}, state, {
+        isChangingPassword: false,
+        isChangePasswordSuccess: true,
+        changePasswordError: '',
+      });
+    case actionTypes.AUTH_CHANGE_PASSWORD_FAIL:
+      return Object.assign({}, state, {
+        isChangingPassword: false,
+        isChangePasswordSuccess: false,
+        changePasswordError: errorFomatter(action.error),
       });
 
     default:

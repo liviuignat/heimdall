@@ -20,6 +20,7 @@ const {Component, PropTypes} = React;
 export default class ResetPasswordPage extends Component<any, any> {
   public static propTypes = {
     isResetingPassword: PropTypes.bool.isRequired,
+    isResetPasswordSuccess: PropTypes.bool.isRequired,
     resetPasswordError: PropTypes.string.isRequired,
     reset: PropTypes.func.isRequired,
     resetUserPassword: PropTypes.func.isRequired,
@@ -47,7 +48,7 @@ export default class ResetPasswordPage extends Component<any, any> {
 
     const component = isResetPasswordSuccess ?
         <div className={css.SuccessMessage}>
-          Yay! Check your email!
+          <FormattedMessage id="ResetPasswordPage.label.successMessage" />
         </div> :
         <ResetPasswordForm
           isLoading={isResetingPassword}

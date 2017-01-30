@@ -24,9 +24,14 @@ export async function sendNewRegisteredUserEmail(user: IUser) {
   }
 }
 
-export async function sendUserResetPasswordEmail(user: IUser, changePasswordUrl: string) {
+export async function sendUserResetPasswordEmail(user: IUser, changePasswordUrl: string, language: string) {
+  const templateIds = {
+    'en-US': '58715d82be537a2800834de8',
+    'de-DE': '588f79d0b6c1fb2800f927b2',
+  };
+
   try {
-    const template = await getTemplate('58715d82be537a2800834de8', {
+    const template = await getTemplate(templateIds[language], {
       name: user.firstName,
       changePasswordUrl,
     });

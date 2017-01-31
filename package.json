@@ -10,12 +10,14 @@
     "start": "node ./node_modules/better-npm-run start",
     "build": "node ./node_modules/better-npm-run build",
     "dev": "concurrently --kill-others \"npm run watch-lint\" \"npm run watch-client\" \"npm run start-dev\"",
+    "dev-sourcemaps": "concurrently --kill-others \"npm run watch-lint\" \"npm run watch-client-sourcemaps\" \"npm run start-dev\"",
     "start-dev": "node ./node_modules/better-npm-run start-dev",
     "watch-lint": "watch 'npm run lint' ./src",
     "lint": "./node_modules/tslint/bin/tslint 'src/**/*.ts?(x)'",
     "test": "node ./node_modules/better-npm-run test",
     "test-once": "node ./node_modules/better-npm-run test-once",
-    "watch-client": "node ./node_modules/better-npm-run watch-client"
+    "watch-client": "node ./node_modules/better-npm-run watch-client",
+    "watch-client-sourcemaps": "node ./node_modules/better-npm-run watch-client-sourcemaps"
   },
   "repository": {
     "type": "git",
@@ -53,6 +55,16 @@
     "watch-client": {
       "command": "node webpack/webpack-dev-server.js",
       "env": {
+        "WEBPACK_DEVTOOL": "eval",
+        "UV_THREADPOOL_SIZE": 100,
+        "NODE_ENV": "development",
+        "NODE_PATH": "./src"
+      }
+    },
+    "watch-client-sourcemaps": {
+      "command": "node webpack/webpack-dev-server.js",
+      "env": {
+        "WEBPACK_DEVTOOL": "inline-source-map",
         "UV_THREADPOOL_SIZE": 100,
         "NODE_ENV": "development",
         "NODE_PATH": "./src"

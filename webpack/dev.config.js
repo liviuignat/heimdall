@@ -10,7 +10,7 @@ const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools'));
 
 module.exports = {
-  devtool: 'inline-source-map',
+  devtool: process.env.WEBPACK_DEVTOOL || 'eval',
   context: path.resolve(__dirname, '..'),
   entry: {
     'main': [

@@ -49,7 +49,7 @@ export async function changePasswordUsingResetToken(req: Request, res: Response,
   }
 }
 
-export async function changePasswordUsingOldPassword(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+export async function changePassword(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
   const {password} = req.body;
   const {email} = req.user;
 
@@ -110,7 +110,7 @@ export const resetPasswordValidation = {
   },
 };
 
-export const changePasswordUsingOldPasswordValidation = {
+export const changePasswordValidation = {
   body: {
     password: joi.string().regex(/[a-zA-Z0-9]{3,30}/).required(),
   },

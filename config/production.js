@@ -10,6 +10,7 @@ try {
 
 const prodDefault = {
   loggedInRedirectUrl: 'https://www.everreal.co/properties/decision',
+  baseUrl: 'http://localhost:9200',
   logger: {
     level: 'warn',
   },

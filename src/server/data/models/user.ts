@@ -32,6 +32,7 @@ export default function defineUser(sequelize: Sequelize.Sequelize): IUserModel {
     },
     resetPasswordId: {
       type: Sequelize.UUID,
+      field: 'reset_password_id',
     },
   },
   {

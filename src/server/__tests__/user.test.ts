@@ -16,7 +16,7 @@ const createUserRequest = (payload = createUserPayload) => request.post('/api/us
   .set('content-type', 'application/json')
   .send(payload);
 
-const changePasswordRequest = (password: string, token: string) => request.put('/api/users/changepassword')
+const changePasswordRequest = (password: string, token: string) => request.put('/api/users/me/changepassword')
   .set('content-type', 'application/json')
   .set('Authorization', `Bearer ${token}`)
   .send({password});
@@ -66,23 +66,24 @@ describe('WHEN testing user endpoints', () => {
           });
         });
 
-        // TODO: Update tests for resetpassword & changepassword
-        // describe('WHEN changing password for the new user', () => {
-        //   const newPassword = 'newpass';
-        //   it('SHOULD return staus code 200', () => changePasswordRequest(newPassword, authToken).expect(200));
+        describe('WHEN changing password for the new user', () => {
+          const password = 'newpass';
+          it('SHOULD return staus code 200', () => changePasswordRequest(password, authToken).expect(200));
 
-        //   describe('WHEN password is changed with success', () => {
-        //     beforeEach(async () => (await changePasswordRequest(newPassword, authToken)).body);
+          describe('WHEN password is changed with success', () => {
+            beforeEach(async () => (await changePasswordRequest(password, authToken)).body);
 
-        //     it('SHOULD be able to generate a new token and get "/me', async () => {
-        //       const newAuthToken = (await getTokenRequest({email: createUserPayload.email, password: newPassword})).body.access_token;
-        //       const me = (await getMeRequest(newAuthToken)).body;
-        //       expect(me.email).toEqual(createUserPayload.email);
-        //     });
-        //   });
-        // });
+            it('SHOULD be able to generate a new token and get "/me', async () => {
+              const newAuthToken = (await getTokenRequest({email: createUserPayload.email, password})).body.access_token;
+              const me = (await getMeRequest(newAuthToken)).body;
+              expect(me.email).toEqual(createUserPayload.email);
+            });
+          });
+        });
 
-        // describe('WHEN resetting password for the new user', () => {
+        // TODO: Fix this. Maybe check that resetPasswordId is generated. In order to check that the resetPasswordId
+        // is generated we must return it as response. We can then also test /{userId}/changepassword
+        // describe('WHEN doing resetpassword for a user', () => {
         //   it('SHOULD return staus code 200', () => resetPasswordRequest(createUserPayload.email).expect(200));
 
         //   describe('WHEN password is changed with success', () => {
@@ -93,23 +94,28 @@ describe('WHEN testing user endpoints', () => {
         //   });
         // });
 
-        describe('WHEN resetting password for an unexisting email', () => {
+        describe('WHEN doing resetpassword for an unexisting email', () => {
           const unexistingEmail = 'email.does.not.exist@everreal.co';
-          it('SHOULD return staus code 400', () => resetPasswordRequest(unexistingEmail).expect(400));
+          let errorCode = null;
+          let errorResponse = null;
 
-          describe('WHEN password is changed with success', () => {
-            let errorResponse = null;
-            beforeEach(async () => errorResponse = (await resetPasswordRequest(unexistingEmail)).body);
+          beforeEach(async () => {
+            errorCode = (await resetPasswordRequest(unexistingEmail)).status;
+            errorResponse = (await resetPasswordRequest(unexistingEmail)).body;
+          });
 
-            it('SHOULD return a well formatted error message', () => {
+          it('SHOULD return staus code 400', () => {
+            expect(errorCode).toBe(400);
+          });
+
+          it('SHOULD return a well formatted error message', () => {
               expect(errorResponse.errorMessage).toBeDefined();
               expect(errorResponse.errorLocale).toBeDefined();
-            });
           });
         });
 
         describe('WHEN password is not valid', () => {
-          it('SHOULD return staus code 400', async () => changePasswordRequest('sm', authToken).expect(400));
+          it('SHOULD return status code 400', async () => changePasswordRequest('sm', authToken).expect(400));
         });
       });
     });

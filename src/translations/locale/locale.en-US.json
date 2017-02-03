@@ -24,15 +24,13 @@
   "ResetPasswordPage.label.successMessage": "Yay! Check your email!",
   "ChangePasswordPage.page.title": "Change password",
   "ChangePasswordPage.page.submit.button": "Change password",
-  "ChangePasswordPage.label.login": "Login",
   "ChangePasswordPage.label.successMessage": "Yay! We successfully changed your password! Click the link below to go to Login.",
+  "ChangePasswordPage.label.errorMessage": "The userId or resetToken are invalid. Try resending the reset password email.",
   "validation.email.invalid": "Email is not correct",
   "validation.required": "Field is required",
   "validation.string.min.length": "Must be at least {min} characters long",
   "validation.repeat.password": "These passwords don't match. Try again?",
   "validation.email.must.be.unique": "Somebody is already registered with this email.",
   "validation.invalid.user.or.password": "Invalid username or password.",
-  "validation.invalid.user.email": "No matching user account was found.",
-  "heimdall.validation.change.password.invalid.reset.token": "Invalid password reset token. Try resending the reset password email.",
-  "heimdall.validation.change.password.user.not.exist": "Invalid user id. Try resending the reset password email."
+  "validation.invalid.user.email": "No matching user account was found."
 }

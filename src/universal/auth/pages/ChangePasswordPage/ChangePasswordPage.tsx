@@ -40,25 +40,7 @@ export default class ChangePasswordPage extends Component<any, any> {
 
   public render() {
     const css = require('./ChangePasswordPage.scss');
-    const {
-      isChangingPassword,
-      isChangePasswordSuccess,
-      changePasswordError,
-    } = this.props;
-    const onSubmit = data => this.handleSubmit(data);
-
-    const component = isChangePasswordSuccess ?
-        <div className={css.SuccessMessage}>
-          <p><FormattedMessage id="ChangePasswordPage.label.successMessage" /></p>
-          <div className={css.Links_container}>
-            <FormattedLink href="/login" className={css.Links_login}><FormattedMessage id="ChangePasswordPage.label.login" /></FormattedLink>
-          </div>
-        </div> :
-        <ChangePasswordForm
-          isLoading={isChangingPassword}
-          errorMessage={changePasswordError}
-          onSubmit={onSubmit}
-        />;
+    const component = this.getComponent(css);
 
     return (
       <Paper className={css.ChangePasswordPage}>
@@ -68,5 +50,44 @@ export default class ChangePasswordPage extends Component<any, any> {
         {component}
       </Paper>
     );
+  }
+
+  private getComponent(css) {
+    const generalErrors = ['heimdall.validation.change.password.user.not.exist', 'heimdall.validation.change.password.invalid.reset.token'];
+    const {
+      isChangingPassword,
+      isChangePasswordSuccess,
+      changePasswordError,
+    } = this.props;
+    const onSubmit = data => this.handleSubmit(data);
+
+    let component = null;
+
+    if (!isChangePasswordSuccess && changePasswordError === '') {
+      component =
+        <ChangePasswordForm
+          isLoading={isChangingPassword}
+          errorMessage={changePasswordError}
+          onSubmit={onSubmit}
+        />;
+    } else if (isChangePasswordSuccess) {
+      component =
+        <div className={css.SuccessMessage}>
+          <p><FormattedMessage id="ChangePasswordPage.label.successMessage" /></p>
+          <div className={css.Links_container}>
+            <FormattedLink href="/login" className={css.Links_login}><FormattedMessage id="LoginPage.label.login" /></FormattedLink>
+          </div>
+        </div>;
+    } else if (!isChangePasswordSuccess && generalErrors.includes(changePasswordError)) {
+      component =
+        <div className={css.ErrorMessage}>
+          <p><FormattedMessage id="ChangePasswordPage.label.errorMessage" /></p>
+          <div className={css.Links_container}>
+            <FormattedLink href="/resetpassword" className={css.Links_resetpassword}><FormattedMessage id="LoginPage.label.reset.password" /></FormattedLink>
+          </div>
+        </div>;
+    }
+
+    return component;
   }
 }

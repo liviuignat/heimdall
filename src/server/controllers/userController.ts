@@ -24,9 +24,9 @@ export async function registerUser(req: Request, res: Response, next: NextFuncti
   }
 }
 
-export async function changePassword(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
-  // TODO: check that userId & resetPasswordId have valid UUID structure
-  const {password, userId, resetPasswordId} = req.body;
+export async function changePasswordUsingResetToken(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+  const {password, resetPasswordId} = req.body;
+  const {userId} = req.params;
 
   try {
     const user = await getUserWithResetPasswordIdById(userId);
@@ -49,7 +49,28 @@ export async function changePassword(req: Request, res: Response, next: NextFunc
   }
 }
 
-// TODO: Don't allow the user to reset password in the future, but do a two step password change
+export async function changePasswordUsingOldPassword(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+  const {password} = req.body;
+  const {email} = req.user;
+
+  try {
+    const user = await getUserByEmail(email);
+
+    if (user === null) {
+      throw new ValidationError('User with email does not exist', 'heimdall.validation.reset.password.user.not.exist');
+    }
+
+    user.password = password;
+    await updateUser(user);
+
+    const updatedUser = await getUserByEmail(email);
+
+    return res.status(200).json(updatedUser);
+  } catch (err) {
+    return Promise.resolve(next(err));
+  }
+}
+
 export async function resetPassword(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
   const {email} = req.body;
   const language = req.headers['accept-language'];
@@ -66,8 +87,7 @@ export async function resetPassword(req: Request, res: Response, next: NextFunct
     await updateUser(user);
 
     // Don't wait to send the email
-    const changePasswordUrl = req.get('Referrer').replace('resetpassword', `changepassword/${user.id}/${user.resetPasswordId}`);
-    sendUserResetPasswordEmail(user, changePasswordUrl, language);
+    sendUserResetPasswordEmail(user, language);
 
     const updatedUser = await getUserByEmail(email);
 
@@ -90,8 +110,18 @@ export const resetPasswordValidation = {
   },
 };
 
-export const changePasswordValidation = {
+export const changePasswordUsingOldPasswordValidation = {
   body: {
     password: joi.string().regex(/[a-zA-Z0-9]{3,30}/).required(),
+  },
+};
+
+export const changePasswordUsingResetTokenValidation = {
+  body: {
+    password: joi.string().regex(/[a-zA-Z0-9]{3,30}/).required(),
+    resetPasswordId: joi.string().guid().required(),
+  },
+  params: {
+    userId: joi.string().guid().required(),
   },
 };

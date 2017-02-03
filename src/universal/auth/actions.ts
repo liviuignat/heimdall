@@ -77,11 +77,10 @@ export function changeUserPassword(password: string, userId: string, resetPasswo
         const requestPayload = {
           data: {
             password: md5(password),
-            userId,
             resetPasswordId,
           },
         };
-        await client.put('/api/users/changepassword', requestPayload);
+        await client.put(`/api/users/${userId}/changepassword`, requestPayload);
         return true;
       } catch (err) {
         throw err.errorLocale;

@@ -24,11 +24,13 @@ export async function sendNewRegisteredUserEmail(user: IUser) {
   }
 }
 
-export async function sendUserResetPasswordEmail(user: IUser, changePasswordUrl: string, language: string) {
+export async function sendUserResetPasswordEmail(user: IUser, language: string) {
   const templateIds = {
     'en-US': '58715d82be537a2800834de8',
     'de-DE': '588f79d0b6c1fb2800f927b2',
   };
+  const baseUrl = config.get<string>('baseUrl');
+  const changePasswordUrl = `${baseUrl}/${language}/changepassword/${user.id}/${user.resetPasswordId}`;
 
   try {
     const template = await getTemplate(templateIds[language], {

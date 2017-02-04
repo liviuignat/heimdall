@@ -81,18 +81,9 @@ describe('WHEN testing user endpoints', () => {
           });
         });
 
-        // TODO: Fix this. Maybe check that resetPasswordId is generated. In order to check that the resetPasswordId
-        // is generated we must return it as response. We can then also test /{userId}/changepassword
-        // describe('WHEN doing resetpassword for a user', () => {
-        //   it('SHOULD return staus code 200', () => resetPasswordRequest(createUserPayload.email).expect(200));
-
-        //   describe('WHEN password is changed with success', () => {
-        //     beforeEach(async () => (await resetPasswordRequest(createUserPayload.email)).body);
-
-        //     it('SHOULD be not be able to generate a new token with the old password',
-        //       async () => getTokenRequest(createUserPayload).expect(403));
-        //   });
-        // });
+        describe('WHEN doing resetpassword for a user', () => {
+          it('SHOULD return staus code 200', () => resetPasswordRequest(createUserPayload.email).expect(200));
+        });
 
         describe('WHEN doing resetpassword for an unexisting email', () => {
           const unexistingEmail = 'email.does.not.exist@everreal.co';

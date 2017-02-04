@@ -9,8 +9,10 @@ const {Component, PropTypes} = React;
 
 @connect(
   ({auth}) => ({
+    changePasswordNotStarted: auth.changePasswordNotStarted,
     isChangingPassword: auth.isChangingPassword,
     isChangePasswordSuccess: auth.isChangePasswordSuccess,
+    isChangePasswordError: auth.isChangePasswordError,
     changePasswordError: auth.changePasswordError,
   }),
   {
@@ -19,7 +21,10 @@ const {Component, PropTypes} = React;
   })
 export default class ChangePasswordPage extends Component<any, any> {
   public static propTypes = {
+    changePasswordNotStarted: PropTypes.bool.isRequired,
     isChangingPassword: PropTypes.bool.isRequired,
+    isChangePasswordSuccess: PropTypes.bool.isRequired,
+    isChangePasswordError: PropTypes.bool.isRequired,
     changePasswordError: PropTypes.string.isRequired,
     reset: PropTypes.func.isRequired,
     changeUserPassword: PropTypes.func.isRequired,
@@ -40,54 +45,42 @@ export default class ChangePasswordPage extends Component<any, any> {
 
   public render() {
     const css = require('./ChangePasswordPage.scss');
-    const component = this.getComponent(css);
+    const generalErrors = ['heimdall.validation.change.password.user.not.exist', 'heimdall.validation.change.password.invalid.reset.token'];
+    const {
+      changePasswordNotStarted,
+      isChangingPassword,
+      isChangePasswordSuccess,
+      isChangePasswordError,
+      changePasswordError,
+    } = this.props;
+    const onSubmit = data => this.handleSubmit(data);
+    const isGeneralError = !isChangePasswordSuccess && generalErrors.includes(changePasswordError);
 
     return (
       <Paper className={css.ChangePasswordPage}>
         <Helmet title="EverReal - change password" />
         <h3><FormattedMessage id="ChangePasswordPage.page.title" /></h3>
 
-        {component}
-      </Paper>
-    );
-  }
-
-  private getComponent(css) {
-    const generalErrors = ['heimdall.validation.change.password.user.not.exist', 'heimdall.validation.change.password.invalid.reset.token'];
-    const {
-      isChangingPassword,
-      isChangePasswordSuccess,
-      changePasswordError,
-    } = this.props;
-    const onSubmit = data => this.handleSubmit(data);
-
-    let component = null;
-
-    if (!isChangePasswordSuccess && changePasswordError === '') {
-      component =
-        <ChangePasswordForm
+        {changePasswordNotStarted && <ChangePasswordForm
           isLoading={isChangingPassword}
           errorMessage={changePasswordError}
           onSubmit={onSubmit}
-        />;
-    } else if (isChangePasswordSuccess) {
-      component =
-        <div className={css.SuccessMessage}>
+        />}
+
+        {isChangePasswordSuccess && <div className={css.SuccessMessage}>
           <p><FormattedMessage id="ChangePasswordPage.label.successMessage" /></p>
           <div className={css.Links_container}>
             <FormattedLink href="/login" className={css.Links_login}><FormattedMessage id="LoginPage.label.login" /></FormattedLink>
           </div>
-        </div>;
-    } else if (!isChangePasswordSuccess && generalErrors.includes(changePasswordError)) {
-      component =
-        <div className={css.ErrorMessage}>
+        </div>}
+
+        {isGeneralError && <div className={css.ErrorMessage}>
           <p><FormattedMessage id="ChangePasswordPage.label.errorMessage" /></p>
           <div className={css.Links_container}>
             <FormattedLink href="/resetpassword" className={css.Links_resetpassword}><FormattedMessage id="LoginPage.label.reset.password" /></FormattedLink>
           </div>
-        </div>;
-    }
-
-    return component;
+        </div>}
+      </Paper>
+    );
   }
 }

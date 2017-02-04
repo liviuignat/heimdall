@@ -54,7 +54,7 @@ export default class ChangePasswordPage extends Component<any, any> {
       changePasswordError,
     } = this.props;
     const onSubmit = data => this.handleSubmit(data);
-    const isGeneralError = !isChangePasswordSuccess && generalErrors.includes(changePasswordError);
+    const isGeneralError = isChangePasswordError && generalErrors.includes(changePasswordError);
 
     return (
       <Paper className={css.ChangePasswordPage}>

@@ -67,15 +67,15 @@ export default class ChangePasswordPage extends Component<any, any> {
           onSubmit={onSubmit}
         />}
 
-        {isChangePasswordSuccess && <div className={css.SuccessMessage}>
-          <p><FormattedMessage id="ChangePasswordPage.label.successMessage" /></p>
+        {isChangePasswordSuccess && <div className={css.Message_container}>
+          <p className={css.SuccessMessage}><FormattedMessage id="ChangePasswordPage.label.successMessage" /></p>
           <div className={css.Links_container}>
             <FormattedLink href="/login" className={css.Links_login}><FormattedMessage id="LoginPage.label.login" /></FormattedLink>
           </div>
         </div>}
 
-        {isGeneralError && <div className={css.ErrorMessage}>
-          <p><FormattedMessage id="ChangePasswordPage.label.errorMessage" /></p>
+        {isGeneralError && <div className={css.Message_container}>
+          <p className={css.ErrorMessage}><FormattedMessage id="ChangePasswordPage.label.errorMessage" /></p>
           <div className={css.Links_container}>
             <FormattedLink href="/resetpassword" className={css.Links_resetpassword}><FormattedMessage id="LoginPage.label.reset.password" /></FormattedLink>
           </div>

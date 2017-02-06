@@ -182,7 +182,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-hot-loader@3.0.0-beta.6":
+"@types/react-hot-loader@3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@types/react-hot-loader/-/react-hot-loader-3.0.1.tgz#d15e3af68595c5d6c5576cfcc18e28d578924fce"
   dependencies:

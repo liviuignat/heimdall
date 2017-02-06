@@ -10,7 +10,8 @@ const port = config.get<number>('port');
 const timeToCheckExpiredTokens = config.get<number>('token.timeToCheckExpiredTokens') * 1000;
 
 async function startServer() {
-  await initializeDatabase();
+  const resetTables = false;
+  await initializeDatabase(resetTables);
 
   setInterval(() => {
     deleteExpiredTokens();

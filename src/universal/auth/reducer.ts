@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 import {errorFomatter} from 'universal/helpers/formatters';
 
-const initialState = {
+const partialInitialState = {
   username: '',
   encodedPassword: '',
   isRegistering: false,
@@ -9,8 +9,17 @@ const initialState = {
   isLoggingIn: false,
   loginError: '',
   isResetingPassword: false,
+  isResetPasswordSuccess: false,
   resetPasswordError: '',
 };
+const changePasswordInitialState = {
+  changePasswordNotStarted: true,
+  isChangingPassword: false,
+  isChangePasswordSuccess: false,
+  isChangePasswordError: false,
+  changePasswordError: '',
+};
+const initialState = Object.assign({}, partialInitialState, changePasswordInitialState);
 
 export function reducer(state = initialState, action) {
   switch (action.type) {
@@ -66,12 +75,39 @@ export function reducer(state = initialState, action) {
     case actionTypes.AUTH_RESET_PASSWORD_SUCCESS:
       return Object.assign({}, state, {
         isResetingPassword: false,
+        isResetPasswordSuccess: true,
         resetPasswordError: '',
       });
     case actionTypes.AUTH_RESET_PASSWORD_FAIL:
       return Object.assign({}, state, {
         isResetingPassword: false,
+        isResetPasswordSuccess: false,
         resetPasswordError: errorFomatter(action.error),
+      });
+
+    case actionTypes.AUTH_CHANGE_PASSWORD:
+      return Object.assign({}, state, {
+        changePasswordNotStarted: false,
+        isChangingPassword: true,
+        isChangePasswordSuccess: false,
+        isChangePasswordError: false,
+        changePasswordError: '',
+      });
+    case actionTypes.AUTH_CHANGE_PASSWORD_SUCCESS:
+      return Object.assign({}, state, {
+        changePasswordNotStarted: false,
+        isChangingPassword: false,
+        isChangePasswordSuccess: true,
+        isChangePasswordError: false,
+        changePasswordError: '',
+      });
+    case actionTypes.AUTH_CHANGE_PASSWORD_FAIL:
+      return Object.assign({}, state, {
+        changePasswordNotStarted: false,
+        isChangingPassword: true,
+        isChangePasswordSuccess: false,
+        isChangePasswordError: true,
+        changePasswordError: errorFomatter(action.error),
       });
 
     default:

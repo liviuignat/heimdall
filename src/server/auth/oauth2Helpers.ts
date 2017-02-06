@@ -6,6 +6,7 @@ import {
   saveRefreshToken,
   deleteAuthorizationCode,
 } from 'server/repositories/authTokenRepository';
+import {getScopesByUserId} from 'server/repositories/scopesRepository';
 import {getUserByEmailAndPassword} from 'server/repositories/userRepository';
 import {
   generateAuthorizationTokenValue,
@@ -24,12 +25,14 @@ interface IAccessTokenResponse {
 
 export async function createAuthorizationToken(clientId: string, userId: string, redirectURI: string, scope: string[]): Promise<IAuthorizationCode> {
   const value = await generateAuthorizationTokenValue(userId);
+  const filteredScopes = await getScopesByUserId(userId, scope);
+
   const authToken: IAuthorizationCode = {
     value,
     clientId,
     redirectURI,
     userId,
-    scope,
+    scope: filteredScopes,
   };
 
   await saveAuthorizationCode(authToken);
@@ -39,13 +42,14 @@ export async function createAuthorizationToken(clientId: string, userId: string,
 export async function createAccessToken(clientId: string, userId: string, scope: string[]): Promise<IAccessToken> {
   const expirationDate = generateAuthTokenExpirationDate();
   const value = await generateAccessTokenValue(userId);
+  const filteredScopes = await getScopesByUserId(userId, scope);
 
   const accessToken: IAccessToken = {
     value,
     expirationDate,
     clientId,
     userId,
-    scope,
+    scope: filteredScopes,
   };
 
   await saveAccessToken(accessToken);
@@ -54,12 +58,13 @@ export async function createAccessToken(clientId: string, userId: string, scope:
 
 export async function createRefreshToken(clientId: string, userId: string, scope: string[]): Promise<IRefreshToken> {
   const value = await generateRefreshTokenValue(userId);
+  const filteredScopes = await getScopesByUserId(userId, scope);
 
   const refreshToken: IRefreshToken = {
     value,
     clientId,
     userId,
-    scope,
+    scope: filteredScopes,
   };
 
   await saveRefreshToken(refreshToken);

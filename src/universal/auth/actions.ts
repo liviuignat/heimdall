@@ -65,6 +65,30 @@ export function resetUserPassword(email: string) {
   };
 }
 
+export function changeUserPassword(password: string, userId: string, resetPasswordId: string) {
+  return {
+    types: [
+      actionTypes.AUTH_CHANGE_PASSWORD,
+      actionTypes.AUTH_CHANGE_PASSWORD_SUCCESS,
+      actionTypes.AUTH_CHANGE_PASSWORD_FAIL,
+    ],
+    promise: client => (async () => {
+      try {
+        const requestPayload = {
+          data: {
+            password: md5(password),
+            resetPasswordId,
+          },
+        };
+        await client.put(`/api/users/${userId}/changepassword`, requestPayload);
+        return true;
+      } catch (err) {
+        throw err.errorLocale;
+      }
+    })(),
+  };
+}
+
 async function login(client, email: string, password: string, encodePassword = true): Promise<any> {
   const tokenPayload = {
     data: {

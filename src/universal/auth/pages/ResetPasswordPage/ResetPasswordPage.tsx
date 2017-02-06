@@ -10,6 +10,7 @@ const {Component, PropTypes} = React;
 @connect(
   ({auth}) => ({
     isResetingPassword: auth.isResetingPassword,
+    isResetPasswordSuccess: auth.isResetPasswordSuccess,
     resetPasswordError: auth.resetPasswordError,
   }),
   {
@@ -19,6 +20,7 @@ const {Component, PropTypes} = React;
 export default class ResetPasswordPage extends Component<any, any> {
   public static propTypes = {
     isResetingPassword: PropTypes.bool.isRequired,
+    isResetPasswordSuccess: PropTypes.bool.isRequired,
     resetPasswordError: PropTypes.string.isRequired,
     reset: PropTypes.func.isRequired,
     resetUserPassword: PropTypes.func.isRequired,
@@ -39,20 +41,27 @@ export default class ResetPasswordPage extends Component<any, any> {
     const css = require('./ResetPasswordPage.scss');
     const {
       isResetingPassword,
+      isResetPasswordSuccess,
       resetPasswordError,
     } = this.props;
     const onSubmit = data => this.handleSubmit(data);
+
+    const component = isResetPasswordSuccess ?
+        <div className={css.SuccessMessage}>
+          <FormattedMessage id="ResetPasswordPage.label.successMessage" />
+        </div> :
+        <ResetPasswordForm
+          isLoading={isResetingPassword}
+          errorMessage={resetPasswordError}
+          onSubmit={onSubmit}
+        />;
 
     return (
       <Paper className={css.ResetPasswordPage}>
         <Helmet title="EverReal - reset password" />
         <h3><FormattedMessage id="ResetPasswordPage.page.title" /></h3>
 
-        <ResetPasswordForm
-          isLoading={isResetingPassword}
-          errorMessage={resetPasswordError}
-          onSubmit={onSubmit}
-        />
+        {component}
 
         <div className={css.Links_container}>
           <FormattedLink href="/login" className={css.Links_login}><FormattedMessage id="LoginPage.label.login" /></FormattedLink>

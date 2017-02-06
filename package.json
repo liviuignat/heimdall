@@ -1,6 +1,6 @@
 {
   "name": "heimdall",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "NodeJS Auth Service",
   "main": "index.js",
   "engines": {
@@ -108,7 +108,7 @@
     "@types/react": "^0.0.0",
     "@types/react-dom": "^0.14.20",
     "@types/react-helmet": "^0.0.27",
-    "@types/react-hot-loader": "3.0.0-beta.6",
+    "@types/react-hot-loader": "3.0.1",
     "@types/react-redux": "^4.4.35",
     "@types/react-router": "^2.0.41",
     "@types/react-router-redux": "^4.0.36",
@@ -164,6 +164,7 @@
     "json-loader": "^0.5.4",
     "jsonwebtoken": "^7.2.1",
     "less": "^2.7.2",
+    "lodash": "^4.17.4",
     "lru-memoize": "^1.0.1",
     "material-ui": "^0.16.6",
     "node-sass": "^4.2.0",

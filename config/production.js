@@ -9,7 +9,8 @@ try {
 }
 
 const prodDefault = {
-  loggedInRedirectUrl: 'https://www.everreal.co/properties/decision',
+  loggedInRedirectUrl: 'https://www.everreal.co/properties',
+  baseUrl: 'https://auth.everreal.co',
   logger: {
     level: 'warn',
   },
@@ -21,7 +22,7 @@ const prodDefault = {
   token: {
     accessTokenExpiresIn: 3600,
     authorizationTokenExpiresIn: 3600,
-    refreshTokenExpiresIn: 52560000,
+    refreshTokenExpiresIn: 30 * 24 * 3600,
     timeToCheckExpiredTokens: 3600,
   },
   defaultClients: [

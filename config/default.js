@@ -1,6 +1,7 @@
 module.exports = {
   port: process.env.PORT || 9200,
   loggedInRedirectUrl: 'http://dev.everreal.co:9300/properties/decision',
+  baseUrl: 'http://localhost:9200',
   database: {
     database: 'everreal',
     username: 'postgres',

@@ -1,7 +1,7 @@
 module.exports = {
   port: process.env.PORT || 9200,
-  loggedInRedirectUrl: 'http://dev.everreal.co:9300/properties/decision',
-  baseUrl: 'http://localhost:9200',
+  loggedInRedirectUrl: 'http://dev.everreal.co:9300/properties',
+  baseUrl: 'http://auth.dev.everreal.co:9200',
   database: {
     database: 'everreal',
     username: 'postgres',
@@ -27,7 +27,7 @@ module.exports = {
   token: {
     accessTokenExpiresIn: 3600,
     authorizationTokenExpiresIn: 3600,
-    refreshTokenExpiresIn: 52560000,
+    refreshTokenExpiresIn: 30 * 24 * 3600,
     timeToCheckExpiredTokens: 3600,
   },
   defaultClients: [

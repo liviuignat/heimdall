@@ -17,7 +17,8 @@
     "test": "node ./node_modules/better-npm-run test",
     "test-once": "node ./node_modules/better-npm-run test-once",
     "watch-client": "node ./node_modules/better-npm-run watch-client",
-    "watch-client-sourcemaps": "node ./node_modules/better-npm-run watch-client-sourcemaps"
+    "watch-client-sourcemaps": "node ./node_modules/better-npm-run watch-client-sourcemaps",
+    "translations-fix": "node ./node_modules/er-translations-fix/bin/translations-fix"
   },
   "repository": {
     "type": "git",
@@ -151,6 +152,7 @@
     "cors": "^2.8.1",
     "css-loader": "^0.26.1",
     "er-common-components": "^1.3.1",
+    "er-translations-fix": "^1.0.1",
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "express-validation": "^1.0.1",

@@ -2431,6 +2431,12 @@ er-common-components@^1.3.1:
     moment "^2.17.1"
     react-intl "^2.1.5"
 
+er-translations-fix@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/er-translations-fix/-/er-translations-fix-1.0.1.tgz#b10854ba08a77f415433fdfdf61beb23dd5abe8c"
+  dependencies:
+    glob "^7.1.1"
+
 "errno@>=0.1.1 <0.2.0-0", errno@^0.1.1, errno@^0.1.3:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/errno/-/errno-0.1.4.tgz#b896e23a9e5e8ba33871fc996abd3635fc9a1c7d"

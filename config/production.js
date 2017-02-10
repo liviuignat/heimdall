@@ -11,6 +11,9 @@ try {
 const prodDefault = {
   loggedInRedirectUrl: 'https://www.everreal.co/properties',
   baseUrl: 'https://auth.everreal.co',
+  redis: {
+    url: 'redis://redis:6379',
+  },
   logger: {
     level: 'warn',
   },

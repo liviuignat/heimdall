@@ -1,6 +1,9 @@
 import 'server/auth/passport';
 import * as path from 'path';
+import * as config from 'config';
 import * as express from 'express';
+import * as redis from 'redis';
+import * as connectRedis from 'connect-redis';
 import * as expressSession from 'express-session';
 import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
@@ -18,15 +21,18 @@ const {getAllTranslations} = require('er-common-components/lib/translations/getA
 initLocaleData();
 
 const app = express();
-const MemoryStore = expressSession.MemoryStore;
+const redisConfig = config.get<any>('redis');
+const redisClient = redis.createClient(redisConfig.url);
+const RedisStore = connectRedis(expressSession);
+const sessionStore = new RedisStore({client: redisClient});
 
 app.use(cookieParser());
 app.use(expressSession({
-  saveUninitialized: true,
+  saveUninitialized: false,
   resave: true,
-  secret: 'some secret',
+  secret: config.get<string>('sessionSecret'),
   name: 'authorization.sid',
-  store: new MemoryStore(),
+  store: sessionStore,
   cookie: { maxAge: 3600 * 1000 },
 }));
 app.use(bodyParser.json());

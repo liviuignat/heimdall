@@ -1,7 +1,11 @@
 module.exports = {
   port: process.env.PORT || 9200,
+  sessionSecret: 'my-session-secret',
   loggedInRedirectUrl: 'http://dev.everreal.co:9300/properties',
   baseUrl: 'http://auth.dev.everreal.co:9200',
+  redis: {
+    url: 'redis://localhost:6379',
+  },
   database: {
     database: 'everreal',
     username: 'postgres',

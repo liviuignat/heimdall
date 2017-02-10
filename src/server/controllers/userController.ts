@@ -24,6 +24,18 @@ export async function registerUser(req: Request, res: Response, next: NextFuncti
   }
 }
 
+export async function logoutUser(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+  const {redirect_uri} = req.query;
+
+  req.logout();
+  req.session.destroy(() => {
+    if (redirect_uri) {
+      return res.redirect(redirect_uri);
+    }
+    return res.json({});
+  });
+}
+
 export async function changePasswordUsingResetToken(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
   const {password, resetPasswordId} = req.body;
   const {userId} = req.params;

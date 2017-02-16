@@ -8,31 +8,20 @@ import {
 } from 'server/repositories';
 import {logger} from 'server/logger';
 
-export async function getTokenInfo(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+export async function getTokenInfoAction(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
   try {
     const tokenValue: string = req.query.access_token;
-    await validate.tokenForHttp(tokenValue);
 
-    const accessToken = await getAccessToken(tokenValue);
-    await validate.tokenExistsForHttp(accessToken);
+    const tokenInfo = await getTokenInfo(tokenValue);
 
-    const authClient = await getAuthClientById(accessToken.clientId);
-    await validate.clientExistsForHttp(authClient);
-
-    const expirationLeft = Math.floor((accessToken.expirationDate.getTime() - Date.now()) / 1000);
-    return res.json({
-      audience : authClient.id,
-      scope: accessToken.scope,
-      user_id: accessToken.userId,
-      expires_in : expirationLeft,
-    });
+    return res.json(tokenInfo);
   } catch (err) {
     logger.warn(JSON.stringify(err));
     return res.status(400).json({error: 'invalid_token'});
   }
 }
 
-export async function revokeToken(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
+export async function revokeTokenAction(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
   try {
     const tokenValue: string = req.query.token;
     await validate.tokenForHttp(tokenValue);
@@ -45,4 +34,23 @@ export async function revokeToken(req: Request, res: Response, next: NextFunctio
     logger.warn(JSON.stringify(err));
     return res.status(400).json({error: 'invalid_token'});
   }
+}
+
+export async function getTokenInfo(tokenValue: string): Promise<any> {
+  await validate.tokenForHttp(tokenValue);
+
+  const accessToken = await getAccessToken(tokenValue);
+  await validate.tokenExistsForHttp(accessToken);
+
+  const authClient = await getAuthClientById(accessToken.clientId);
+  await validate.clientExistsForHttp(authClient);
+
+  const expirationLeft = Math.floor((accessToken.expirationDate.getTime() - Date.now()) / 1000);
+
+  return {
+    audience : authClient.id,
+    scope: accessToken.scope,
+    user_id: accessToken.userId,
+    expires_in : expirationLeft,
+  };
 }

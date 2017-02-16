@@ -52,3 +52,7 @@ export const getTokenRequest = (user: IUser = firstUser, authClient = firstClien
 export const getMeRequest = (token: string) => request.get('/api/users/me')
   .set('content-type', 'application/json')
   .set('Authorization', `Bearer ${token}`);
+
+export const getUserInfoRequest = (token: string) => request.get('/api/userinfo')
+  .set('content-type', 'application/json')
+  .set('Authorization', `Bearer ${token}`);

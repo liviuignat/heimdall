@@ -3,10 +3,22 @@ import * as joi from 'joi';
 import {Request, Response, NextFunction} from 'express';
 import {createUser, getUserWithResetPasswordIdById, getUserByEmail, updateUser} from 'server/repositories';
 import {sendNewRegisteredUserEmail, sendUserResetPasswordEmail} from 'server/services/notificationService';
+import {getTokenInfo} from 'server/controllers/tokenController';
 import {ValidationError} from 'server/errors';
 
 export async function getMe(req: Request, res: Response): Promise<void | Response> {
   return res.json(req.user);
+}
+
+export async function getUserInfo(req: Request, res: Response): Promise<void | Response> {
+  try {
+    const accessToken: string = (req.headers.authorization || '').replace('Bearer ', '');
+    const tokenInfo = await getTokenInfo(accessToken);
+    const user = Object.assign({}, req.user, {tokenInfo});
+    return res.json(user);
+  } catch (err) {
+    return Promise.resolve(next(err));
+  }
 }
 
 export async function registerUser(req: Request, res: Response, next: NextFunction): Promise<void | Response> {

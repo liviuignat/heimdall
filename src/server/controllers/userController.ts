@@ -10,9 +10,10 @@ export async function getMe(req: Request, res: Response): Promise<void | Respons
   return res.json(req.user);
 }
 
-export async function getUserInfo(req: Request, res: Response): Promise<void | Response> {
+export async function getUserInfo(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
   try {
-    const accessToken: string = (req.headers.authorization || '').replace('Bearer ', '');
+    const {headers} = req;
+    const accessToken: string = (headers['authorization'] || '').replace('Bearer ', '');
     const tokenInfo = await getTokenInfo(accessToken);
     const user = Object.assign({}, req.user, {tokenInfo});
     return res.json(user);

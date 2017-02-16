@@ -15,6 +15,7 @@ export function setupApiRoutes(app: express.Application): void {
   app.get('/', siteController.getHome);
   app.post('/login', passport.authenticate('local', { successReturnToOrRedirect: '/', failureRedirect: '/login' }));
 
+  app.get('/dialog/logout', userController.logoutUser);
   app.get('/dialog/authorize', oauth2.authorization);
   app.post('/dialog/authorize/decision', oauth2.decision);
   app.post('/oauth/token', oauth2.token);

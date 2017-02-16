@@ -5,6 +5,7 @@ import {
   request,
   getTokenRequest,
   getMeRequest,
+  getUserInfoRequest,
 } from 'server/testHelpers';
 
 const createUserPayload = {
@@ -62,6 +63,26 @@ describe('WHEN testing user endpoints', () => {
               expect(me.updatedAt).toBeDefined();
               expect(me.firstName).toBeNull();
               expect(me.lastName).toBeNull();
+            });
+          });
+        });
+
+        describe('WHEN asking for "/userinfo" endpoint', () => {
+          it('SHOULD have a response status 200', async () => getUserInfoRequest(authToken).expect(200));
+
+          describe('WHEN request finished with success', () => {
+            let me: IUserInfo = null;
+            beforeEach(async () => me = (await getUserInfoRequest(authToken)).body);
+
+            it('SHOULD not have a password property set', () => expect(me.password).not.toBeDefined());
+            it('SHOULD have required user information', () => {
+              expect(me.id).toBeDefined();
+              expect(me.email).toEqual(createUserPayload.email);
+              expect(me.createdAt).toBeDefined();
+              expect(me.updatedAt).toBeDefined();
+              expect(me.firstName).toBeNull();
+              expect(me.lastName).toBeNull();
+              expect(me.tokenInfo).toBeDefined();
             });
           });
         });

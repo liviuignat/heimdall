@@ -23,6 +23,10 @@ interface IUser {
   updatedAt?: Date;
 }
 
+interface IUserInfo extends IUser {
+  tokenInfo: any;
+}
+
 interface IAuthorizationCode {
   id?: string;
   value: string;

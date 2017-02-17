@@ -14,6 +14,20 @@ const prodDefault = {
   redis: {
     url: 'redis://redis:6379',
   },
+  database: {
+    database: 'everreal',
+    username: 'postgres',
+    password: 'password',
+    dialect: 'postgres',
+    host: 'postgres',
+    port: 5432,
+    logging: false,
+    pool: {
+      idle: 10000,
+      max: 10,
+      min: 0,
+    },
+  },
   logger: {
     level: 'warn',
   },

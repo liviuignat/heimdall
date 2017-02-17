@@ -38,6 +38,13 @@ docker build -t heimdall .
 
 # override configuration file by setting CONF environment variable with the stringified JSON
 docker run -d -p 9200:9200 --name heimdall \
-  -e CONF='{"database":{"host":"192.168.0.14","port":5432,"database":"everreal","username":"postgres","password":"password","dialect":"postgres","logging":false,"pool":{"idle":10000,"max":10,"min":0}}}' \
+  -e CONF='{"redis":{"url":"redis://10.0.0.80:6379"}, "database":{"host":"10.0.0.80","port":5432,"database":"everreal","username":"postgres","password":"password","dialect":"postgres","logging":false,"pool":{"idle":10000,"max":10,"min":0}}}' \
+  heimdall
+
+# OR add host mapping for running the doker image on the local machine
+MACHINE_IP=10.0.0.80 \
+docker run -d -p 9200:9200 --name heimdall \
+  --add-host "postgres":${MACHINE_IP} \
+  --add-host "redis":${MACHINE_IP} \
   heimdall
 ```

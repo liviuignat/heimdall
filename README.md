@@ -42,9 +42,8 @@ docker run -d -p 9200:9200 --name heimdall \
   heimdall
 
 # OR add host mapping for running the doker image on the local machine
-MACHINE_IP=10.0.0.80 \
 docker run -d -p 9200:9200 --name heimdall \
-  --add-host "postgres":${MACHINE_IP} \
-  --add-host "redis":${MACHINE_IP} \
+  --add-host "host-machine:10.0.0.80" \
+  -e CONF='{"port":9200,"sessionSecret":"my-session-secret","loggedInRedirectUrl":"http://dev.everreal.co:9300/properties","baseUrl":"http://auth.dev.everreal.co:9200","redis":{"url":"redis://host-machine:6379"},"database":{"host":"host-machine","database":"everreal","username":"postgres","password":"password","dialect":"postgres","port":5432,"logging":false,"pool":{"idle":10000,"max":10,"min":0}},"logger":{"level":"info"},"notification":{"email":"everreal.dev@gmail.com","from":"\"EverReal\" <everreal.dev@gmail.com>","password":"everrealsecret"},"token":{"accessTokenExpiresIn":3600,"authorizationTokenExpiresIn":3600,"refreshTokenExpiresIn":2592000,"timeToCheckExpiredTokens":3600},"defaultClients":[{"id":"dbf8fc00-d7e1-11e6-be11-4df610fa68f6","clientSecret":"9864b910-d742-11e6-b754-976f8d441951","description":"EverReal Default client","name":"EverReal Default Client","trustedClient":true}]}' \
   heimdall
 ```

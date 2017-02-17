@@ -4,14 +4,14 @@ module.exports = {
   loggedInRedirectUrl: 'http://dev.everreal.co:9300/properties',
   baseUrl: 'http://auth.dev.everreal.co:9200',
   redis: {
-    url: 'redis://localhost:6379',
+    url: 'redis://host-machine:6379',
   },
   database: {
+    host: 'host-machine',
     database: 'everreal',
     username: 'postgres',
     password: 'password',
     dialect: 'postgres',
-    host: 'localhost',
     port: 5432,
     logging: false,
     pool: {
